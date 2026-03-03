@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <base target="_top">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>CSV+ | Portal Gamificado</title>
+  
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <style>
+    :root {
+      --bg-color: #f0f2f5; --text-color: #2d3436; --glass-bg: rgba(255, 255, 255, 0.6); --glass-border: rgba(255, 255, 255, 0.3); --glass-shadow: rgba(0, 0, 0, 0.05);
+      --primary: #6c5ce7; --secondary: #fd79a8; --accent: #00b894; --danger: #d63031; --success: #00cec9;
+    }
+    [data-theme="dark"] {
+      --bg-color: #0f172a; --text-color: #f1f5f9; --glass-bg: rgba(30, 41, 59, 0.7); --glass-border: rgba(255, 255, 255, 0.1); --glass-shadow: rgba(0, 0, 0, 0.3);
+      --primary: #81ecec; --secondary: #a29bfe;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; outline: none; -webkit-tap-highlight-color: transparent; font-family: 'Poppins', sans-serif; }
+    body { background: var(--bg-color); color: var(--text-color); height: 100dvh; overflow: hidden; display: flex; flex-direction: column; transition: background 0.4s ease, color 0.4s ease; }
+    
+    .bg-anim { position: fixed; top: -50%; left: -50%; width: 200%; height: 200%; z-index: -1; background: radial-gradient(circle, var(--primary) 0%, transparent 20%), radial-gradient(circle, var(--secondary) 0%, transparent 20%); background-size: 100vw 100vh; background-position: 0 0, 50vw 50vh; opacity: 0.1; animation: bgFloat 30s linear infinite; pointer-events: none; }
+    @keyframes bgFloat { 100% { transform: rotate(360deg); } }
+
+    /* ==========================================
+       INTRO 3D SPLASH SCREEN
+       ========================================== */
+    #splash { position: fixed; inset: 0; background: #050505; z-index: 10000; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.5s ease; }
+    .logo-3d { font-size: 70px; font-weight: 900; color: transparent; -webkit-text-stroke: 2px var(--primary); animation: pulse3D 2s infinite alternate, float3D 3s infinite ease-in-out; text-shadow: 0 10px 40px var(--primary); letter-spacing: 5px; }
+    @keyframes pulse3D { 0% { transform: scale(1) perspective(500px) rotateX(15deg) rotateY(-10deg); } 100% { transform: scale(1.1) perspective(500px) rotateX(-5deg) rotateY(10deg); } }
+    @keyframes float3D { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+    .cyber-bar { width: 200px; height: 6px; background: #222; margin-top: 40px; border-radius: 10px; overflow: hidden; position: relative; box-shadow: inset 0 0 5px #000; }
+    .cyber-fill { width: 0%; height: 100%; background: linear-gradient(90deg, var(--primary), var(--secondary)); animation: fillBar 3s forwards cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 0 15px var(--secondary); }
+    @keyframes fillBar { 0% { width: 0%; } 50% { width: 60%; } 100% { width: 100%; } }
+    .splash-txt { color: #fff; opacity: 0.5; margin-top: 15px; font-size: 12px; font-weight: bold; letter-spacing: 2px; animation: blink 1s infinite; }
+    @keyframes blink { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+
+    /* Estilos Gerais */
+    .glass-card { background: var(--glass-bg); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid var(--glass-border); box-shadow: 0 8px 32px var(--glass-shadow); border-radius: 24px; padding: 20px; }
+    .btn { width: 100%; padding: 16px; border-radius: 16px; border: none; background: linear-gradient(135deg, var(--primary), var(--secondary)); color: #fff; font-weight: 800; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+    .btn:active { transform: scale(0.95); box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+    .inp { width: 100%; padding: 16px; border-radius: 16px; margin-bottom: 15px; font-weight: 600; background: rgba(255,255,255,0.1); border: 1px solid var(--glass-border); color: var(--text-color); transition: 0.3s; }
+    .inp:focus { border-color: var(--primary); background: rgba(255,255,255,0.2); }
+
+    #t-login { position: absolute; top:0; left:0; width:100%; height:100%; z-index: 9999; display: none; flex-direction: column; justify-content: center; align-items: center; padding: 20px; background: var(--bg-color); }
+    .login-box { max-width: 380px; width: 100%; text-align: center; padding: 40px 30px; animation: fadeUp 0.8s ease; }
+    
+    .app-container { width: 100%; height: 100%; position: relative; overflow: hidden; display: flex; flex-direction: column; }
+    .top-header { display: flex; justify-content: space-between; align-items: center; padding: 20px; z-index: 10; }
+    .view { flex: 1; display: none; flex-direction: column; overflow-x: hidden; overflow-y: auto; padding-bottom: 100px; padding-inline: 20px; }
+    .view.active { display: flex; animation: fadeUp 0.4s ease; }
+    @keyframes fadeUp { from {opacity:0; transform:translateY(20px);} to {opacity:1; transform:translateY(0);} }
+
+    .nav-bar { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 400px; height: 70px; border-radius: 35px; display: flex; justify-content: space-around; align-items: center; z-index: 40; }
+    .nav-btn { display: flex; flex-direction: column; align-items: center; color: var(--text-color); opacity: 0.5; font-size: 10px; font-weight: 800; cursor: pointer; transition: 0.3s;}
+    .nav-btn.active { opacity: 1; color: var(--primary); transform: translateY(-5px); }
+    .nav-btn span { font-size: 26px; margin-bottom: 2px; }
+
+    .u-av { width: 50px; height: 50px; border-radius: 18px; background: var(--primary); overflow: hidden; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 5px 15px rgba(0,0,0,0.1); cursor: pointer; color:white; font-weight:bold;}
+    .u-av img { width: 100%; height: 100%; object-fit: cover; }
+    .podium-box { display: flex; justify-content: center; align-items: flex-end; height: 260px; padding-bottom: 30px; margin-top: 20px; }
+    .p-col { width: 30%; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; position: relative; margin: 0 5px; }
+    .p-block { width: 100%; border-radius: 15px 15px 5px 5px; display: flex; justify-content: center; align-items: flex-end; padding-bottom: 10px; font-weight: 900; color: white; box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+    .p1 .p-block { height: 140px; background: linear-gradient(to top, #FFD700, #Ffd80088); } .p2 .p-block { height: 100px; background: linear-gradient(to top, #C0C0C0, #c0c0c088); } .p3 .p-block { height: 70px; background: linear-gradient(to top, #CD7F32, #cd7f3288); }
+    
+    .lvl-box { position: relative; width: 100%; height: 120px; border-radius: 24px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; padding: 25px; cursor: pointer; overflow: hidden; color: white; box-shadow: 0 10px 20px rgba(0,0,0,0.1); transition: 0.3s; }
+    .lvl-box:active { transform: scale(0.96); }
+    .lvl-box.facil { background: linear-gradient(135deg, #00b894, #55efc4); } .lvl-box.medio { background: linear-gradient(135deg, #fdcb6e, #ffeaa7); color: #2d3436; } .lvl-box.dificil { background: linear-gradient(135deg, #d63031, #ff7675); }
+    
+    .game-card { display: flex; align-items: center; gap: 15px; padding: 20px; margin-bottom: 15px; cursor: pointer; transition: 0.3s; }
+    .game-card:active { transform: scale(0.95); }
+    .game-icon { width: 60px; height: 60px; border-radius: 20px; background: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; font-size: 30px; }
+
+    /* MINIGAMES (Caixa e Raspadinha) */
+    .boxes-container { display: flex; justify-content: center; gap: 15px; margin-top: 30px; perspective: 1000px; }
+    .m-box { width: 90px; height: 90px; background: linear-gradient(45deg, var(--accent), #00cec9); border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 40px; color: white; cursor: pointer; transition: 0.5s; box-shadow: 0 10px 20px rgba(0,0,0,0.3); animation: float3D 3s infinite ease-in-out; }
+    .m-box:hover { transform: scale(1.1); }
+    .m-box.opened { background: var(--primary); transform: scale(1.2) rotateY(180deg); animation: none; cursor: default; }
+    
+    .scratch-area { width: 100%; height: 150px; background: #888; border-radius: 20px; margin-top: 30px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 900; font-size: 20px; cursor: pointer; transition: 0.5s; box-shadow: inset 0 0 20px rgba(0,0,0,0.5); background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(0,0,0,0.1) 10px, rgba(0,0,0,0.1) 20px); }
+    .scratch-area.revealed { background: var(--success); box-shadow: 0 10px 20px rgba(0,0,0,0.2); transform: scale(1.05); }
+
+    .chat-list { flex: 1; overflow-y: auto; padding-right: 5px; display: flex; flex-direction: column; gap: 15px; margin-bottom: 15px;}
+    .c-msg { display: flex; gap: 10px; align-items: flex-end; max-width: 85%; } .c-msg.me { align-self: flex-end; flex-direction: row-reverse; }
+    .c-bub { background: var(--glass-bg); border: 1px solid var(--glass-border); padding: 12px 16px; border-radius: 20px 20px 20px 0; font-size: 14px; box-shadow: 0 4px 10px var(--glass-shadow); }
+    .c-msg.me .c-bub { background: var(--primary); color: white; border-radius: 20px 20px 0 20px; border: none;}
+    
+    .adm-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(5px); z-index: 500; display: none; justify-content: center; align-items: flex-end; }
+    .adm-card { width: 100%; height: 90%; border-radius: 30px 30px 0 0; display: flex; flex-direction: column; padding: 20px; overflow: hidden; background: var(--bg-color); color: var(--text-color); border-top: 2px solid var(--primary); }
+    .adm-tabs { display: flex; gap: 10px; margin-bottom: 20px; overflow-x: auto; flex-shrink: 0; padding-bottom:10px; }
+    .adm-tab { padding: 10px 20px; border-radius: 12px; font-weight: 800; font-size: 12px; cursor: pointer; white-space: nowrap; border: 1px solid var(--glass-border); background: var(--glass-bg); color: var(--text-color); transition:0.2s;}
+    .adm-tab.active { background: var(--primary); color: #fff; border-color: var(--primary);}
+    .adm-view { display: none; flex: 1; overflow-y: auto; padding-bottom: 40px; }
+    .adm-view.active { display: block; }
+    .row-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+    #t-play { position: fixed; top:0; left:0; width:100%; height:100%; background: var(--bg-color); z-index:300; display:none; flex-direction:column; padding: 20px; overflow-y:auto;}
+    .opt-btn { background: var(--glass-bg); backdrop-filter: blur(10px); padding: 20px; border-radius: 20px; margin-bottom: 15px; border: 2px solid var(--glass-border); font-weight: bold; cursor: pointer; transition: 0.2s; box-shadow: 0 4px 10px var(--glass-shadow); color: var(--text-color);}
+    .xp-float { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 60px; font-weight: 900; z-index: 999999; animation: floatAnim 1.5s forwards; text-shadow: 0 5px 20px rgba(0,0,0,0.5); pointer-events: none; }
+    .xp-float.win { color: var(--success); } .xp-float.lose { color: var(--danger); }
+  </style>
+</head>
+<body data-theme="dark">
+
+  <div class="bg-anim"></div>
+
+  <div id="splash">
+    <div class="logo-3d">CSV+</div>
+    <div class="cyber-bar"><div class="cyber-fill"></div></div>
+    <div class="splash-txt">CARREGANDO SISTEMA...</div>
+  </div>
+
+  <div id="uni-pop" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);backdrop-filter:blur(5px);z-index:999999;display:none;justify-content:center;align-items:center;padding:20px;">
+    <div class="glass-card" style="width:100%; max-width: 320px; text-align:center;">
+      <h2 id="pop-t" style="color:var(--primary); margin-bottom:10px;">Aviso</h2>
+      <p id="pop-m" style="margin-bottom:20px;font-weight:600;">...</p>
+      <button class="btn" onclick="document.getElementById('uni-pop').style.display='none'">OK</button>
+    </div>
+  </div>
+
+  <div id="t-login">
+    <div class="glass-card login-box">
+      <div class="logo-login" style="width: 90px; height: 90px; border-radius: 25px; background: linear-gradient(45deg, var(--primary), var(--secondary)); display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; color: white;"><span class="material-icons-round" style="font-size: 50px;">data_exploration</span></div>
+      <h2 id="app-title-login" style="margin-bottom:5px;font-weight:900;font-size:28px;">CSV+</h2>
+      <p id="app-sub-login" style="opacity:0.7;margin-bottom:30px;font-size:12px;font-weight:bold;text-transform:uppercase;">HUB DO COLABORADOR</p>
+      <input id="u" class="inp" type="email" placeholder="O seu e-mail">
+      <input id="s" class="inp" type="password" placeholder="A sua palavra-passe">
+      <button class="btn" id="btn-login" onclick="acaoLogin()">ENTRAR</button>
+      <div id="login-msg" style="color: var(--danger); font-size: 12px; margin-top: 15px; font-weight: bold; min-height: 15px;"></div>
+    </div>
+  </div>
+
+  <div id="app-main" class="app-container" style="display:none;">
+    <div class="top-header">
+      <div style="display:flex; align-items:center; gap:15px;">
+        <div class="u-av" id="h-av" onclick="go('profile', document.getElementById('btn-nav-prof'))"><span class="material-icons-round">person</span></div>
+        <div><h3 id="h-nome" style="font-size:16px; margin:0; line-height:1;">...</h3><span id="h-xp" style="color:var(--primary);font-weight:900;font-size:14px;">0 XP</span></div>
+      </div>
+      <div style="display:flex; gap:10px;">
+        <div class="glass-card" style="padding:10px; border-radius:50%; width:45px; height:45px; display:flex; align-items:center; justify-content:center; cursor:pointer;" onclick="toggleTheme()"><span class="material-icons-round" id="theme-icon">light_mode</span></div>
+        <div id="fab-adm" class="glass-card" style="padding:10px; border-radius:50%; width:45px; height:45px; display:none; align-items:center; justify-content:center; cursor:pointer; background:var(--danger); color:white;" onclick="abrirAdm()"><span class="material-icons-round">settings</span></div>
+      </div>
+    </div>
+    
+    <div id="v-home" class="view active">
+      <h2 style="font-size:24px; font-weight:900; margin-bottom: 20px;">Treinamento</h2>
+      <div class="lvl-box facil" onclick="play('FACIL')"><div><h2 style="margin:0;font-size:26px;font-weight:900">FÁCIL</h2><p style="margin:0;font-size:13px;opacity:0.9">Iniciante</p></div><span class="material-icons-round" style="font-size: 40px; opacity: 0.8;">school</span></div>
+      <div class="lvl-box medio" onclick="play('MEDIO')"><div><h2 style="margin:0;font-size:26px;font-weight:900">MÉDIO</h2><p style="margin:0;font-size:13px;opacity:0.9">Intermediário</p></div><span class="material-icons-round" style="font-size: 40px; opacity: 0.8;">bolt</span></div>
+      <div class="lvl-box dificil" onclick="play('DIFICIL')"><div><h2 style="margin:0;font-size:26px;font-weight:900">DIFÍCIL</h2><p style="margin:0;font-size:13px;opacity:0.9">Avançado</p></div><span class="material-icons-round" style="font-size: 40px; opacity: 0.8;">local_fire_department</span></div>
+    </div>
+
+    <div id="v-spin" class="view">
+      <h2 style="font-size:24px; font-weight:900; margin-bottom: 20px;">Tente a Sorte</h2>
+      <p style="font-size:12px; opacity:0.7; margin-bottom: 20px;">Jogue para ganhar bônus de XP!</p>
+      
+      <div class="glass-card game-card" onclick="startCaixaGame()">
+        <div class="game-icon" style="color: var(--accent);"><span class="material-icons-round">inventory_2</span></div>
+        <div style="flex:1;"><h3 style="font-size:18px;">Caixa Misteriosa</h3><span style="font-size:12px; opacity:0.7;">3 caixas, 1 escolha.</span></div>
+        <span class="material-icons-round">chevron_right</span>
+      </div>
+
+      <div class="glass-card game-card" onclick="startRaspaGame()">
+        <div class="game-icon" style="color: var(--secondary);"><span class="material-icons-round">crop_free</span></div>
+        <div style="flex:1;"><h3 style="font-size:18px;">Raspadinha</h3><span style="font-size:12px; opacity:0.7;">Raspe para descobrir!</span></div>
+        <span class="material-icons-round">chevron_right</span>
+      </div>
+      
+      <div class="glass-card game-card" onclick="pop('Roleta', 'A roleta visual será integrada no próximo sprint. Jogue a Caixa Misteriosa por enquanto!')">
+        <div class="game-icon" style="color: var(--primary);"><span class="material-icons-round">casino</span></div>
+        <div style="flex:1;"><h3 style="font-size:18px;">Roleta Premiada</h3><span style="font-size:12px; opacity:0.7;">Em construção</span></div>
+        <span class="material-icons-round">lock</span>
+      </div>
+    </div>
+
+    <div id="v-rank" class="view">
+      <h2 style="font-size:24px; font-weight:900; text-align:center;">Quadro de Honra</h2>
+      <div id="podium-area" class="podium-box"></div>
+      <div id="rank-list" style="margin-top: 20px;"></div>
+    </div>
+
+    <div id="v-chat" class="view">
+      <h2 style="font-size:24px; font-weight:900; margin-bottom: 20px;">Sala de Convívio</h2>
+      <div class="chat-wrapper">
+        <div id="chat-msgs" class="chat-list glass-card"></div>
+        <div style="display: flex; gap: 10px;">
+          <input id="c-txt" class="inp" style="margin:0; border-radius: 20px;" placeholder="Escreva sua mensagem...">
+          <button class="btn" style="width:60px; border-radius:20px; padding:0; display:flex; align-items:center; justify-content:center;" onclick="sendChat()"><span class="material-icons-round">send</span></button>
+        </div>
+      </div>
+    </div>
+
+    <div id="v-profile" class="view">
+      <h2 style="font-size:24px; font-weight:900; margin-bottom: 20px;">Meu Perfil</h2>
+      <div class="glass-card" style="text-align:center;">
+        <div id="p-av" class="u-av" style="width:100px;height:100px;margin:0 auto 20px auto;font-size:40px;"><span class="material-icons-round">person</span></div>
+        <h2 id="p-name" style="font-size:24px;margin-bottom:5px">Nome</h2>
+        <h3 id="p-xp" style="color:var(--primary);font-size:20px;font-weight:900;margin-bottom:20px;">0 XP</h3>
+        <label style="font-size:12px; opacity:0.7; display:block; text-align:left; margin-bottom:5px; font-weight:bold; color:var(--primary);">LINK DA FOTO DE PERFIL (Terminado em .jpg/.png)</label>
+        <input id="pf-av" class="inp" placeholder="Cole o link direto da imagem">
+        <label style="font-size:12px; opacity:0.7; display:block; text-align:left; margin-bottom:5px; font-weight:bold; color:var(--primary);">SUA FRASE DE STATUS (Aparece no Ranking)</label>
+        <input id="pf-frase" class="inp" placeholder="Ex: Cuidado, estou subindo!">
+        <button class="btn" onclick="savePerf()" style="margin-bottom:15px;">SALVAR ALTERAÇÕES</button>
+        <button class="btn" onclick="location.reload()" style="background:transparent; color:var(--danger); border:2px solid var(--danger); box-shadow:none;">SAIR DO SISTEMA</button>
+      </div>
+    </div>
+
+    <div class="glass-card nav-bar" id="nav-bar">
+      <div class="nav-btn active" onclick="go('home',this)"><span class="material-icons-round">sports_esports</span>Início</div>
+      <div class="nav-btn" onclick="go('spin',this)"><span class="material-icons-round">explore</span>Jogos</div>
+      <div class="nav-btn" onclick="go('rank',this)"><span class="material-icons-round">emoji_events</span>Top</div>
+      <div class="nav-btn" onclick="go('chat',this)"><span class="material-icons-round">forum</span>Chat</div>
+      <div class="nav-btn" id="btn-nav-prof" onclick="go('profile',this)"><span class="material-icons-round">face</span>Perfil</div>
+    </div>
+  </div>
+
+  <div id="t-caixa" style="position:fixed;top:0;left:0;width:100%;height:100%;background:var(--bg-color);z-index:300;display:none;flex-direction:column;padding:20px;">
+     <div style="display:flex;justify-content:space-between;align-items:center; margin-bottom:30px;">
+      <div class="glass-card" onclick="sairMinigame()" style="padding:10px; border-radius:15px; cursor:pointer;"><span class="material-icons-round">arrow_back</span></div>
+    </div>
+    <h2 style="text-align:center; font-size:28px;">Caixa Misteriosa</h2>
+    <p style="text-align:center; opacity:0.7;">Escolha uma caixa e descubra seu prêmio!</p>
+    <div class="boxes-container">
+       <div class="m-box" onclick="abrirCaixa(this)"><span class="material-icons-round" style="font-size:50px;">help_outline</span></div>
+       <div class="m-box" onclick="abrirCaixa(this)"><span class="material-icons-round" style="font-size:50px;">help_outline</span></div>
+       <div class="m-box" onclick="abrirCaixa(this)"><span class="material-icons-round" style="font-size:50px;">help_outline</span></div>
+    </div>
+    <div id="caixa-msg" style="text-align:center; margin-top:30px; font-weight:bold; color:var(--primary); font-size:20px;"></div>
+  </div>
+
+  <div id="t-raspa" style="position:fixed;top:0;left:0;width:100%;height:100%;background:var(--bg-color);z-index:300;display:none;flex-direction:column;padding:20px;">
+    <div style="display:flex;justify-content:space-between;align-items:center; margin-bottom:30px;">
+      <div class="glass-card" onclick="sairMinigame()" style="padding:10px; border-radius:15px; cursor:pointer;"><span class="material-icons-round">arrow_back</span></div>
+    </div>
+    <h2 style="text-align:center; font-size:28px;">Raspadinha</h2>
+    <p style="text-align:center; opacity:0.7;">Clique no cartão para raspar e revelar!</p>
+    <div id="scratch-el" class="scratch-area" onclick="raspar(this)">CLIQUE PARA RASPAR</div>
+    <div id="raspa-msg" style="text-align:center; margin-top:30px; font-weight:bold; color:var(--primary); font-size:20px;"></div>
+  </div>
+
+  <div id="t-play">
+    <div style="display:flex;justify-content:space-between;align-items:center; margin-bottom:30px;">
+      <div class="glass-card" onclick="sairJogo()" style="padding:10px; border-radius:15px; cursor:pointer; display:flex; align-items:center; justify-content:center;"><span class="material-icons-round">close</span></div>
+      <div class="glass-card" style="padding:10px 20px; border-radius:15px; font-weight:900; font-size:20px; color:var(--primary); border-color:var(--primary);"><span id="timer">30</span>s</div>
+    </div>
+    <div id="q-box" style="flex:1;display:flex;flex-direction:column;justify-content:center;"></div>
+  </div>
+
+  <div id="mod-adm" class="adm-overlay">
+    <div class="adm-card glass-card" style="background: var(--bg-color);">
+      <div style="display:flex;justify-content:space-between;margin-bottom:20px;align-items:center">
+         <h2 style="color:var(--primary); font-weight:900;">PAINEL ADMIN</h2>
+         <span class="material-icons-round" style="cursor:pointer;font-size:30px" onclick="document.getElementById('mod-adm').style.display='none'">close</span>
+      </div>
+      <div class="adm-tabs">
+        <div id="tb-q" class="adm-tab active" onclick="tab('q')">PERGUNTAS</div>
+        <div id="tb-r" class="adm-tab" onclick="tab('r')">JOGOS (REGRAS)</div>
+        <div id="tb-c" class="adm-tab" onclick="tab('c')">SISTEMA</div>
+      </div>
+      
+      <div id="adm-q" class="adm-view active">
+        <input type="hidden" id="q-id">
+        <div class="row-grid">
+          <select id="q-n" class="inp"><option value="FACIL">FÁCIL</option><option value="MEDIO">MÉDIO</option><option value="DIFICIL">DIFÍCIL</option></select>
+          <select id="q-t" class="inp"><option value="MULTIPLA">Múltipla Escolha</option></select>
+        </div>
+        <input id="q-e" class="inp" placeholder="Enunciado da Pergunta">
+        <input id="q-i" class="inp" placeholder="URL da Imagem de Fundo (Ex: termina em .jpg/.png)">
+        <div class="row-grid">
+           <input id="q-w" class="inp" type="number" placeholder="XP Acerto (ex: 10)">
+           <input id="q-l" class="inp" type="number" placeholder="XP Erro (ex: 5)">
+           <input id="q-tm" class="inp" type="number" placeholder="Tempo (Segundos)">
+        </div>
+        
+        <div class="glass-card" style="margin-bottom:15px;">
+           <label style="color:var(--primary);font-size:12px;font-weight:bold;margin-bottom:10px;display:block">INFORME ATÉ 4 OPÇÕES</label>
+           <div class="row-grid"><input id="oa" class="inp" placeholder="Texto A"><input id="oai" class="inp" placeholder="Imagem A (Link .png/.jpg)"></div>
+           <div class="row-grid"><input id="ob" class="inp" placeholder="Texto B"><input id="obi" class="inp" placeholder="Imagem B (Link .png/.jpg)"></div>
+           <div class="row-grid"><input id="oc" class="inp" placeholder="Texto C"><input id="oci" class="inp" placeholder="Imagem C (Link .png/.jpg)"></div>
+           <div class="row-grid"><input id="od" class="inp" placeholder="Texto D"><input id="odi" class="inp" placeholder="Imagem D (Link .png/.jpg)"></div>
+           
+           <label style="color:var(--primary);font-size:12px;font-weight:bold;margin-bottom:10px;display:block">RESPOSTA CORRETA</label>
+           <select id="q-c-sel" class="inp" style="margin-bottom:0"><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option></select>
+        </div>
+        <button class="btn" onclick="saveQ()">GUARDAR PERGUNTA</button>
+        <button class="btn" style="background:transparent; border:2px solid var(--text-color); color:var(--text-color); margin-top:10px; box-shadow:none;" onclick="clearQForm()">LIMPAR (NOVA PERGUNTA)</button>
+
+        <div style="margin-top:30px;font-weight:bold;color:var(--primary)">REGISTRO DE PERGUNTAS</div>
+        <div id="adm-list" style="margin-top:10px; font-size:12px;"></div>
+      </div>
+
+      <div id="adm-r" class="adm-view">
+        <h3 style="color:var(--primary); margin-bottom:10px;">REGRAS: CAIXA MISTERIOSA</h3>
+        <label style="font-weight:bold; font-size:12px; display:block; margin-bottom:5px;">Tempo de Recarga (Horas) e 3 Possíveis Prêmios (XP)</label>
+        <div class="row-grid">
+          <input id="cx-tm" class="inp" type="number" placeholder="Horas (Ex: 12)" value="12">
+          <input id="cx-p1" class="inp" type="number" placeholder="Prêmio 1 (Ex: 0)">
+          <input id="cx-p2" class="inp" type="number" placeholder="Prêmio 2 (Ex: 50)">
+          <input id="cx-p3" class="inp" type="number" placeholder="Prêmio 3 (Ex: 200)">
+        </div>
+
+        <h3 style="color:var(--secondary); margin-bottom:10px; margin-top:20px;">REGRAS: RASPADINHA</h3>
+        <label style="font-weight:bold; font-size:12px; display:block; margin-bottom:5px;">Tempo de Recarga (Horas) e Prêmio (XP)</label>
+        <div class="row-grid">
+          <input id="rp-tm" class="inp" type="number" placeholder="Horas (Ex: 8)" value="8">
+          <input id="rp-p1" class="inp" type="number" placeholder="Prêmio ao Ganhar (Ex: 100)">
+        </div>
+        
+        <button class="btn" style="margin-top:20px" onclick="saveGames()">GUARDAR REGRAS DOS JOGOS</button>
+      </div>
+
+      <div id="adm-c" class="adm-view">
+        <label style="font-weight:bold;color:var(--primary);display:block;margin-bottom:10px">NOME DA PLATAFORMA</label>
+        <div style="display:flex;gap:10px;margin-bottom:20px">
+            <input id="cfg-title" class="inp" style="margin:0" placeholder="Ex: CSV+"><button class="btn" style="width:80px;margin:0;min-height:unset" onclick="saveTitle()">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
+
+  <script>
+    // INTRO 3D
+    window.addEventListener('load', () => {
+       setTimeout(() => {
+          document.getElementById('splash').style.opacity = '0';
+          setTimeout(() => {
+             document.getElementById('splash').style.display = 'none';
+             document.getElementById('t-login').style.display = 'flex'; // Mostra login após a intro
+          }, 500);
+       }, 3500); // 3.5 segundos de animação
+    });
+
+    const firebaseConfig = { apiKey: "AIzaSyBiHQQdfL4X88KEZUMvZS-WP0z2viR-ZHY", authDomain: "csvplus-62502.firebaseapp.com", projectId: "csvplus-62502", storageBucket: "csvplus-62502.firebasestorage.app", messagingSenderId: "879590605354", appId: "1:879590605354:web:368cd1fdc1f1e35ca77953" };
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth(); const db = firebase.firestore();
+    let U = null; window.TMR = null; window.LS = [];
+    
+    // Configurações globais dos minigames (carregadas ao logar)
+    window.GAME_CFG = { cx_tm: 12, cx_p: [0, 50, 200], rp_tm: 8, rp_p: 100 };
+
+    function toggleTheme() {
+      const body = document.body; const icon = document.getElementById('theme-icon');
+      if (body.getAttribute('data-theme') === 'dark') { body.setAttribute('data-theme', 'light'); icon.innerText = 'dark_mode'; localStorage.setItem('csv_theme', 'light'); } 
+      else { body.setAttribute('data-theme', 'dark'); icon.innerText = 'light_mode'; localStorage.setItem('csv_theme', 'dark'); }
+    }
+    const savedTheme = localStorage.getItem('csv_theme') || 'dark'; document.body.setAttribute('data-theme', savedTheme);
+    
+    function triggerVibration(type) {
+      if (!("vibrate" in navigator)) return;
+      if (type === 'win') window.navigator.vibrate([100, 50, 100]); else if (type === 'lose') window.navigator.vibrate([300]); 
+    }
+
+    function acaoLogin(){
+      let email = document.getElementById('u').value.trim(); let senha = document.getElementById('s').value;
+      let btn = document.getElementById('btn-login'); let msg = document.getElementById('login-msg');
+      if(!email || !senha) { msg.innerText = "Por favor, digite o e-mail e a senha."; return; }
+      btn.innerText = "CONECTANDO...";
+
+      auth.signInWithEmailAndPassword(email, senha).then((userCredential) => {
+          let uid = userCredential.user.uid;
+          db.collection("usuarios").doc(uid).get().then((doc) => {
+            if (doc.exists) {
+              U = doc.data(); U.id = uid; 
+              // Busca as regras dos jogos criadas pelo admin
+              db.collection('sistema').doc('minigames').get().then(gDoc => {
+                 if(gDoc.exists) window.GAME_CFG = gDoc.data();
+                 document.getElementById('t-login').style.display = 'none'; document.getElementById('app-main').style.display = 'flex'; 
+                 updUI();
+                 if(U.nivel === 'ADMIN') document.getElementById('fab-adm').style.display = 'flex'; 
+              });
+            } else { msg.innerText = "Perfil não criado no banco de dados."; btn.innerText = "ENTRAR"; }
+          });
+        }).catch((error) => { msg.innerText = "Login falhou. Verifique os dados."; btn.innerText = "ENTRAR"; });
+    }
+
+    function updUI(){
+      document.getElementById('h-nome').innerText = U.nome.split(' ')[0]; document.getElementById('h-xp').innerText = U.xp + " XP";
+      document.getElementById('p-name').innerText = U.nome; document.getElementById('p-xp').innerText = U.xp + " XP";
+      document.getElementById('pf-frase').value = U.frase || ''; document.getElementById('pf-av').value = U.avatar || '';
+      let fotoHTML = U.avatar ? `<img src="${U.avatar}" onerror="this.style.display='none'">` : `<span class="material-icons-round">person</span>`;
+      document.getElementById('h-av').innerHTML = fotoHTML; document.getElementById('p-av').innerHTML = fotoHTML;
+    }
+
+    function savePerf(){ 
+      let novaFrase = document.getElementById('pf-frase').value; let novoAvatar = document.getElementById('pf-av').value.trim();
+      db.collection('usuarios').doc(U.id).update({ frase: novaFrase, avatar: novoAvatar }).then(() => { U.frase = novaFrase; U.avatar = novoAvatar; updUI(); pop("Sucesso!", "Perfil atualizado com a sua foto!"); });
+    }
+
+    function go(t, el){
+      document.querySelectorAll('.view').forEach(v => { v.classList.remove('active'); v.style.display='none'; });
+      let tg = document.getElementById('v-'+t); tg.style.display='flex'; setTimeout(() => tg.classList.add('active'), 10);
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active')); el.classList.add('active');
+      if(t === 'chat') loadChat(); if(t === 'rank') loadRank();
+    }
+    function pop(t,m){ document.getElementById('uni-pop').style.display='flex'; document.getElementById('pop-t').innerText=t; document.getElementById('pop-m').innerText=m; }
+
+    function loadRank() {
+      let p = document.getElementById('podium-area'), ls = document.getElementById('rank-list');
+      p.innerHTML = '<div style="text-align:center; width:100%; padding-top:50px;">Carregando posições...</div>'; ls.innerHTML = '';
+      db.collection("usuarios").orderBy("xp", "desc").limit(10).get().then((snap) => {
+        let l = []; snap.forEach(doc => l.push(doc.data())); p.innerHTML = ''; if(l.length === 0) return;
+        if(l[1]) pod(l[1], 2, p); if(l[0]) pod(l[0], 1, p); if(l[2]) pod(l[2], 3, p);
+        l.slice(3).forEach((u, i) => { 
+          let av = u.avatar ? `<img src="${u.avatar}">` : `<span class="material-icons-round">person</span>`; 
+          ls.innerHTML += `<div class="glass-card" style="display:flex; align-items:center; padding:15px; margin-bottom:10px;"><div style="width:30px;font-weight:900;opacity:0.5;font-size:16px">#${i+4}</div><div class="u-av" style="margin-right:15px; width:45px; height:45px;">${av}</div><div style="flex:1;font-weight:bold">${u.nome}<br><small style="font-weight:400;opacity:0.7;">${u.frase || ''}</small></div><div style="color:var(--primary);font-weight:900;font-size:16px">${u.xp} XP</div></div>`; 
+        });
+        confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 }, colors: ['#6c5ce7', '#fd79a8', '#00cec9', '#FFD700'] });
+      });
+    }
+    function pod(u, pos, c) {
+      let av = u.avatar ? `<img src="${u.avatar}" onerror="this.style.display='none'">` : `<span class="material-icons-round">person</span>`; 
+      c.innerHTML += `<div class="p-col p${pos}"><div class="u-av" style="width:60px;height:60px;margin-bottom:10px;border:3px solid var(--glass-bg);z-index:2">${av}</div><div class="p-block" style="position:relative;">${u.xp}<div style="position:absolute; top:-35px; width:120px; background:var(--glass-bg); backdrop-filter:blur(5px); color:var(--text-color); font-size:9px; padding:5px; border-radius:10px; text-align:center; font-weight:normal; border:1px solid var(--glass-border); display: ${u.frase ? 'block' : 'none'}">${u.frase}</div></div><div style="font-size:11px;margin-top:8px;font-weight:800;text-transform:uppercase">${u.nome.split(' ')[0]}</div></div>`;
+    }
+
+    let escutaChat = null; 
+    function loadChat(){ 
+      if(escutaChat) escutaChat(); 
+      let b = document.getElementById('chat-msgs'); b.innerHTML = '<div style="text-align:center; padding:20px; opacity:0.5;">Conectando...</div>';
+      escutaChat = db.collection('chat').orderBy('data', 'asc').limit(50).onSnapshot((snap) => {
+        b.innerHTML = ''; if(snap.empty) { b.innerHTML = '<div style="text-align:center; padding:20px; opacity:0.5;">Diga Olá!</div>'; }
+        snap.forEach((doc) => {
+          let m = doc.data(); let me = m.uid === U.id ? 'me' : ''; let av = m.av ? `<img src="${m.av}" onerror="this.style.display='none'">` : `<span class="material-icons-round">person</span>`; 
+          b.innerHTML += `<div class="c-msg ${me}"><div class="c-av u-av" style="width:35px;height:35px;font-size:20px;">${av}</div><div class="c-bub"><span style="font-size:10px;opacity:0.7;display:block;margin-bottom:3px;font-weight:bold;">${m.nome}</span>${m.msg}</div></div>`; 
+        }); b.scrollTop = b.scrollHeight; 
+      });
+    }
+    function sendChat(){ let i = document.getElementById('c-txt'); let t = i.value.trim(); if(!t) return; i.value = ''; db.collection('chat').add({ uid: U.id, nome: U.nome, av: U.avatar || '', msg: t, data: firebase.firestore.FieldValue.serverTimestamp() }); }
+
+    // ==========================================
+    // LOGICA DOS MINIGAMES (Sincronizando XP)
+    // ==========================================
+    let JOGANDO_MINI = false;
+
+    function startCaixaGame() { document.getElementById('app-main').style.display = 'none'; document.getElementById('t-caixa').style.display = 'flex'; document.getElementById('caixa-msg').innerText = ''; document.querySelectorAll('.m-box').forEach(b => { b.className = 'm-box'; b.innerHTML = '<span class="material-icons-round" style="font-size:50px;">help_outline</span>'; }); JOGANDO_MINI = false; }
+    function startRaspaGame() { document.getElementById('app-main').style.display = 'none'; document.getElementById('t-raspa').style.display = 'flex'; document.getElementById('raspa-msg').innerText = ''; let el = document.getElementById('scratch-el'); el.className = 'scratch-area'; el.innerText = 'CLIQUE PARA RASPAR'; JOGANDO_MINI = false; }
+    function sairMinigame() { document.getElementById('t-caixa').style.display = 'none'; document.getElementById('t-raspa').style.display = 'none'; document.getElementById('app-main').style.display = 'flex'; updUI(); }
+
+    function checarCooldown(jogo, tempoHoras, callback) {
+        db.collection("usuarios").doc(U.id).get().then((doc) => {
+            let dados = doc.data(); let ultimo = dados['ultimo_' + jogo] || 0; let agora = new Date().getTime(); let cooldown = tempoHoras * 60 * 60 * 1000;
+            if (U.nivel !== 'ADMIN' && (agora - ultimo) < cooldown) {
+               let h = Math.floor(((ultimo + cooldown) - agora) / (1000*60*60)); let m = Math.floor((((ultimo + cooldown) - agora) % (1000*60*60)) / (1000*60));
+               pop("Aguarde!", `Disponível em ${h}h e ${m}m.`); return;
+            }
+            callback(dados, agora);
+        });
+    }
+
+    function processarGanho(jogo, premio, dados, agora, elMsg) {
+        let novoXP = (dados.xp || 0) + premio;
+        let objUpdate = { xp: novoXP }; objUpdate['ultimo_' + jogo] = agora;
+        
+        db.collection("usuarios").doc(U.id).update(objUpdate).then(() => {
+             triggerVibration(premio > 0 ? 'win' : 'lose');
+             U.xp = novoXP; 
+             elMsg.innerText = premio > 0 ? `Ganhou +${premio} XP!` : "Poxa, Caixa Vazia!";
+             elMsg.style.color = premio > 0 ? 'var(--success)' : 'var(--danger)';
+             
+             let floatEl = document.createElement('div'); floatEl.innerText = premio > 0 ? `+${premio} XP` : `+0 XP`; floatEl.className = premio > 0 ? 'xp-float win' : 'xp-float lose'; document.body.appendChild(floatEl); setTimeout(()=>floatEl.remove(), 1500);
+        });
+    }
+
+    function abrirCaixa(el) {
+        if(JOGANDO_MINI) return; 
+        checarCooldown('caixa', window.GAME_CFG.cx_tm, (dados, agora) => {
+            JOGANDO_MINI = true;
+            el.className = 'm-box opened';
+            let prêmios = window.GAME_CFG.cx_p || [0, 50, 200];
+            let premio = parseInt(prêmios[Math.floor(Math.random() * prêmios.length)]);
+            el.innerHTML = `<span class="material-icons-round" style="font-size:40px;">${premio > 0 ? 'star' : 'mood_bad'}</span>`;
+            processarGanho('caixa', premio, dados, agora, document.getElementById('caixa-msg'));
+        });
+    }
+
+    function raspar(el) {
+        if(JOGANDO_MINI) return;
+        checarCooldown('raspa', window.GAME_CFG.rp_tm, (dados, agora) => {
+            JOGANDO_MINI = true;
+            let sorte = Math.random() > 0.5; // 50% de chance de ganhar
+            let premio = sorte ? (window.GAME_CFG.rp_p || 100) : 0;
+            
+            el.className = 'scratch-area revealed';
+            el.innerText = sorte ? `🎉 ${premio} XP 🎉` : 'TENTE NOVAMENTE';
+            el.style.background = sorte ? 'var(--success)' : 'var(--danger)';
+            processarGanho('raspa', premio, dados, agora, document.getElementById('raspa-msg'));
+        });
+    }
+
+    // ADMIN
+    function abrirAdm(){ document.getElementById('mod-adm').style.display='flex'; tab('q'); }
+    function tab(v){ document.querySelectorAll('.adm-tab').forEach(e => e.classList.remove('active')); document.querySelectorAll('.adm-view').forEach(e => e.classList.remove('active')); document.getElementById('tb-'+v).classList.add('active'); document.getElementById('adm-'+v).classList.add('active'); if(v === 'q') ldQ(); }
+
+    function clearQForm() { document.getElementById('q-id').value=''; document.getElementById('q-e').value=''; document.getElementById('q-i').value=''; document.getElementById('q-w').value=''; document.getElementById('q-l').value=''; document.getElementById('q-tm').value=''; document.getElementById('oa').value=''; document.getElementById('oai').value=''; document.getElementById('ob').value=''; document.getElementById('obi').value=''; document.getElementById('oc').value=''; document.getElementById('oci').value=''; document.getElementById('od').value=''; document.getElementById('odi').value=''; pop("Limpo", "Insira nova pergunta."); }
+    function saveQ(){
+       let id = document.getElementById('q-id').value || "P" + Date.now();
+       let o = { id: id, nivel: document.getElementById('q-n').value, tipo: document.getElementById('q-t').value, enunciado: document.getElementById('q-e').value, imagem: document.getElementById('q-i').value, opcoes: {A: document.getElementById('oa').value, A_img: document.getElementById('oai').value, B: document.getElementById('ob').value, B_img: document.getElementById('obi').value, C: document.getElementById('oc').value, C_img: document.getElementById('oci').value, D: document.getElementById('od').value, D_img: document.getElementById('odi').value}, correta: document.getElementById('q-c-sel').value, xpGanho: parseInt(document.getElementById('q-w').value) || 10, xpPerda: parseInt(document.getElementById('q-l').value) || 5, tempo: parseInt(document.getElementById('q-tm').value) || 30, status: 'ATIVA' };
+       db.collection('perguntas').doc(id).set(o).then(() => { pop("Ok","A pergunta foi salva."); ldQ(); clearQForm(); });
+    }
+    function ldQ(){
+        let list = document.getElementById('adm-list'); list.innerHTML = 'A carregar...';
+        db.collection('perguntas').get().then((snap) => {
+            window.G_QS = []; let h = '';
+            snap.forEach(doc => { let q = doc.data(); window.G_QS.push(q); let idx = window.G_QS.length - 1; h += `<div class="glass-card" style="margin-bottom:10px; display:flex; align-items:center;"><div style="flex:1"><span style="color:var(--primary);font-size:10px">[${q.nivel}]</span><br>${q.enunciado}</div><div style="display:flex;gap:10px;"><div style="color:var(--primary);cursor:pointer" onclick="editQ(${idx})"><span class="material-icons-round">edit</span></div><div style="color:var(--danger);cursor:pointer" onclick="delQ('${q.id}')"><span class="material-icons-round">delete</span></div></div></div>`; });
+            list.innerHTML = h || "Nenhuma pergunta.";
+        });
+    }
+    function editQ(idx){ let q = window.G_QS[idx]; document.getElementById('q-id').value=q.id; document.getElementById('q-e').value=q.enunciado; document.getElementById('q-n').value=q.nivel; document.getElementById('q-t').value=q.tipo; document.getElementById('q-w').value=q.xpGanho||10; document.getElementById('q-l').value=q.xpPerda||5; document.getElementById('q-tm').value=q.tempo||30; document.getElementById('q-i').value=q.imagem||''; if(q.opcoes){ document.getElementById('oa').value=q.opcoes.A||''; document.getElementById('oai').value=q.opcoes.A_img||''; document.getElementById('ob').value=q.opcoes.B||''; document.getElementById('obi').value=q.opcoes.B_img||''; document.getElementById('oc').value=q.opcoes.C||''; document.getElementById('oci').value=q.opcoes.C_img||''; document.getElementById('od').value=q.opcoes.D||''; document.getElementById('odi').value=q.opcoes.D_img||''; } document.getElementById('q-c-sel').value=q.correta||'A'; tab('q'); }
+    function delQ(id){ db.collection('perguntas').doc(id).delete().then(() => ldQ()); }
+
+    function saveTitle(){ let nt = document.getElementById('cfg-title').value; db.collection('sistema').doc('configuracoes').set({ titulo: nt }, { merge: true }).then(() => { document.getElementById('app-title-login').innerText = nt; pop("Sucesso", "Título guardado!"); }); }
+    
+    // Salvar Regras dos Minigames
+    function saveGames() {
+        let cfg = {
+            cx_tm: parseInt(document.getElementById('cx-tm').value) || 12,
+            cx_p: [parseInt(document.getElementById('cx-p1').value)||0, parseInt(document.getElementById('cx-p2').value)||0, parseInt(document.getElementById('cx-p3').value)||0],
+            rp_tm: parseInt(document.getElementById('rp-tm').value) || 8,
+            rp_p: parseInt(document.getElementById('rp-p1').value) || 100
+        };
+        db.collection('sistema').doc('minigames').set(cfg, {merge:true}).then(()=>{ window.GAME_CFG = cfg; pop("Perfeito!", "As regras e XPs dos Minigames foram atualizadas."); });
+    }
+
+    // QUIZ (Com imagens arrumadas)
+    function play(nivel){
+      document.getElementById('app-main').style.display = 'none'; document.getElementById('t-play').style.display = 'flex'; document.getElementById('q-box').innerHTML = '<h2 style="text-align:center">Buscando perguntas...</h2>';
+      db.collection('perguntas').where('nivel', '==', nivel).where('status', '==', 'ATIVA').get().then((snap) => {
+         let perguntas = []; snap.forEach(doc => perguntas.push(doc.data()));
+         if(perguntas.length === 0){ pop("Fim", "Não há perguntas cadastradas neste nível."); sairJogo(); return; }
+         perguntas = perguntas.sort(() => 0.5 - Math.random()); runQ(perguntas, 0);
+      });
+    }
+    function runQ(l, i){
+      if(i >= l.length){ pop("Excelente!", "Treino concluído com sucesso!"); sairJogo(); return; }
+      let q = l[i], b = document.getElementById('q-box');
+      
+      // IMAGEM DO ENUNCIADO AGORA APARECE AQUI!
+      let imgEnunciadoHtml = q.imagem ? `<img src="${q.imagem}" onerror="this.style.display='none'" style="max-height:180px; width:100%; object-fit:contain; border-radius:15px; margin-bottom:20px; box-shadow:0 5px 15px rgba(0,0,0,0.3);">` : '';
+      
+      let html = `${imgEnunciadoHtml}<div style="text-align:center; font-size:24px; font-weight:800; margin-bottom:30px;">${q.enunciado}</div>`;
+      ['A','B','C','D'].forEach(function(o){
+        if(q.opcoes && (q.opcoes[o] || q.opcoes[o+'_img'])) {
+          let innerContent = "";
+          if(q.opcoes[o]) innerContent += `<span>${q.opcoes[o]}</span>`;
+          // IMAGEM DA OPÇÃO AQUI!
+          if(q.opcoes[o+'_img']) innerContent += `<img src="${q.opcoes[o+'_img']}" onerror="this.style.display='none'" style="max-height:80px; border-radius:10px; display:block; margin-top:10px;">`;
+          html += `<div class="opt-btn" onclick="chk('${o}'=='${q.correta}',this,${i})"><b style="color:var(--primary);font-size:20px;margin-right:10px;">${o})</b> ${innerContent}</div>`;
+        }
+      });
+      b.innerHTML = html; window.LS = l; let t = q.tempo || 30; document.getElementById('timer').innerText = t;
+      clearInterval(window.TMR); window.TMR = setInterval(() => { t--; document.getElementById('timer').innerText = t; if(t <= 0) chk(false, null, i); }, 1000);
+    }
+    function chk(win, el, i){
+      clearInterval(window.TMR); let q = window.LS[i]; let xp = win ? (q.xpGanho || 10) : -(q.xpPerda || 5);
+      triggerVibration(win ? 'win' : 'lose');
+      let floatEl = document.createElement('div'); floatEl.innerText = win ? `+${xp} XP` : `${xp} XP`; floatEl.className = win ? 'xp-float win' : 'xp-float lose'; document.body.appendChild(floatEl); setTimeout(()=>floatEl.remove(), 1500);
+      if(win){ if(el) { el.style.background = 'var(--success)'; el.style.color = '#fff'; } U.xp += xp; } else { if(el) { el.style.background = 'var(--danger)'; el.style.color = '#fff'; } let flash = document.createElement('div'); flash.style.position='fixed'; flash.style.top=0; flash.style.left=0; flash.style.width='100%'; flash.style.height='100%'; flash.style.background='rgba(214, 48, 49, 0.4)'; flash.style.zIndex=9999; document.body.appendChild(flash); setTimeout(()=>flash.remove(), 200); }
+      db.collection("usuarios").doc(U.id).update({ xp: U.xp }).then(() => updUI()); setTimeout(() => runQ(window.LS, i+1), 1500);
+    }
+    function sairJogo(){ clearInterval(window.TMR); document.getElementById('t-play').style.display='none'; document.getElementById('app-main').style.display='flex'; updUI(); }
+  </script>
+</body>
+</html>
