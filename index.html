@@ -38,7 +38,7 @@
     .splash-txt { color: #fff; opacity: 0.5; margin-top: 15px; font-size: 12px; font-weight: bold; letter-spacing: 2px; animation: blink 1s infinite; }
     @keyframes blink { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
 
-    /* Estilos Gerais */
+    /* Estilos Gerais (Glass) */
     .glass-card { background: var(--glass-bg); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid var(--glass-border); box-shadow: 0 8px 32px var(--glass-shadow); border-radius: 24px; padding: 20px; }
     .btn { width: 100%; padding: 16px; border-radius: 16px; border: none; background: linear-gradient(135deg, var(--primary), var(--secondary)); color: #fff; font-weight: 800; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
     .btn:active { transform: scale(0.95); box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
@@ -74,7 +74,16 @@
     .game-card:active { transform: scale(0.95); }
     .game-icon { width: 60px; height: 60px; border-radius: 20px; background: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; font-size: 30px; }
 
-    /* MINIGAMES (Caixa e Raspadinha) */
+    /* ==========================================
+       A NOVA ROLETA 3D E MINIGAMES
+       ========================================== */
+    .wheel-container { position: relative; width: 280px; height: 280px; margin: 40px auto; }
+    .wheel { width: 100%; height: 100%; border-radius: 50%; border: 8px solid var(--primary); position: relative; overflow: hidden; transition: transform 4s cubic-bezier(0.2, 0.9, 0.2, 1); box-shadow: 0 0 30px rgba(0,0,0,0.5), inset 0 0 20px rgba(0,0,0,0.5); background: conic-gradient(var(--primary) 0deg 45deg, var(--secondary) 45deg 90deg, var(--primary) 90deg 135deg, var(--secondary) 135deg 180deg, var(--primary) 180deg 225deg, var(--secondary) 225deg 270deg, var(--primary) 270deg 315deg, var(--secondary) 315deg 360deg); }
+    .wheel-text { position: absolute; width: 100%; height: 100%; text-align: center; padding-top: 15px; font-weight: 900; font-size: 14px; color: white; text-shadow: 1px 1px 3px black; box-sizing: border-box; transform-origin: center; pointer-events: none; z-index: 2; }
+    .wheel-marker { position: absolute; top: -20px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 15px solid transparent; border-right: 15px solid transparent; border-top: 30px solid #fff; z-index: 10; filter: drop-shadow(0 4px 5px rgba(0,0,0,0.6)); }
+    .wheel-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 70px; height: 70px; background: var(--bg-color); border-radius: 50%; border: 4px solid var(--primary); z-index: 5; display: flex; justify-content: center; align-items: center; box-shadow: 0 0 15px rgba(0,0,0,0.5); cursor: pointer; font-weight: 900; color: var(--text-color); font-size: 14px; }
+    .wheel-center:active { transform: translate(-50%, -50%) scale(0.9); }
+
     .boxes-container { display: flex; justify-content: center; gap: 15px; margin-top: 30px; perspective: 1000px; }
     .m-box { width: 90px; height: 90px; background: linear-gradient(45deg, var(--accent), #00cec9); border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 40px; color: white; cursor: pointer; transition: 0.5s; box-shadow: 0 10px 20px rgba(0,0,0,0.3); animation: float3D 3s infinite ease-in-out; }
     .m-box:hover { transform: scale(1.1); }
@@ -83,6 +92,7 @@
     .scratch-area { width: 100%; height: 150px; background: #888; border-radius: 20px; margin-top: 30px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 900; font-size: 20px; cursor: pointer; transition: 0.5s; box-shadow: inset 0 0 20px rgba(0,0,0,0.5); background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(0,0,0,0.1) 10px, rgba(0,0,0,0.1) 20px); }
     .scratch-area.revealed { background: var(--success); box-shadow: 0 10px 20px rgba(0,0,0,0.2); transform: scale(1.05); }
 
+    /* Modais e Chat */
     .chat-list { flex: 1; overflow-y: auto; padding-right: 5px; display: flex; flex-direction: column; gap: 15px; margin-bottom: 15px;}
     .c-msg { display: flex; gap: 10px; align-items: flex-end; max-width: 85%; } .c-msg.me { align-self: flex-end; flex-direction: row-reverse; }
     .c-bub { background: var(--glass-bg); border: 1px solid var(--glass-border); padding: 12px 16px; border-radius: 20px 20px 20px 0; font-size: 14px; box-shadow: 0 4px 10px var(--glass-shadow); }
@@ -104,6 +114,8 @@
   </style>
 </head>
 <body data-theme="dark">
+
+  <audio id="global-audio" loop></audio>
 
   <div class="bg-anim"></div>
 
@@ -134,12 +146,16 @@
   </div>
 
   <div id="app-main" class="app-container" style="display:none;">
+    
     <div class="top-header">
       <div style="display:flex; align-items:center; gap:15px;">
         <div class="u-av" id="h-av" onclick="go('profile', document.getElementById('btn-nav-prof'))"><span class="material-icons-round">person</span></div>
         <div><h3 id="h-nome" style="font-size:16px; margin:0; line-height:1;">...</h3><span id="h-xp" style="color:var(--primary);font-weight:900;font-size:14px;">0 XP</span></div>
       </div>
       <div style="display:flex; gap:10px;">
+        <div class="glass-card" style="padding:10px; border-radius:50%; width:45px; height:45px; display:flex; align-items:center; justify-content:center; cursor:pointer;" onclick="document.getElementById('mod-music').style.display='flex'">
+          <span class="material-icons-round" id="music-icon">music_note</span>
+        </div>
         <div class="glass-card" style="padding:10px; border-radius:50%; width:45px; height:45px; display:flex; align-items:center; justify-content:center; cursor:pointer;" onclick="toggleTheme()"><span class="material-icons-round" id="theme-icon">light_mode</span></div>
         <div id="fab-adm" class="glass-card" style="padding:10px; border-radius:50%; width:45px; height:45px; display:none; align-items:center; justify-content:center; cursor:pointer; background:var(--danger); color:white;" onclick="abrirAdm()"><span class="material-icons-round">settings</span></div>
       </div>
@@ -156,6 +172,12 @@
       <h2 style="font-size:24px; font-weight:900; margin-bottom: 20px;">Tente a Sorte</h2>
       <p style="font-size:12px; opacity:0.7; margin-bottom: 20px;">Jogue para ganhar bônus de XP!</p>
       
+      <div class="glass-card game-card" onclick="startRoletaGame()">
+        <div class="game-icon" style="color: var(--primary);"><span class="material-icons-round">casino</span></div>
+        <div style="flex:1;"><h3 style="font-size:18px;">Roleta Premiada</h3><span style="font-size:12px; opacity:0.7;">Gire para multiplicar seu XP</span></div>
+        <span class="material-icons-round">chevron_right</span>
+      </div>
+
       <div class="glass-card game-card" onclick="startCaixaGame()">
         <div class="game-icon" style="color: var(--accent);"><span class="material-icons-round">inventory_2</span></div>
         <div style="flex:1;"><h3 style="font-size:18px;">Caixa Misteriosa</h3><span style="font-size:12px; opacity:0.7;">3 caixas, 1 escolha.</span></div>
@@ -164,14 +186,8 @@
 
       <div class="glass-card game-card" onclick="startRaspaGame()">
         <div class="game-icon" style="color: var(--secondary);"><span class="material-icons-round">crop_free</span></div>
-        <div style="flex:1;"><h3 style="font-size:18px;">Raspadinha</h3><span style="font-size:12px; opacity:0.7;">Raspe para descobrir!</span></div>
+        <div style="flex:1;"><h3 style="font-size:18px;">Raspadinha</h3><span style="font-size:12px; opacity:0.7;">Raspe o cartão!</span></div>
         <span class="material-icons-round">chevron_right</span>
-      </div>
-      
-      <div class="glass-card game-card" onclick="pop('Roleta', 'A roleta visual será integrada no próximo sprint. Jogue a Caixa Misteriosa por enquanto!')">
-        <div class="game-icon" style="color: var(--primary);"><span class="material-icons-round">casino</span></div>
-        <div style="flex:1;"><h3 style="font-size:18px;">Roleta Premiada</h3><span style="font-size:12px; opacity:0.7;">Em construção</span></div>
-        <span class="material-icons-round">lock</span>
       </div>
     </div>
 
@@ -214,6 +230,30 @@
       <div class="nav-btn" onclick="go('chat',this)"><span class="material-icons-round">forum</span>Chat</div>
       <div class="nav-btn" id="btn-nav-prof" onclick="go('profile',this)"><span class="material-icons-round">face</span>Perfil</div>
     </div>
+  </div>
+
+  <div id="mod-music" class="adm-overlay" style="align-items:center;">
+    <div class="glass-card" style="width:90%; max-width:350px; text-align:center;">
+      <h2 style="color:var(--primary); margin-bottom:20px;">🎶 Rádio CSV+</h2>
+      <div class="opt-btn" onclick="playMusic('https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf7f6.mp3', this)">🎧 Lofi Focus (Concentração)</div>
+      <div class="opt-btn" onclick="playMusic('https://cdn.pixabay.com/download/audio/2022/01/18/audio_d0a13f69d2.mp3', this)">🚀 Synthwave (Energia)</div>
+      <div class="opt-btn" onclick="playMusic('https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a73467.mp3', this)">🎮 Epic Battle (Aventura)</div>
+      <button class="btn" style="background:var(--danger); margin-top:10px;" onclick="stopMusic()">MUDO (Desligar)</button>
+      <button class="btn" style="background:transparent; border:2px solid var(--text-color); color:var(--text-color); margin-top:15px; box-shadow:none;" onclick="document.getElementById('mod-music').style.display='none'">FECHAR</button>
+    </div>
+  </div>
+
+  <div id="t-roleta" style="position:fixed;top:0;left:0;width:100%;height:100%;background:var(--bg-color);z-index:300;display:none;flex-direction:column;padding:20px;">
+    <div style="display:flex;justify-content:space-between;align-items:center; margin-bottom:10px;">
+      <div class="glass-card" onclick="sairMinigame()" style="padding:10px; border-radius:15px; cursor:pointer;"><span class="material-icons-round">arrow_back</span></div>
+    </div>
+    <h2 style="text-align:center; font-size:28px;">Roleta Premiada</h2>
+    <div class="wheel-container">
+      <div class="wheel-marker"></div>
+      <div class="wheel" id="wheel-el"></div>
+      <div class="wheel-center" onclick="girarRoletaReal()">GIRAR</div>
+    </div>
+    <div id="roleta-msg" style="text-align:center; margin-top:30px; font-weight:bold; color:var(--text-color); font-size:16px;">Toque no centro para girar!</div>
   </div>
 
   <div id="t-caixa" style="position:fixed;top:0;left:0;width:100%;height:100%;background:var(--bg-color);z-index:300;display:none;flex-direction:column;padding:20px;">
@@ -280,7 +320,6 @@
            <div class="row-grid"><input id="ob" class="inp" placeholder="Texto B"><input id="obi" class="inp" placeholder="Imagem B (Link .png/.jpg)"></div>
            <div class="row-grid"><input id="oc" class="inp" placeholder="Texto C"><input id="oci" class="inp" placeholder="Imagem C (Link .png/.jpg)"></div>
            <div class="row-grid"><input id="od" class="inp" placeholder="Texto D"><input id="odi" class="inp" placeholder="Imagem D (Link .png/.jpg)"></div>
-           
            <label style="color:var(--primary);font-size:12px;font-weight:bold;margin-bottom:10px;display:block">RESPOSTA CORRETA</label>
            <select id="q-c-sel" class="inp" style="margin-bottom:0"><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option></select>
         </div>
@@ -292,20 +331,27 @@
       </div>
 
       <div id="adm-r" class="adm-view">
-        <h3 style="color:var(--primary); margin-bottom:10px;">REGRAS: CAIXA MISTERIOSA</h3>
-        <label style="font-weight:bold; font-size:12px; display:block; margin-bottom:5px;">Tempo de Recarga (Horas) e 3 Possíveis Prêmios (XP)</label>
+        <h3 style="color:var(--primary); margin-bottom:10px;">REGRAS: ROLETA</h3>
+        <label style="font-weight:bold; font-size:12px; display:block; margin-bottom:5px;">Tempo Recarga (Horas) e 8 Fatias (0=Azar)</label>
+        <input id="rl-tm" class="inp" type="number" placeholder="Horas (Ex: 12)" value="12">
         <div class="row-grid">
-          <input id="cx-tm" class="inp" type="number" placeholder="Horas (Ex: 12)" value="12">
-          <input id="cx-p1" class="inp" type="number" placeholder="Prêmio 1 (Ex: 0)">
-          <input id="cx-p2" class="inp" type="number" placeholder="Prêmio 2 (Ex: 50)">
-          <input id="cx-p3" class="inp" type="number" placeholder="Prêmio 3 (Ex: 200)">
+          <input id="f1" class="inp" type="number" placeholder="F1"><input id="f2" class="inp" type="number" placeholder="F2">
+          <input id="f3" class="inp" type="number" placeholder="F3"><input id="f4" class="inp" type="number" placeholder="F4">
+          <input id="f5" class="inp" type="number" placeholder="F5"><input id="f6" class="inp" type="number" placeholder="F6">
+          <input id="f7" class="inp" type="number" placeholder="F7"><input id="f8" class="inp" type="number" placeholder="F8">
+        </div>
+
+        <h3 style="color:var(--accent); margin-bottom:10px; margin-top:20px;">REGRAS: CAIXA MISTERIOSA</h3>
+        <label style="font-weight:bold; font-size:12px; display:block; margin-bottom:5px;">Recarga e 3 Prêmios (XP)</label>
+        <div class="row-grid">
+          <input id="cx-tm" class="inp" type="number" placeholder="Horas" value="12">
+          <input id="cx-p1" class="inp" type="number" placeholder="Prêmio 1"><input id="cx-p2" class="inp" type="number" placeholder="Prêmio 2"><input id="cx-p3" class="inp" type="number" placeholder="Prêmio 3">
         </div>
 
         <h3 style="color:var(--secondary); margin-bottom:10px; margin-top:20px;">REGRAS: RASPADINHA</h3>
-        <label style="font-weight:bold; font-size:12px; display:block; margin-bottom:5px;">Tempo de Recarga (Horas) e Prêmio (XP)</label>
         <div class="row-grid">
-          <input id="rp-tm" class="inp" type="number" placeholder="Horas (Ex: 8)" value="8">
-          <input id="rp-p1" class="inp" type="number" placeholder="Prêmio ao Ganhar (Ex: 100)">
+          <input id="rp-tm" class="inp" type="number" placeholder="Horas" value="8">
+          <input id="rp-p1" class="inp" type="number" placeholder="Prêmio XP">
         </div>
         
         <button class="btn" style="margin-top:20px" onclick="saveGames()">GUARDAR REGRAS DOS JOGOS</button>
@@ -327,13 +373,7 @@
   <script>
     // INTRO 3D
     window.addEventListener('load', () => {
-       setTimeout(() => {
-          document.getElementById('splash').style.opacity = '0';
-          setTimeout(() => {
-             document.getElementById('splash').style.display = 'none';
-             document.getElementById('t-login').style.display = 'flex'; // Mostra login após a intro
-          }, 500);
-       }, 3500); // 3.5 segundos de animação
+       setTimeout(() => { document.getElementById('splash').style.opacity = '0'; setTimeout(() => { document.getElementById('splash').style.display = 'none'; document.getElementById('t-login').style.display = 'flex'; }, 500); }, 3500);
     });
 
     const firebaseConfig = { apiKey: "AIzaSyBiHQQdfL4X88KEZUMvZS-WP0z2viR-ZHY", authDomain: "csvplus-62502.firebaseapp.com", projectId: "csvplus-62502", storageBucket: "csvplus-62502.firebasestorage.app", messagingSenderId: "879590605354", appId: "1:879590605354:web:368cd1fdc1f1e35ca77953" };
@@ -341,8 +381,23 @@
     const auth = firebase.auth(); const db = firebase.firestore();
     let U = null; window.TMR = null; window.LS = [];
     
-    // Configurações globais dos minigames (carregadas ao logar)
-    window.GAME_CFG = { cx_tm: 12, cx_p: [0, 50, 200], rp_tm: 8, rp_p: 100 };
+    // Configurações globais dos minigames (Valores padrão)
+    window.GAME_CFG = { rl_tm: 12, rl_p: [0, 50, 0, 100, 0, 200, 0, 500], cx_tm: 12, cx_p: [0, 50, 200], rp_tm: 8, rp_p: 100 };
+
+    // AUDIO PLAYER LOGIC
+    let bgMusic = document.getElementById('global-audio');
+    bgMusic.volume = 0.3; // Volume agradável de fundo
+    function playMusic(url, el) {
+        bgMusic.src = url; bgMusic.play();
+        document.querySelectorAll('#mod-music .opt-btn').forEach(btn => btn.style.borderColor = 'var(--glass-border)');
+        el.style.borderColor = 'var(--success)';
+        document.getElementById('music-icon').style.color = 'var(--success)';
+    }
+    function stopMusic() {
+        bgMusic.pause();
+        document.querySelectorAll('#mod-music .opt-btn').forEach(btn => btn.style.borderColor = 'var(--glass-border)');
+        document.getElementById('music-icon').style.color = 'var(--text-color)';
+    }
 
     function toggleTheme() {
       const body = document.body; const icon = document.getElementById('theme-icon');
@@ -367,9 +422,10 @@
           db.collection("usuarios").doc(uid).get().then((doc) => {
             if (doc.exists) {
               U = doc.data(); U.id = uid; 
-              // Busca as regras dos jogos criadas pelo admin
+              // Busca as regras dos jogos do Admin
               db.collection('sistema').doc('minigames').get().then(gDoc => {
                  if(gDoc.exists) window.GAME_CFG = gDoc.data();
+                 montarRoletaVisual(); // Desenha a roleta com as fatias do banco!
                  document.getElementById('t-login').style.display = 'none'; document.getElementById('app-main').style.display = 'flex'; 
                  updUI();
                  if(U.nivel === 'ADMIN') document.getElementById('fab-adm').style.display = 'flex'; 
@@ -433,20 +489,33 @@
     function sendChat(){ let i = document.getElementById('c-txt'); let t = i.value.trim(); if(!t) return; i.value = ''; db.collection('chat').add({ uid: U.id, nome: U.nome, av: U.avatar || '', msg: t, data: firebase.firestore.FieldValue.serverTimestamp() }); }
 
     // ==========================================
-    // LOGICA DOS MINIGAMES (Sincronizando XP)
+    // LOGICA DOS MINIGAMES (ROLETA, CAIXA, RASPADINHA)
     // ==========================================
     let JOGANDO_MINI = false;
+    let ROL_CURRENT_ROTATION = 0;
 
+    function montarRoletaVisual() {
+       let w = document.getElementById('wheel-el'); w.innerHTML = '';
+       let fatias = window.GAME_CFG.rl_p || [0,50,0,100,0,200,0,500];
+       for(let i=0; i<8; i++) {
+         let val = fatias[i], txt = val == 0 ? 'AZAR' : '+' + val;
+         let div = document.createElement('div'); div.className = 'wheel-text';
+         div.style.transform = `rotate(${i * 45 + 22.5}deg)`; div.innerText = txt;
+         w.appendChild(div);
+       }
+    }
+
+    function startRoletaGame() { document.getElementById('app-main').style.display = 'none'; document.getElementById('t-roleta').style.display = 'flex'; document.getElementById('roleta-msg').innerText = "Toque no centro para girar!"; document.getElementById('roleta-msg').style.color = "var(--text-color)"; JOGANDO_MINI = false; }
     function startCaixaGame() { document.getElementById('app-main').style.display = 'none'; document.getElementById('t-caixa').style.display = 'flex'; document.getElementById('caixa-msg').innerText = ''; document.querySelectorAll('.m-box').forEach(b => { b.className = 'm-box'; b.innerHTML = '<span class="material-icons-round" style="font-size:50px;">help_outline</span>'; }); JOGANDO_MINI = false; }
-    function startRaspaGame() { document.getElementById('app-main').style.display = 'none'; document.getElementById('t-raspa').style.display = 'flex'; document.getElementById('raspa-msg').innerText = ''; let el = document.getElementById('scratch-el'); el.className = 'scratch-area'; el.innerText = 'CLIQUE PARA RASPAR'; JOGANDO_MINI = false; }
-    function sairMinigame() { document.getElementById('t-caixa').style.display = 'none'; document.getElementById('t-raspa').style.display = 'none'; document.getElementById('app-main').style.display = 'flex'; updUI(); }
+    function startRaspaGame() { document.getElementById('app-main').style.display = 'none'; document.getElementById('t-raspa').style.display = 'flex'; document.getElementById('raspa-msg').innerText = ''; let el = document.getElementById('scratch-el'); el.className = 'scratch-area'; el.innerText = 'CLIQUE PARA RASPAR'; el.style.background = '#888'; JOGANDO_MINI = false; }
+    function sairMinigame() { if(JOGANDO_MINI) return; document.getElementById('t-roleta').style.display = 'none'; document.getElementById('t-caixa').style.display = 'none'; document.getElementById('t-raspa').style.display = 'none'; document.getElementById('app-main').style.display = 'flex'; updUI(); }
 
     function checarCooldown(jogo, tempoHoras, callback) {
         db.collection("usuarios").doc(U.id).get().then((doc) => {
             let dados = doc.data(); let ultimo = dados['ultimo_' + jogo] || 0; let agora = new Date().getTime(); let cooldown = tempoHoras * 60 * 60 * 1000;
             if (U.nivel !== 'ADMIN' && (agora - ultimo) < cooldown) {
                let h = Math.floor(((ultimo + cooldown) - agora) / (1000*60*60)); let m = Math.floor((((ultimo + cooldown) - agora) % (1000*60*60)) / (1000*60));
-               pop("Aguarde!", `Disponível em ${h}h e ${m}m.`); return;
+               pop("Aguarde!", `O jogo está carregando. Disponível em ${h}h e ${m}m.`); return;
             }
             callback(dados, agora);
         });
@@ -455,22 +524,44 @@
     function processarGanho(jogo, premio, dados, agora, elMsg) {
         let novoXP = (dados.xp || 0) + premio;
         let objUpdate = { xp: novoXP }; objUpdate['ultimo_' + jogo] = agora;
-        
         db.collection("usuarios").doc(U.id).update(objUpdate).then(() => {
-             triggerVibration(premio > 0 ? 'win' : 'lose');
-             U.xp = novoXP; 
-             elMsg.innerText = premio > 0 ? `Ganhou +${premio} XP!` : "Poxa, Caixa Vazia!";
+             triggerVibration(premio > 0 ? 'win' : 'lose'); U.xp = novoXP; 
+             elMsg.innerText = premio > 0 ? `Incrível! Ganhou +${premio} XP!` : "Poxa, não foi desta vez!";
              elMsg.style.color = premio > 0 ? 'var(--success)' : 'var(--danger)';
-             
              let floatEl = document.createElement('div'); floatEl.innerText = premio > 0 ? `+${premio} XP` : `+0 XP`; floatEl.className = premio > 0 ? 'xp-float win' : 'xp-float lose'; document.body.appendChild(floatEl); setTimeout(()=>floatEl.remove(), 1500);
+             setTimeout(()=>{ JOGANDO_MINI = false; }, 2000); // Libera o botão de voltar
+        });
+    }
+
+    // A MÁGICA DA ROLETA VISUAL
+    function girarRoletaReal() {
+        if(JOGANDO_MINI) return;
+        checarCooldown('roleta', window.GAME_CFG.rl_tm || 12, (dados, agora) => {
+            JOGANDO_MINI = true;
+            let msgEl = document.getElementById('roleta-msg'); msgEl.innerText = "A cruzar os dedos...";
+            
+            let fatias = window.GAME_CFG.rl_p || [0, 50, 0, 100, 0, 200, 0, 500];
+            let idx = Math.floor(Math.random() * fatias.length);
+            let premio = parseInt(fatias[idx]);
+
+            let baseSpins = 3600; // 10 voltas completas
+            let targetAngle = 360 - (idx * 45 + 22.5);
+            ROL_CURRENT_ROTATION = ROL_CURRENT_ROTATION + baseSpins + (targetAngle - (ROL_CURRENT_ROTATION % 360));
+            if ((targetAngle - (ROL_CURRENT_ROTATION % 360)) < 0) ROL_CURRENT_ROTATION += 360;
+
+            document.getElementById('wheel-el').style.transform = `rotate(${ROL_CURRENT_ROTATION}deg)`; 
+
+            setTimeout(function(){
+               processarGanho('roleta', premio, dados, agora, msgEl);
+               if(premio > 0) confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+            }, 4000); // 4 Segundos girando
         });
     }
 
     function abrirCaixa(el) {
         if(JOGANDO_MINI) return; 
-        checarCooldown('caixa', window.GAME_CFG.cx_tm, (dados, agora) => {
-            JOGANDO_MINI = true;
-            el.className = 'm-box opened';
+        checarCooldown('caixa', window.GAME_CFG.cx_tm || 12, (dados, agora) => {
+            JOGANDO_MINI = true; el.className = 'm-box opened';
             let prêmios = window.GAME_CFG.cx_p || [0, 50, 200];
             let premio = parseInt(prêmios[Math.floor(Math.random() * prêmios.length)]);
             el.innerHTML = `<span class="material-icons-round" style="font-size:40px;">${premio > 0 ? 'star' : 'mood_bad'}</span>`;
@@ -480,15 +571,15 @@
 
     function raspar(el) {
         if(JOGANDO_MINI) return;
-        checarCooldown('raspa', window.GAME_CFG.rp_tm, (dados, agora) => {
+        checarCooldown('raspa', window.GAME_CFG.rp_tm || 8, (dados, agora) => {
             JOGANDO_MINI = true;
-            let sorte = Math.random() > 0.5; // 50% de chance de ganhar
+            let sorte = Math.random() > 0.5; // 50% chance
             let premio = sorte ? (window.GAME_CFG.rp_p || 100) : 0;
-            
             el.className = 'scratch-area revealed';
             el.innerText = sorte ? `🎉 ${premio} XP 🎉` : 'TENTE NOVAMENTE';
             el.style.background = sorte ? 'var(--success)' : 'var(--danger)';
             processarGanho('raspa', premio, dados, agora, document.getElementById('raspa-msg'));
+            if(sorte) confetti({ particleCount: 50, spread: 50 });
         });
     }
 
@@ -515,18 +606,19 @@
 
     function saveTitle(){ let nt = document.getElementById('cfg-title').value; db.collection('sistema').doc('configuracoes').set({ titulo: nt }, { merge: true }).then(() => { document.getElementById('app-title-login').innerText = nt; pop("Sucesso", "Título guardado!"); }); }
     
-    // Salvar Regras dos Minigames
     function saveGames() {
         let cfg = {
+            rl_tm: parseInt(document.getElementById('rl-tm').value) || 12,
+            rl_p: [parseInt(document.getElementById('f1').value)||0, parseInt(document.getElementById('f2').value)||0, parseInt(document.getElementById('f3').value)||0, parseInt(document.getElementById('f4').value)||0, parseInt(document.getElementById('f5').value)||0, parseInt(document.getElementById('f6').value)||0, parseInt(document.getElementById('f7').value)||0, parseInt(document.getElementById('f8').value)||0],
             cx_tm: parseInt(document.getElementById('cx-tm').value) || 12,
             cx_p: [parseInt(document.getElementById('cx-p1').value)||0, parseInt(document.getElementById('cx-p2').value)||0, parseInt(document.getElementById('cx-p3').value)||0],
             rp_tm: parseInt(document.getElementById('rp-tm').value) || 8,
             rp_p: parseInt(document.getElementById('rp-p1').value) || 100
         };
-        db.collection('sistema').doc('minigames').set(cfg, {merge:true}).then(()=>{ window.GAME_CFG = cfg; pop("Perfeito!", "As regras e XPs dos Minigames foram atualizadas."); });
+        db.collection('sistema').doc('minigames').set(cfg, {merge:true}).then(()=>{ window.GAME_CFG = cfg; montarRoletaVisual(); pop("Perfeito!", "As regras dos Minigames foram atualizadas."); });
     }
 
-    // QUIZ (Com imagens arrumadas)
+    // QUIZ (COMPLETO E COM VIBRAÇÃO)
     function play(nivel){
       document.getElementById('app-main').style.display = 'none'; document.getElementById('t-play').style.display = 'flex'; document.getElementById('q-box').innerHTML = '<h2 style="text-align:center">Buscando perguntas...</h2>';
       db.collection('perguntas').where('nivel', '==', nivel).where('status', '==', 'ATIVA').get().then((snap) => {
@@ -538,16 +630,12 @@
     function runQ(l, i){
       if(i >= l.length){ pop("Excelente!", "Treino concluído com sucesso!"); sairJogo(); return; }
       let q = l[i], b = document.getElementById('q-box');
-      
-      // IMAGEM DO ENUNCIADO AGORA APARECE AQUI!
       let imgEnunciadoHtml = q.imagem ? `<img src="${q.imagem}" onerror="this.style.display='none'" style="max-height:180px; width:100%; object-fit:contain; border-radius:15px; margin-bottom:20px; box-shadow:0 5px 15px rgba(0,0,0,0.3);">` : '';
-      
       let html = `${imgEnunciadoHtml}<div style="text-align:center; font-size:24px; font-weight:800; margin-bottom:30px;">${q.enunciado}</div>`;
       ['A','B','C','D'].forEach(function(o){
         if(q.opcoes && (q.opcoes[o] || q.opcoes[o+'_img'])) {
           let innerContent = "";
           if(q.opcoes[o]) innerContent += `<span>${q.opcoes[o]}</span>`;
-          // IMAGEM DA OPÇÃO AQUI!
           if(q.opcoes[o+'_img']) innerContent += `<img src="${q.opcoes[o+'_img']}" onerror="this.style.display='none'" style="max-height:80px; border-radius:10px; display:block; margin-top:10px;">`;
           html += `<div class="opt-btn" onclick="chk('${o}'=='${q.correta}',this,${i})"><b style="color:var(--primary);font-size:20px;margin-right:10px;">${o})</b> ${innerContent}</div>`;
         }
