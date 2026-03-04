@@ -875,6 +875,18 @@
     firebase.initializeApp(firebaseConfig); const secondaryApp = firebase.initializeApp(firebaseConfig, "Secondary");
     const auth = firebase.auth(); const db = firebase.firestore();
     
+    // ATIVA A SINCRONIZAÇÃO OFFLINE DO FIREBASE
+    db.enablePersistence().catch(err => { console.log("Erro Offline:", err.code); });
+
+    // REGISTRA O INSTALADOR DO APLICATIVO
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').then(() => {
+          console.log('App pronto para instalação e uso Offline!');
+        });
+      });
+    }
+    
     let U = null; window.TMR = null; window.LS = []; window.DESAFIO_ATUAL = null; window.PAPEL_ATUAL = null;
     window.GAME_CFG = { rl_tm: 12, rl_p: [0, 50, 0, 100, 0, 200, 0, 500], cx_tm: 12, cx_p: [0, 50, 200], cx_t: ["Azar!", "Bom!", "Jackpot!"], rp_tm: 8, rp_p: 100 };
     window.STORE_ITEMS = []; window.ANUNCIO_MOSTRADO = false;
@@ -1120,4 +1132,5 @@
   </script>
 </body>
 </html>
+
 
