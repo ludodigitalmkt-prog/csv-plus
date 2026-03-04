@@ -11,30 +11,14 @@
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
   <style>
-    /* ==========================================
-       TEMA E VARIÁVEIS GLOBAIS
-       ========================================== */
+    /* TEMA E VARIÁVEIS GLOBAIS */
     :root {
-      --bg-color: #f0f2f5; 
-      --text-color: #2d3436; 
-      --glass-bg: rgba(255, 255, 255, 0.6); 
-      --glass-border: rgba(255, 255, 255, 0.3); 
-      --glass-shadow: rgba(0, 0, 0, 0.05);
-      --primary: #6c5ce7; 
-      --secondary: #fd79a8; 
-      --accent: #00b894; 
-      --danger: #d63031; 
-      --success: #00cec9;
+      --bg-color: #f0f2f5; --text-color: #2d3436; --glass-bg: rgba(255, 255, 255, 0.6); --glass-border: rgba(255, 255, 255, 0.3); --glass-shadow: rgba(0, 0, 0, 0.05);
+      --primary: #6c5ce7; --secondary: #fd79a8; --accent: #00b894; --danger: #d63031; --success: #00cec9;
     }
-    
     [data-theme="dark"] {
-      --bg-color: #0f172a; 
-      --text-color: #f1f5f9; 
-      --glass-bg: rgba(30, 41, 59, 0.7); 
-      --glass-border: rgba(255, 255, 255, 0.1); 
-      --glass-shadow: rgba(0, 0, 0, 0.3);
-      --primary: #81ecec; 
-      --secondary: #a29bfe;
+      --bg-color: #0f172a; --text-color: #f1f5f9; --glass-bg: rgba(30, 41, 59, 0.7); --glass-border: rgba(255, 255, 255, 0.1); --glass-shadow: rgba(0, 0, 0, 0.3);
+      --primary: #81ecec; --secondary: #a29bfe;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; outline: none; -webkit-tap-highlight-color: transparent; font-family: 'Poppins', sans-serif; }
@@ -43,9 +27,7 @@
     .bg-anim { position: fixed; top: -50%; left: -50%; width: 200%; height: 200%; z-index: -1; background: radial-gradient(circle, var(--primary) 0%, transparent 20%), radial-gradient(circle, var(--secondary) 0%, transparent 20%); background-size: 100vw 100vh; background-position: 0 0, 50vw 50vh; opacity: 0.1; animation: bgFloat 30s linear infinite; pointer-events: none; }
     @keyframes bgFloat { 100% { transform: rotate(360deg); } }
 
-    /* ==========================================
-       SPLASH SCREEN (INTRO) E LOGIN
-       ========================================== */
+    /* SPLASH E LOGIN */
     #splash { position: fixed; inset: 0; background: #050505; z-index: 10000; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.5s ease; }
     .logo-3d { font-size: 70px; font-weight: 900; color: transparent; -webkit-text-stroke: 2px var(--primary); animation: pulse3D 2s infinite alternate, float3D 3s infinite ease-in-out; text-shadow: 0 10px 40px var(--primary); letter-spacing: 5px; }
     @keyframes pulse3D { 0% { transform: scale(1) perspective(500px) rotateX(15deg) rotateY(-10deg); } 100% { transform: scale(1.1) perspective(500px) rotateX(-5deg) rotateY(10deg); } }
@@ -56,14 +38,11 @@
     .splash-txt { color: #fff; opacity: 0.5; margin-top: 15px; font-size: 12px; font-weight: bold; letter-spacing: 2px; animation: blink 1s infinite; }
     @keyframes blink { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
 
-    /* Login Consertado e Centralizado */
     #t-login { position: fixed; inset: 0; z-index: 9999; display: none; flex-direction: column; justify-content: center; align-items: center; padding: 20px; background: var(--bg-color); }
     .login-box { max-width: 400px; width: 100%; text-align: center; padding: 40px 30px; border-radius: 24px; background: var(--glass-bg); backdrop-filter: blur(16px); border: 1px solid var(--glass-border); box-shadow: 0 15px 35px var(--glass-shadow); animation: fadeUp 0.8s ease; }
     .logo-login { width: 100px; height: 100px; border-radius: 25px; background: linear-gradient(45deg, var(--primary), var(--secondary)); display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; color: white; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
 
-    /* ==========================================
-       COMPONENTES GERAIS (BOTÕES, INPUTS, CARDS)
-       ========================================== */
+    /* COMPONENTES GERAIS */
     .glass-card { background: var(--glass-bg); backdrop-filter: blur(16px); border: 1px solid var(--glass-border); box-shadow: 0 8px 32px var(--glass-shadow); border-radius: 24px; padding: 20px; }
     .btn { width: 100%; padding: 16px; border-radius: 16px; border: none; background: linear-gradient(135deg, var(--primary), var(--secondary)); color: #fff; font-weight: 800; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
     .btn:active { transform: scale(0.95); box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
@@ -77,7 +56,6 @@
     .view.active { display: flex; animation: fadeUp 0.4s ease; }
     @keyframes fadeUp { from {opacity:0; transform:translateY(20px);} to {opacity:1; transform:translateY(0);} }
 
-    /* Barra de Navegação */
     .nav-bar-wrapper { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); width: 95%; max-width: 500px; border-radius: 35px; overflow-x: auto; overflow-y: hidden; white-space: nowrap; padding: 5px 0; z-index: 40;}
     .nav-bar { display: inline-flex; justify-content: space-between; align-items: center; padding: 0 15px; min-width: 100%; height: 60px; gap: 25px; }
     .nav-bar-wrapper::-webkit-scrollbar { display: none; }
@@ -85,16 +63,12 @@
     .nav-btn.active { opacity: 1; color: var(--primary); transform: translateY(-5px); }
     .nav-btn span { font-size: 26px; margin-bottom: 2px; }
 
-    /* Botão Admin Flutuante (Restaurado) */
     .fab-admin { position: fixed; bottom: 100px; right: 20px; width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(45deg, var(--danger), #ff7675); color: white; display: none; align-items: center; justify-content: center; box-shadow: 0 10px 25px rgba(214, 48, 49, 0.5); cursor: pointer; z-index: 100; transition: 0.3s; border: 2px solid white; }
     .fab-admin:hover { transform: scale(1.1) rotate(45deg); }
 
-    /* ==========================================
-       SISTEMA DE RANKS E AVATARES
-       ========================================== */
+    /* RANKS E AVATARES */
     .u-av { width: 50px; height: 50px; border-radius: 18px; background: var(--primary); overflow: hidden; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 5px 15px rgba(0,0,0,0.1); cursor: pointer; color:white; font-weight:bold; position: relative; border: 3px solid transparent; transition: 0.3s; }
     .u-av img { width: 100%; height: 100%; object-fit: cover; }
-    
     .rank-normal { border-color: transparent; }
     .rank-prata { border-color: #bdc3c7; box-shadow: 0 0 15px #bdc3c7; }
     .rank-ouro { border-color: #f1c40f; box-shadow: 0 0 20px #f1c40f; }
@@ -106,7 +80,6 @@
     .p-block { width: 100%; border-radius: 15px 15px 5px 5px; display: flex; justify-content: center; align-items: flex-end; padding-bottom: 10px; font-weight: 900; color: white; box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
     .p1 .p-block { height: 140px; background: linear-gradient(to top, #f1c40f, #f39c12); } .p2 .p-block { height: 100px; background: linear-gradient(to top, #bdc3c7, #95a5a6); } .p3 .p-block { height: 70px; background: linear-gradient(to top, #cd6133, #d35400); }
     
-    /* Loja */
     .store-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
     .store-item { background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 20px; padding: 15px; text-align: center; display: flex; flex-direction: column; align-items: center; }
     .store-img { width: 80px; height: 80px; border-radius: 15px; object-fit: cover; margin-bottom: 10px; border: 2px solid var(--primary); }
@@ -114,9 +87,7 @@
     .store-btn { padding: 8px 15px; border-radius: 10px; border: none; background: var(--primary); color: white; font-weight: bold; cursor: pointer; width: 100%; transition: 0.2s; }
     .store-btn.owned { background: var(--success); }
 
-    /* ==========================================
-       TELAS DE JOGOS E EFEITOS
-       ========================================== */
+    /* TELAS DE JOGOS */
     .lvl-box { position: relative; width: 100%; height: 120px; border-radius: 24px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; padding: 25px; cursor: pointer; overflow: hidden; color: white; box-shadow: 0 10px 20px rgba(0,0,0,0.1); transition: 0.3s; }
     .lvl-box:active { transform: scale(0.96); }
     .lvl-box.facil { background: linear-gradient(135deg, #00b894, #55efc4); } .lvl-box.medio { background: linear-gradient(135deg, #fdcb6e, #ffeaa7); color: #2d3436; } .lvl-box.dificil { background: linear-gradient(135deg, #d63031, #ff7675); }
@@ -125,38 +96,30 @@
     .game-card:active { transform: scale(0.95); }
     .game-icon { width: 60px; height: 60px; border-radius: 20px; background: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; font-size: 30px; }
 
-    /* ROLETA */
+    /* ROLETA, CAIXAS, RASPADINHA */
     .wheel-container { position: relative; width: 280px; height: 280px; margin: 40px auto; }
     .wheel { width: 100%; height: 100%; border-radius: 50%; border: 8px solid var(--primary); position: relative; overflow: hidden; transition: transform 4s cubic-bezier(0.2, 0.9, 0.2, 1); box-shadow: 0 0 30px rgba(0,0,0,0.5), inset 0 0 20px rgba(0,0,0,0.5); background: conic-gradient(var(--primary) 0deg 45deg, var(--secondary) 45deg 90deg, var(--primary) 90deg 135deg, var(--secondary) 135deg 180deg, var(--primary) 180deg 225deg, var(--secondary) 225deg 270deg, var(--primary) 270deg 315deg, var(--secondary) 315deg 360deg); }
     .wheel-text { position: absolute; width: 100%; height: 100%; text-align: center; padding-top: 15px; font-weight: 900; font-size: 14px; color: white; text-shadow: 1px 1px 3px black; box-sizing: border-box; transform-origin: center; pointer-events: none; z-index: 2; }
     .wheel-marker { position: absolute; top: -20px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 15px solid transparent; border-right: 15px solid transparent; border-top: 30px solid #fff; z-index: 10; filter: drop-shadow(0 4px 5px rgba(0,0,0,0.6)); }
     .wheel-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 70px; height: 70px; background: var(--bg-color); border-radius: 50%; border: 4px solid var(--primary); z-index: 5; display: flex; justify-content: center; align-items: center; box-shadow: 0 0 15px rgba(0,0,0,0.5); cursor: pointer; font-weight: 900; color: var(--text-color); font-size: 14px; }
 
-    /* 4 CAIXAS MISTERIOSAS (Consertado) */
     .boxes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 250px; margin: 30px auto; perspective: 1000px; }
     .m-box { width: 100px; height: 100px; background: linear-gradient(45deg, var(--accent), #00cec9); border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 40px; color: white; cursor: pointer; transition: 0.5s; box-shadow: 0 10px 20px rgba(0,0,0,0.3); animation: float3D 3s infinite ease-in-out; position: relative;}
     .m-box:hover { transform: scale(1.1); }
     .m-box.opened { background: var(--primary); transform: scale(1.1) rotateY(180deg); animation: none; z-index: 10;}
     .m-box.disabled { filter: grayscale(100%); opacity: 0.5; pointer-events: none; animation: none; }
     
-    /* RASPADINHA */
     .scratch-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 30px; }
     .scratch-card { height: 100px; background: linear-gradient(135deg, #7f8c8d, #95a5a6); border-radius: 15px; display: flex; align-items: center; justify-content: center; color: transparent; font-weight: 900; font-size: 30px; cursor: pointer; transition: 0.4s; box-shadow: inset 0 0 10px rgba(0,0,0,0.3); background-image: repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(0,0,0,0.1) 5px, rgba(0,0,0,0.1) 10px); }
     .scratch-card.revealed { background: var(--glass-bg); color: var(--text-color); box-shadow: 0 5px 15px var(--glass-shadow); transform: scale(1.05); background-image: none; }
     .scratch-card.match { background: var(--success); color: white; animation: pulseDiamante 1s infinite alternate; }
 
-    /* ==========================================
-       QUIZ E TIPOS DE PERGUNTAS (RESTAURADOS)
-       ========================================== */
+    /* QUIZ TIPOS */
     #t-play { position: fixed; inset:0; background: var(--bg-color); z-index:300; display:none; flex-direction:column; padding: 20px; overflow-y:auto;}
     .opt-btn { background: var(--glass-bg); backdrop-filter: blur(10px); padding: 20px; border-radius: 20px; margin-bottom: 15px; border: 2px solid var(--glass-border); font-weight: bold; cursor: pointer; transition: 0.2s; box-shadow: 0 4px 10px var(--glass-shadow); color: var(--text-color);}
-    
-    /* Balões (Complete a frase) */
     .balloon { width: 110px; height: 110px; border-radius: 50%; background: var(--glass-bg); border: 2px solid var(--glass-border); display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--text-color); font-weight: 800; text-align: center; padding: 10px; cursor: pointer; box-shadow: 0 10px 20px var(--glass-shadow); animation: floatBalloon 3s ease-in-out infinite; backdrop-filter: blur(10px); transition: 0.2s;}
     .balloon:active { transform: scale(0.9) !important; }
     @keyframes floatBalloon { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-
-    /* Flashcards Mágicos */
     .flashcard { position: relative; aspect-ratio: 1; perspective: 1000px; cursor: pointer; }
     .flashcard .front, .flashcard .back { width: 100%; height: 100%; position: absolute; top: 0; left: 0; backface-visibility: hidden; border-radius: 15px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 16px; font-weight: 800; box-shadow: 0 5px 15px var(--glass-shadow); transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1); padding: 10px; text-align: center; background: var(--glass-bg); border: 1px solid var(--glass-border); backdrop-filter: blur(10px); color: var(--text-color);}
     .flashcard .back { transform: rotateY(180deg); color: #fff; }
@@ -166,9 +129,7 @@
     .xp-float { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 60px; font-weight: 900; z-index: 999999; animation: floatAnim 1.5s forwards; text-shadow: 0 5px 20px rgba(0,0,0,0.5); pointer-events: none; }
     .xp-float.win { color: var(--success); } .xp-float.lose { color: var(--danger); }
 
-    /* ==========================================
-       CHAT E ADMIN
-       ========================================== */
+    /* CHAT E ADMIN */
     .chat-list { flex: 1; overflow-y: auto; padding-right: 5px; display: flex; flex-direction: column; gap: 15px; margin-bottom: 15px;}
     .c-msg { display: flex; gap: 10px; align-items: flex-end; max-width: 85%; } .c-msg.me { align-self: flex-end; flex-direction: row-reverse; }
     .c-bub { background: var(--glass-bg); border: 1px solid var(--glass-border); padding: 12px 16px; border-radius: 20px 20px 20px 0; font-size: 14px; box-shadow: 0 4px 10px var(--glass-shadow); }
@@ -241,7 +202,7 @@
 
     <div id="v-store" class="view">
       <h2 style="font-size:24px; font-weight:900;">Loja de Avatares</h2>
-      <p style="font-size:12px; opacity:0.7; margin-bottom: 10px;">Use seu XP para liberar novos visuais. A borda muda com o Rank!</p>
+      <p style="font-size:12px; opacity:0.7; margin-bottom: 10px;">Use seu XP para liberar novos visuais.</p>
       <div id="store-list" class="store-grid"></div>
     </div>
 
@@ -269,7 +230,9 @@
         <div id="p-rank-name" style="font-size:12px; font-weight:900; letter-spacing:1px; margin-bottom:15px; color:var(--primary); text-transform:uppercase;">INICIANTE</div>
         <h2 id="p-name" style="font-size:24px;margin-bottom:5px">Nome</h2>
         <h3 id="p-xp" style="color:var(--primary);font-size:20px;font-weight:900;margin-bottom:20px;">0 XP</h3>
-        <label style="font-size:12px; opacity:0.7; display:block; text-align:left; margin-bottom:5px; font-weight:bold; color:var(--primary);">SUA FRASE DE STATUS (Aparece no Ranking)</label>
+        <label style="font-size:12px; opacity:0.7; display:block; text-align:left; margin-bottom:5px; font-weight:bold; color:var(--primary);">LINK DA FOTO DE PERFIL</label>
+        <input id="pf-av" class="inp" placeholder="Cole o link ou compre na loja">
+        <label style="font-size:12px; opacity:0.7; display:block; text-align:left; margin-bottom:5px; font-weight:bold; color:var(--primary);">SUA FRASE DE STATUS</label>
         <input id="pf-frase" class="inp" placeholder="Ex: Cuidado, estou subindo!">
         <button class="btn" onclick="savePerf()" style="margin-bottom:15px;">SALVAR ALTERAÇÕES</button>
         <button class="btn" onclick="location.reload()" style="background:transparent; color:var(--danger); border:2px solid var(--danger); box-shadow:none;">SAIR DO SISTEMA</button>
@@ -307,15 +270,8 @@
   <div id="t-caixa" style="position:fixed;top:0;left:0;width:100%;height:100%;background:var(--bg-color);z-index:300;display:none;flex-direction:column;padding:20px;">
     <div class="glass-card" onclick="sairMinigame()" style="padding:10px; border-radius:15px; cursor:pointer; width:max-content;"><span class="material-icons-round">arrow_back</span></div>
     <h2 style="text-align:center; font-size:28px; margin-top:20px;">Baú Misterioso</h2>
-    <p style="text-align:center; opacity:0.7;">Escolha UMA das 4 caixas com sabedoria!</p>
-    
-    <div class="boxes-grid" id="box-grid">
-       <div class="m-box" onclick="abrirCaixa(this)"><span class="material-icons-round">help_outline</span></div>
-       <div class="m-box" onclick="abrirCaixa(this)"><span class="material-icons-round">help_outline</span></div>
-       <div class="m-box" onclick="abrirCaixa(this)"><span class="material-icons-round">help_outline</span></div>
-       <div class="m-box" onclick="abrirCaixa(this)"><span class="material-icons-round">help_outline</span></div>
-    </div>
-
+    <p style="text-align:center; opacity:0.7;">Escolha UMA das 4 caixas!</p>
+    <div class="boxes-grid" id="box-grid"></div>
     <div id="caixa-msg" style="text-align:center; margin-top:20px; font-weight:900; color:var(--primary); font-size:24px;"></div>
     <div id="caixa-sub" style="text-align:center; opacity:0.8; font-size:14px; margin-top:5px;"></div>
   </div>
@@ -343,33 +299,35 @@
          <span class="material-icons-round" style="cursor:pointer;font-size:30px" onclick="document.getElementById('mod-adm').style.display='none'">close</span>
       </div>
       <div class="adm-tabs">
+        <div id="tb-u" class="adm-tab" onclick="tab('u')">USUÁRIOS</div>
         <div id="tb-q" class="adm-tab active" onclick="tab('q')">PERGUNTAS</div>
         <div id="tb-r" class="adm-tab" onclick="tab('r')">JOGOS</div>
         <div id="tb-l" class="adm-tab" onclick="tab('l')">LOJA</div>
         <div id="tb-m" class="adm-tab" onclick="tab('m')">MÚSICAS</div>
       </div>
       
+      <div id="adm-u" class="adm-view">
+        <h3 style="color:var(--primary); margin-bottom:10px;">CRIAR NOVO COLABORADOR</h3>
+        <p style="font-size:12px; opacity:0.8; margin-bottom:15px;">Isso cria o usuário sem deslogar você da conta Admin!</p>
+        <input id="cad-nome" class="inp" placeholder="Nome do Funcionário">
+        <input id="cad-email" class="inp" type="email" placeholder="E-mail Corporativo">
+        <div class="row-grid">
+           <input id="cad-senha" class="inp" value="Ludo@2026" placeholder="Senha">
+           <select id="cad-nivel" class="inp"><option value="USER">USER (Comum)</option><option value="ADMIN">ADMIN</option></select>
+        </div>
+        <button class="btn" onclick="cadastrarUsuarioPeloAdmin()">CRIAR USUÁRIO</button>
+        <div id="cad-msg" style="margin-top:15px; font-size:12px; font-weight:bold; color:var(--success);"></div>
+      </div>
+
       <div id="adm-q" class="adm-view active">
         <input type="hidden" id="q-id">
-        <div class="row-grid">
-          <select id="q-n" class="inp">
-            <option value="FACIL">FÁCIL</option>
-            <option value="MEDIO">MÉDIO</option>
-            <option value="DIFICIL">DIFÍCIL</option>
-          </select>
-          <select id="q-t" class="inp">
-            <option value="MULTIPLA">Múltipla Escolha</option>
-            <option value="COMPLETE">Balões (Complete a Frase)</option>
-            <option value="FLASHCARD">Cartões Mágicos (Vidro)</option>
-          </select>
-        </div>
+        <div class="row-grid"><select id="q-n" class="inp"><option value="FACIL">FÁCIL</option><option value="MEDIO">MÉDIO</option><option value="DIFICIL">DIFÍCIL</option></select><select id="q-t" class="inp"><option value="MULTIPLA">Múltipla Escolha</option><option value="COMPLETE">Balões (Complete a Frase)</option><option value="FLASHCARD">Cartões Mágicos (Vidro)</option></select></div>
         <input id="q-e" class="inp" placeholder="Enunciado da Pergunta">
         <input id="q-i" class="inp" placeholder="URL da Imagem de Fundo (Opcional)">
         <div class="row-grid"><input id="q-w" class="inp" type="number" placeholder="XP Acerto"><input id="q-l" class="inp" type="number" placeholder="XP Erro"><input id="q-tm" class="inp" type="number" placeholder="Tempo"></div>
         <div class="glass-card" style="margin-bottom:15px;">
-           <label style="color:var(--primary);font-size:12px;font-weight:bold;margin-bottom:10px;display:block">INFORME AS OPÇÕES (P/ Balões, use os Textos)</label>
+           <label style="color:var(--primary);font-size:12px;font-weight:bold;margin-bottom:10px;display:block">INFORME AS OPÇÕES</label>
            <div class="row-grid"><input id="oa" class="inp" placeholder="Texto A"><input id="oai" class="inp" placeholder="Img A"></div><div class="row-grid"><input id="ob" class="inp" placeholder="Texto B"><input id="obi" class="inp" placeholder="Img B"></div><div class="row-grid"><input id="oc" class="inp" placeholder="Texto C"><input id="oci" class="inp" placeholder="Img C"></div><div class="row-grid"><input id="od" class="inp" placeholder="Texto D"><input id="odi" class="inp" placeholder="Img D"></div>
-           <label style="color:var(--primary);font-size:12px;font-weight:bold;margin-bottom:10px;display:block">RESPOSTA CORRETA</label>
            <select id="q-c-sel" class="inp" style="margin-bottom:0"><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option></select>
         </div>
         <button class="btn" onclick="saveQ()">GUARDAR PERGUNTA</button>
@@ -392,18 +350,15 @@
       </div>
 
       <div id="adm-l" class="adm-view">
-        <p style="font-size:12px; opacity:0.8;">Cadastre fotos para a loja. Ex: Links do Google Imagens (Disney, Filmes).</p>
         <input id="lj-img" class="inp" placeholder="URL da Imagem (.png/.jpg)">
-        <input id="lj-nome" class="inp" placeholder="Nome do Avatar (Ex: Princesa)">
-        <input id="lj-preco" class="inp" type="number" placeholder="Preço em XP (Ex: 500)">
+        <input id="lj-nome" class="inp" placeholder="Nome do Avatar">
+        <input id="lj-preco" class="inp" type="number" placeholder="Preço XP">
         <button class="btn" onclick="saveLoja()">ADICIONAR À LOJA</button>
         <div id="adm-loja-list" style="margin-top:20px;"></div>
       </div>
-
       <div id="adm-m" class="adm-view">
-        <p style="font-size:12px; opacity:0.8;">Cole links diretos de MP3 (Pixabay, etc) para a Rádio.</p>
-        <input id="mu-nome" class="inp" placeholder="Nome da Música (Ex: Foco Total)">
-        <input id="mu-url" class="inp" placeholder="URL do arquivo .mp3">
+        <input id="mu-nome" class="inp" placeholder="Nome da Música">
+        <input id="mu-url" class="inp" placeholder="URL .mp3">
         <button class="btn" onclick="saveMusic()">ADICIONAR MÚSICA</button>
         <div id="adm-mu-list" style="margin-top:20px;"></div>
       </div>
@@ -415,18 +370,20 @@
   <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
 
   <script>
-    // INTRO LOGIC
     window.addEventListener('load', () => { setTimeout(() => { document.getElementById('splash').style.opacity = '0'; setTimeout(() => { document.getElementById('splash').style.display = 'none'; document.getElementById('t-login').style.display = 'flex'; }, 500); }, 3500); });
 
     const firebaseConfig = { apiKey: "AIzaSyBiHQQdfL4X88KEZUMvZS-WP0z2viR-ZHY", authDomain: "csvplus-62502.firebaseapp.com", projectId: "csvplus-62502", storageBucket: "csvplus-62502.firebasestorage.app", messagingSenderId: "879590605354", appId: "1:879590605354:web:368cd1fdc1f1e35ca77953" };
+    
+    // INICIALIZAÇÃO DOS 2 APPS (O Truque Ninja para cadastrar usuários)
     firebase.initializeApp(firebaseConfig);
+    const secondaryApp = firebase.initializeApp(firebaseConfig, "Secondary");
+    
     const auth = firebase.auth(); const db = firebase.firestore();
     
     let U = null; window.TMR = null; window.LS = [];
     window.GAME_CFG = { rl_tm: 12, rl_p: [0, 50, 0, 100, 0, 200, 0, 500], cx_tm: 12, cx_p: [0, 50, 200], cx_t: ["Que pena!", "Bom!", "Jackpot!"], rp_tm: 8, rp_p: 100 };
     window.STORE_ITEMS = []; window.MUSIC_LIST = [];
 
-    // EFEITOS SONOROS 
     const sfxWin = new Audio('https://cdn.pixabay.com/download/audio/2021/08/04/audio_0625c1539c.mp3');
     const sfxLose = new Audio('https://cdn.pixabay.com/download/audio/2021/08/09/audio_9bc3fb3b1b.mp3');
     const sfxMagic = new Audio('https://cdn.pixabay.com/download/audio/2022/03/10/audio_c8c8a73467.mp3'); 
@@ -440,15 +397,11 @@
     const savedTheme = localStorage.getItem('csv_theme') || 'dark'; document.body.setAttribute('data-theme', savedTheme);
     function triggerVibration(type) { if (!("vibrate" in navigator)) return; if (type === 'win') window.navigator.vibrate([100, 50, 100]); else if (type === 'lose') window.navigator.vibrate([300]); }
 
-    // SISTEMA DE RANKS (BORDAS E NOMES)
     function getRankObj(xp) {
-        if(xp < 500) return {c: 'rank-normal', n: 'Iniciante'};
-        if(xp < 2000) return {c: 'rank-prata', n: 'Prata'};
-        if(xp < 5000) return {c: 'rank-ouro', n: 'Ouro'};
-        return {c: 'rank-diamante', n: 'Diamante'};
+        if(xp < 500) return {c: 'rank-normal', n: 'Iniciante'}; if(xp < 2000) return {c: 'rank-prata', n: 'Prata'};
+        if(xp < 5000) return {c: 'rank-ouro', n: 'Ouro'}; return {c: 'rank-diamante', n: 'Diamante'};
     }
 
-    // LOGIN COM PROTEÇÃO ADMIN
     function acaoLogin(){
       let email = document.getElementById('u').value.trim(); let senha = document.getElementById('s').value;
       let btn = document.getElementById('btn-login'); let msg = document.getElementById('login-msg');
@@ -463,34 +416,50 @@
               
               document.getElementById('t-login').style.display = 'none'; document.getElementById('app-main').style.display = 'flex'; 
               updUI(); 
-              
-              // Proteção Maiúscula/Minúscula para o Admin aparecer
               if(U.nivel && U.nivel.toUpperCase() === 'ADMIN') document.getElementById('fab-adm').style.display = 'flex'; 
             } else { msg.innerText = "Perfil não criado."; btn.innerText = "ENTRAR"; }
           });
         }).catch(() => { msg.innerText = "Falha no Login."; btn.innerText = "ENTRAR"; });
     }
 
+    // CADASTRO PELO ADMIN COM CLONE APP
+    function cadastrarUsuarioPeloAdmin() {
+       let nome = document.getElementById('cad-nome').value.trim();
+       let email = document.getElementById('cad-email').value.trim();
+       let senha = document.getElementById('cad-senha').value;
+       let nivel = document.getElementById('cad-nivel').value;
+       let msg = document.getElementById('cad-msg');
+
+       if(!nome || !email || !senha) { msg.style.color = 'var(--danger)'; msg.innerText = "Preencha todos os campos!"; return; }
+       msg.style.color = 'var(--primary)'; msg.innerText = "A criar usuário de forma segura...";
+
+       secondaryApp.auth().createUserWithEmailAndPassword(email, senha)
+       .then((cred) => {
+           db.collection('usuarios').doc(cred.user.uid).set({
+               nome: nome, xp: 0, nivel: nivel, frase: "", avatar: "", inventario: []
+           }).then(() => {
+               secondaryApp.auth().signOut(); 
+               document.getElementById('cad-nome').value = ''; document.getElementById('cad-email').value = '';
+               msg.style.color = 'var(--success)'; msg.innerText = "Sucesso! Usuário criado.";
+               pop("Pronto!", "O colaborador já pode fazer login!");
+           });
+       }).catch(error => { msg.style.color = 'var(--danger)'; msg.innerText = "Erro: " + error.message; });
+    }
+
     function updUI(){
       document.getElementById('h-nome').innerText = U.nome.split(' ')[0]; document.getElementById('h-xp').innerText = U.xp + " XP";
       document.getElementById('p-name').innerText = U.nome; document.getElementById('p-xp').innerText = U.xp + " XP";
       document.getElementById('pf-frase').value = U.frase || ''; 
-      
-      let rank = getRankObj(U.xp);
-      document.getElementById('p-rank-name').innerText = rank.n;
-      
+      let rank = getRankObj(U.xp); document.getElementById('p-rank-name').innerText = rank.n;
       let fotoHTML = U.avatar ? `<img src="${U.avatar}" onerror="this.src='https://api.dicebear.com/7.x/bottts/svg?seed=${U.nome}'">` : `<img src="https://api.dicebear.com/7.x/bottts/svg?seed=${U.nome}">`;
-      
       let hav = document.getElementById('h-av'); hav.innerHTML = fotoHTML; hav.className = `u-av ${rank.c}`;
       let pav = document.getElementById('p-av'); pav.innerHTML = fotoHTML; pav.className = `u-av ${rank.c}`;
     }
 
     function savePerf(){ 
       let novaFrase = document.getElementById('pf-frase').value; let novoAvatar = document.getElementById('pf-av').value.trim();
-      if(novoAvatar && !U.inventario.includes(novoAvatar) && !novoAvatar.includes('dicebear')) {
-          pop("Atenção", "Para usar fotos personalizadas, você deve comprá-las na Loja primeiro!"); return;
-      }
-      db.collection('usuarios').doc(U.id).update({ frase: novaFrase }).then(() => { U.frase = novaFrase; updUI(); pop("Sucesso!", "Perfil atualizado!"); });
+      if(novoAvatar && !U.inventario.includes(novoAvatar) && !novoAvatar.includes('dicebear')) { pop("Atenção", "Para usar fotos personalizadas, você deve comprá-las na Loja primeiro!"); return; }
+      db.collection('usuarios').doc(U.id).update({ frase: novaFrase, avatar: novoAvatar }).then(() => { U.frase = novaFrase; U.avatar = novoAvatar; updUI(); pop("Sucesso!", "Perfil atualizado!"); });
     }
 
     function go(t, el){
@@ -518,43 +487,27 @@
       c.innerHTML += `<div class="p-col p${pos}"><div class="u-av ${r.c}" style="width:60px;height:60px;margin-bottom:10px;z-index:2">${av}</div><div class="p-block" style="position:relative;">${u.xp}<div style="position:absolute; top:-35px; width:120px; background:var(--glass-bg); backdrop-filter:blur(5px); color:var(--text-color); font-size:9px; padding:5px; border-radius:10px; text-align:center; font-weight:normal; border:1px solid var(--glass-border); display: ${u.frase ? 'block' : 'none'}">${u.frase}</div></div><div style="font-size:11px;margin-top:8px;font-weight:800;text-transform:uppercase">${u.nome.split(' ')[0]}</div></div>`;
     }
 
-    // CHAT MANTIDO
     let escutaChat = null; 
     function loadChat(){ if(escutaChat) escutaChat(); let b = document.getElementById('chat-msgs'); b.innerHTML = '<div style="text-align:center; padding:20px; opacity:0.5;">Conectando...</div>'; escutaChat = db.collection('chat').orderBy('data', 'asc').limit(50).onSnapshot((snap) => { b.innerHTML = ''; if(snap.empty) { b.innerHTML = '<div style="text-align:center; padding:20px; opacity:0.5;">Diga Olá!</div>'; } snap.forEach((doc) => { let m = doc.data(); let me = m.uid === U.id ? 'me' : ''; let r = getRankObj(m.xp||0); let av = m.av ? `<img src="${m.av}" onerror="this.style.display='none'">` : `<span class="material-icons-round">person</span>`; b.innerHTML += `<div class="c-msg ${me}"><div class="c-av u-av ${r.c}" style="width:35px;height:35px;font-size:20px;">${av}</div><div class="c-bub"><span style="font-size:10px;opacity:0.7;display:block;margin-bottom:3px;font-weight:bold;">${m.nome}</span>${m.msg}</div></div>`; }); b.scrollTop = b.scrollHeight; }); }
     function sendChat(){ let i = document.getElementById('c-txt'); let t = i.value.trim(); if(!t) return; i.value = ''; db.collection('chat').add({ uid: U.id, nome: U.nome, av: U.avatar || '', xp: U.xp, msg: t, data: firebase.firestore.FieldValue.serverTimestamp() }); }
 
-    // LOJA DE AVATARES
     function loadStoreItems() { db.collection('sistema').doc('loja').get().then(doc => { if(doc.exists) window.STORE_ITEMS = doc.data().itens || []; }); }
     function renderStore() {
-        let h = '';
-        let defaults = [ {n:'Robô Default', i:`https://api.dicebear.com/7.x/bottts/svg?seed=${U.id}`, p:0}, {n:'Humano Default', i:`https://api.dicebear.com/7.x/adventurer/svg?seed=${U.id}`, p:0} ];
+        let h = ''; let defaults = [ {n:'Robô Default', i:`https://api.dicebear.com/7.x/bottts/svg?seed=${U.id}`, p:0}, {n:'Humano Default', i:`https://api.dicebear.com/7.x/adventurer/svg?seed=${U.id}`, p:0} ];
         let allItems = defaults.concat(window.STORE_ITEMS);
-
         allItems.forEach((it, idx) => {
-            let owned = U.inventario.includes(it.i) || it.p === 0;
-            let isCurrent = U.avatar === it.i;
+            let owned = U.inventario.includes(it.i) || it.p === 0; let isCurrent = U.avatar === it.i;
             let btnHTML = isCurrent ? `<button class="store-btn" style="background:#555">EQUIPADO</button>` : (owned ? `<button class="store-btn owned" onclick="usarAvatar('${it.i}')">USAR</button>` : `<button class="store-btn" onclick="comprarAvatar('${it.i}', ${it.p})">COMPRAR (${it.p} XP)</button>`);
             h += `<div class="store-item"><img src="${it.i}" class="store-img"><div class="store-price">${it.n}</div>${btnHTML}</div>`;
-        });
-        document.getElementById('store-list').innerHTML = h;
+        }); document.getElementById('store-list').innerHTML = h;
     }
-    function comprarAvatar(url, preco) {
-        if(U.xp < preco) { pop("Saldo Insuficiente", "Você precisa jogar mais para comprar este avatar!"); return; }
-        U.xp -= preco; U.inventario.push(url); U.avatar = url;
-        db.collection("usuarios").doc(U.id).update({ xp: U.xp, inventario: U.inventario, avatar: url }).then(() => {
-            sfxMagic.play(); confetti({ particleCount: 100, spread: 70 }); updUI(); renderStore(); pop("Compra Aprovada!", "Novo visual equipado! Seu XP foi atualizado.");
-        });
-    }
+    function comprarAvatar(url, preco) { if(U.xp < preco) { pop("Saldo Insuficiente", "Jogue mais para comprar este avatar!"); return; } U.xp -= preco; U.inventario.push(url); U.avatar = url; db.collection("usuarios").doc(U.id).update({ xp: U.xp, inventario: U.inventario, avatar: url }).then(() => { sfxMagic.play(); confetti({ particleCount: 100, spread: 70 }); updUI(); renderStore(); pop("Compra Aprovada!", "Novo visual equipado! Seu XP foi atualizado."); }); }
     function usarAvatar(url) { U.avatar = url; db.collection("usuarios").doc(U.id).update({ avatar: url }).then(() => { updUI(); renderStore(); pop("Sucesso", "Visual atualizado!"); }); }
 
-    // MÚSICAS ADMIN E PLAYER
     function loadMusicList() { db.collection('sistema').doc('musicas').get().then(doc => { if(doc.exists) { let ms = doc.data().lista || []; let h = ''; ms.forEach(m => { h += `<div class="opt-btn" onclick="playMusic('${m.url}', this)">🎧 ${m.nome}</div>`; }); if(h) document.getElementById('music-list').innerHTML = h; } }); }
 
-    // ==========================================
-    // MINIGAMES: ROLETA, 4 CAIXAS, RASPADINHA
-    // ==========================================
+    // JOGOS DE SORTE
     let JOGANDO_MINI = false; let CAIXA_ABERTA = false; let ROL_CURRENT_ROTATION = 0;
-    
     function montarRoletaVisual() { let w = document.getElementById('wheel-el'); w.innerHTML = ''; let fatias = window.GAME_CFG.rl_p || [0,50,0,100,0,200,0,500]; for(let i=0; i<8; i++) { let val = fatias[i], txt = val == 0 ? 'AZAR' : '+' + val; let div = document.createElement('div'); div.className = 'wheel-text'; div.style.transform = `rotate(${i * 45 + 22.5}deg)`; div.innerText = txt; w.appendChild(div); } }
     function startRoletaGame() { document.getElementById('app-main').style.display = 'none'; document.getElementById('t-roleta').style.display = 'flex'; document.getElementById('roleta-msg').innerText = "Toque no centro para girar!"; document.getElementById('roleta-msg').style.color = "var(--text-color)"; JOGANDO_MINI = false; }
     
@@ -562,7 +515,6 @@
       document.getElementById('app-main').style.display = 'none'; document.getElementById('t-caixa').style.display = 'flex'; 
       document.getElementById('caixa-msg').innerText = ''; document.getElementById('caixa-sub').innerText = ''; 
       let grid = document.getElementById('box-grid'); grid.innerHTML = '';
-      // Cria as 4 caixas visualmente
       for(let i=0; i<4; i++) { grid.innerHTML += `<div class="m-box" onclick="abrirCaixa(this)"><span class="material-icons-round" style="font-size:40px;">inventory_2</span></div>`; }
       JOGANDO_MINI = false; CAIXA_ABERTA = false; 
     }
@@ -604,10 +556,7 @@
         if(JOGANDO_MINI || CAIXA_ABERTA) return; 
         checarCooldown('caixa', window.GAME_CFG.cx_tm || 12, (dados, agora) => {
             JOGANDO_MINI = true; CAIXA_ABERTA = true; sfxScratch.play(); 
-            
-            // Desativa as outras caixas visualmente
             document.querySelectorAll('.m-box').forEach(b => { if(b !== el) b.classList.add('disabled'); });
-            
             el.classList.add('shake');
             setTimeout(() => {
                sfxMagic.play(); el.classList.remove('shake'); el.classList.add('opened'); 
@@ -626,7 +575,6 @@
         let simbolos = ['⭐', '🔔', '🍒']; 
         let s = simbolos[Math.floor(Math.random() * simbolos.length)];
         el.innerText = s; window.RASPA_RES.push(s); window.RASPA_CLICKS++;
-
         if(window.RASPA_CLICKS === 4) {
             JOGANDO_MINI = true;
             checarCooldown('raspa', window.GAME_CFG.rp_tm || 8, (dados, agora) => {
@@ -634,16 +582,13 @@
                 let max = Math.max(...Object.values(counts));
                 let winSimbol = Object.keys(counts).find(key => counts[key] === max);
                 let premio = max >= 3 ? (window.GAME_CFG.rp_p || 100) : 0;
-                
                 if(premio > 0) { document.querySelectorAll('.scratch-card').forEach(c => { if(c.innerText === winSimbol) c.classList.add('match'); }); }
                 processarGanho('raspa', premio, dados, agora, document.getElementById('raspa-msg'));
             });
         }
     }
 
-    // ==========================================
-    // ADMIN E QUIZ
-    // ==========================================
+    // ADMIN 
     function abrirAdm(){ document.getElementById('mod-adm').style.display='flex'; tab('q'); }
     function tab(v){ document.querySelectorAll('.adm-tab').forEach(e => e.classList.remove('active')); document.querySelectorAll('.adm-view').forEach(e => e.classList.remove('active')); document.getElementById('tb-'+v).classList.add('active'); document.getElementById('adm-'+v).classList.add('active'); if(v === 'q') ldQ(); if(v === 'l') ldL(); if(v === 'm') ldM(); }
 
@@ -669,7 +614,7 @@
     function editQ(idx){ let q = window.G_QS[idx]; document.getElementById('q-id').value=q.id; document.getElementById('q-e').value=q.enunciado; document.getElementById('q-n').value=q.nivel; document.getElementById('q-t').value=q.tipo; document.getElementById('q-w').value=q.xpGanho||10; document.getElementById('q-l').value=q.xpPerda||5; document.getElementById('q-tm').value=q.tempo||30; document.getElementById('q-i').value=q.imagem||''; if(q.opcoes){ document.getElementById('oa').value=q.opcoes.A||''; document.getElementById('oai').value=q.opcoes.A_img||''; document.getElementById('ob').value=q.opcoes.B||''; document.getElementById('obi').value=q.opcoes.B_img||''; document.getElementById('oc').value=q.opcoes.C||''; document.getElementById('oci').value=q.opcoes.C_img||''; document.getElementById('od').value=q.opcoes.D||''; document.getElementById('odi').value=q.opcoes.D_img||''; } document.getElementById('q-c-sel').value=q.correta||'A'; tab('q'); }
     function delQ(id){ db.collection('perguntas').doc(id).delete().then(() => ldQ()); }
 
-    // QUIZ RENDER (Trata os Tipos Diferentes)
+    // QUIZ RENDER
     function play(nivel){ document.getElementById('app-main').style.display = 'none'; document.getElementById('t-play').style.display = 'flex'; document.getElementById('q-box').innerHTML = '<h2 style="text-align:center">Buscando perguntas...</h2>'; db.collection('perguntas').where('nivel', '==', nivel).where('status', '==', 'ATIVA').get().then((snap) => { let perguntas = []; snap.forEach(doc => perguntas.push(doc.data())); if(perguntas.length === 0){ pop("Fim", "Não há perguntas."); sairJogo(); return; } perguntas = perguntas.sort(() => 0.5 - Math.random()); runQ(perguntas, 0); }); }
     function runQ(l, i){
       if(i >= l.length){ pop("Excelente!", "Treino concluído com sucesso!"); sairJogo(); return; }
