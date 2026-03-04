@@ -15,28 +15,44 @@
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
   <style>
-    /* TEMA GAMER E VARIÁVEIS */
+    /* ==========================================
+       TEMA GAMER E VARIÁVEIS GLOBAIS
+       ========================================== */
     :root {
-      --bg-dark: #0B0E14; --bg-panel: #151A25; --border-dark: #222B3E;
-      --text-main: #FFFFFF; --text-muted: #6C7A89;
-      --gold: #FFC312; --gold-glow: rgba(255, 195, 18, 0.4);
-      --rare-blue: #0984E3; --epic-purple: #6C5CE7; --legendary-red: #D63031; --success-green: #00B894;
+      --bg-dark: #0B0E14; 
+      --bg-panel: #151A25; 
+      --border-dark: #222B3E;
+      --text-main: #FFFFFF; 
+      --text-muted: #6C7A89;
+      --gold: #FFC312; 
+      --gold-glow: rgba(255, 195, 18, 0.4);
+      --rare-blue: #0984E3; 
+      --epic-purple: #6C5CE7; 
+      --legendary-red: #D63031; 
+      --success-green: #00B894;
     }
+
     * { box-sizing: border-box; margin: 0; padding: 0; outline: none; -webkit-tap-highlight-color: transparent; font-family: 'Poppins', sans-serif; }
     body { background: var(--bg-dark); color: var(--text-main); height: 100dvh; overflow: hidden; display: flex; flex-direction: column; }
+    
     .bg-anim { position: fixed; inset: 0; z-index: -1; background: radial-gradient(circle at 50% 0%, #151A25 0%, #0B0E14 60%); }
 
-    /* BÁSICOS E BOTÕES */
+    /* ==========================================
+       COMPONENTES BÁSICOS
+       ========================================== */
     .glass-card { background: var(--bg-panel); border: 1px solid var(--border-dark); border-radius: 20px; padding: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
     .btn { width: 100%; padding: 16px; border-radius: 12px; border: none; background: linear-gradient(to right, #F8EFBA, #FFC312); color: #000; font-weight: 900; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; box-shadow: 0 5px 15px var(--gold-glow); display: flex; justify-content: center; align-items: center; gap: 10px;}
     .btn:active { transform: scale(0.96); box-shadow: 0 2px 5px rgba(255, 195, 18, 0.3); }
     .btn-sm { padding: 8px 12px; font-size: 11px; border-radius: 8px; font-weight: bold; cursor: pointer; border: none; color: white; text-transform: uppercase; text-align: center; transition: 0.2s;}
     .btn-sm:active { transform: scale(0.9); }
+    
     .inp { width: 100%; padding: 14px; border-radius: 12px; margin-bottom: 12px; font-weight: 600; background: #07090D; border: 1px solid var(--border-dark); color: var(--text-main); transition: 0.3s; font-size: 13px;}
     .inp:focus { border-color: var(--gold); box-shadow: 0 0 10px var(--gold-glow); }
     .adm-lbl { font-size: 10px; color: var(--gold); font-weight: 900; margin-bottom: 4px; display: block; text-transform: uppercase; letter-spacing: 1px; }
 
-    /* TELAS OVERLAY (LOGIN, SPLASH, POPUP) */
+    /* ==========================================
+       TELAS DE OVERLAY (INTRO E LOGIN)
+       ========================================== */
     #splash { position: fixed; inset: 0; background: var(--bg-dark); z-index: 10000; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.5s ease; }
     .logo-3d { font-size: 70px; font-weight: 900; color: transparent; -webkit-text-stroke: 2px var(--gold); animation: float3D 3s infinite ease-in-out; text-shadow: 0 0 30px var(--gold-glow); letter-spacing: 5px; }
     @keyframes float3D { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
@@ -44,17 +60,21 @@
     .cyber-fill { width: 0%; height: 100%; background: var(--gold); animation: fillBar 3s forwards cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 0 10px var(--gold); }
     @keyframes fillBar { 0% { width: 0%; } 50% { width: 60%; } 100% { width: 100%; } }
 
-    #t-login { position: fixed; inset: 0; z-index: 9999; display: none; flex-direction: column; justify-content: center; align-items: center; padding: 20px; background: var(--bg-dark); }
+    #t-login { position: fixed; inset: 0; background: var(--bg-dark); z-index: 9999; display: none; flex-direction: column; justify-content: center; align-items: center; padding: 20px; }
     .login-box { max-width: 380px; width: 100%; text-align: center; padding: 40px 30px; border-radius: 20px; background: var(--bg-panel); border: 1px solid var(--border-dark); box-shadow: 0 20px 40px rgba(0,0,0,0.5); animation: fadeUp 0.8s ease; }
     .logo-login { width: 90px; height: 90px; border-radius: 20px; background: linear-gradient(45deg, var(--gold), #ff9f43); display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; color: #000; box-shadow: 0 10px 25px var(--gold-glow);}
 
-    #ad-modal, #uni-pop, .adm-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 999999; display: none; justify-content: center; align-items: center; padding: 20px; backdrop-filter: blur(10px); }
+    /* POPUPS GENÉRICOS */
+    #ad-modal, #uni-pop, .adm-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 999999; display: none; justify-content: center; align-items: center; padding: 20px; backdrop-filter: blur(5px); }
     .ad-content { background: var(--bg-panel); border: 2px solid var(--gold); border-radius: 20px; padding: 30px; text-align: center; position: relative; max-width: 90vw; max-height: 85vh; overflow-y: auto; box-shadow: 0 0 50px var(--gold-glow); animation: pulse3D 2s infinite alternate;}
     .ad-close { position: absolute; top: 10px; right: 10px; background: var(--legendary-red); color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; cursor: pointer; border: none; }
 
-    /* LAYOUT PRINCIPAL */
+    /* ==========================================
+       LAYOUT PRINCIPAL E NAVEGAÇÃO
+       ========================================== */
     .app-container { width: 100%; height: 100%; position: relative; overflow: hidden; display: flex; flex-direction: column; }
     .top-header { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; background: var(--bg-panel); border-bottom: 1px solid var(--border-dark); z-index: 10; box-shadow: 0 4px 10px rgba(0,0,0,0.3);}
+    
     .view { flex: 1; display: none; flex-direction: column; overflow-x: hidden; overflow-y: auto; padding: 20px; padding-bottom: 100px; }
     .view.active { display: flex; animation: fadeUp 0.4s ease; }
     @keyframes fadeUp { from {opacity:0; transform:translateY(20px);} to {opacity:1; transform:translateY(0);} }
@@ -62,13 +82,16 @@
     .nav-bar-wrapper { position: absolute; bottom: 0; left: 0; width: 100%; background: var(--bg-panel); border-top: 1px solid var(--border-dark); z-index: 40; padding-bottom: env(safe-area-inset-bottom); overflow-x: auto;}
     .nav-bar { display: inline-flex; justify-content: space-between; align-items: center; height: 70px; min-width: 100%; padding: 0 15px; gap: 20px;}
     .nav-bar-wrapper::-webkit-scrollbar { display: none; }
+    
     .nav-btn { display: flex; flex-direction: column; align-items: center; color: var(--text-muted); font-size: 10px; font-weight: 800; cursor: pointer; transition: 0.3s; text-transform: uppercase; }
     .nav-btn.active { color: var(--gold); transform: translateY(-3px); }
     .nav-btn span { font-size: 26px; margin-bottom: 4px; transition: 0.3s; }
 
     .fab-admin { position: fixed; bottom: 90px; right: 20px; width: 55px; height: 55px; border-radius: 16px; background: var(--rare-blue); color: white; display: none; align-items: center; justify-content: center; box-shadow: 0 10px 20px rgba(9, 132, 227, 0.4); cursor: pointer; z-index: 100; transition: 0.3s; }
 
-    /* AVATARES, UI, RANKING */
+    /* ==========================================
+       UI ELEMENTS (Avatares, Ranks)
+       ========================================== */
     .u-av { border-radius: 14px; background: #07090D; overflow: hidden; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 5px 15px rgba(0,0,0,0.3); color:white; font-weight:bold; border: 2px solid var(--border-dark); transition: 0.3s; }
     .u-av img, .u-av svg { width: 100% !important; height: 100% !important; max-width: 100% !important; max-height: 100% !important; object-fit: cover !important; border-radius: inherit; }
     .av-top { width: 45px; min-width: 45px; max-width: 45px; height: 45px; min-height: 45px; max-height: 45px; }
@@ -77,15 +100,24 @@
     .av-chat { width: 35px; min-width: 35px; max-width: 35px; height: 35px; min-height: 35px; max-height: 35px; font-size: 20px; flex-shrink: 0; }
     #p-av { width: 100px; min-width: 100px; max-width: 100px; height: 100px; min-height: 100px; max-height: 100px; border-radius: 20px; border-width: 3px; font-size: 40px; margin: 0 auto 10px auto; }
 
-    .rank-prata { border-color: #bdc3c7; box-shadow: 0 0 10px #bdc3c7; } .rank-ouro { border-color: var(--gold); box-shadow: 0 0 15px var(--gold-glow); } .rank-diamante { border-color: #00cec9; box-shadow: 0 0 20px #00cec9; animation: pulseDiamante 1.5s infinite alternate; }
+    .rank-prata { border-color: #bdc3c7; box-shadow: 0 0 10px #bdc3c7; } 
+    .rank-ouro { border-color: var(--gold); box-shadow: 0 0 15px var(--gold-glow); } 
+    .rank-diamante { border-color: #00cec9; box-shadow: 0 0 20px #00cec9; animation: pulseDiamante 1.5s infinite alternate; }
     @keyframes pulseDiamante { 0% { box-shadow: 0 0 10px #00cec9; } 100% { box-shadow: 0 0 25px #0ff; } }
+    
     .xp-badge { background: #07090D; border: 1px solid var(--gold); padding: 5px 12px; border-radius: 8px; color: var(--gold); font-weight: 900; font-size: 14px; display: flex; align-items: center; gap: 5px; box-shadow: inset 0 0 10px rgba(255, 195, 18, 0.1);}
+    
+    /* RANKING PÓDIO */
     .podium-box { display: flex; justify-content: center; align-items: flex-end; height: 260px; padding-bottom: 20px; margin-top: 10px; }
     .p-col { width: 30%; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; position: relative; margin: 0 5px; }
     .p-block { width: 100%; border-radius: 8px 8px 4px 4px; display: flex; justify-content: center; align-items: flex-end; padding-bottom: 10px; font-weight: 900; color: #000; box-shadow: inset 0 -10px 20px rgba(0,0,0,0.5), 0 10px 20px rgba(0,0,0,0.5); }
-    .p1 .p-block { height: 140px; background: linear-gradient(to top, #FFC312, #F8EFBA); } .p2 .p-block { height: 100px; background: linear-gradient(to top, #7f8fa6, #dcdde1); } .p3 .p-block { height: 70px; background: linear-gradient(to top, #b33939, #ff7979); }
+    .p1 .p-block { height: 140px; background: linear-gradient(to top, #FFC312, #F8EFBA); } 
+    .p2 .p-block { height: 100px; background: linear-gradient(to top, #7f8fa6, #dcdde1); } 
+    .p3 .p-block { height: 70px; background: linear-gradient(to top, #b33939, #ff7979); }
 
-    /* DUELOS, LOJA E JOGOS LISTA */
+    /* ==========================================
+       ARENA, LOJA E COMPONENTES JOGOS
+       ========================================== */
     .arena-card { background: var(--bg-panel); border: 1px solid var(--border-dark); border-radius: 16px; padding: 15px; margin-bottom: 15px; box-shadow: 0 8px 20px rgba(0,0,0,0.4); display: flex; flex-direction: column; }
     .arena-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
     .arena-vs { font-size: 24px; font-weight: 900; color: var(--gold); text-shadow: 0 0 15px var(--gold-glow); font-style: italic; }
@@ -93,8 +125,10 @@
     .arena-name { font-size: 12px; font-weight: bold; margin-top: 5px; text-transform: uppercase; color: var(--text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%; }
     .arena-res { font-size: 14px; font-weight: 900; margin-top: 5px; }
     .res-win { color: var(--success-green); } .res-lose { color: var(--legendary-red); } .res-wait { color: var(--text-muted); font-size: 10px; }
-    .op-card { display: flex; align-items: center; gap: 15px; padding: 10px; border: 1px solid var(--border-dark); border-radius: 12px; margin-bottom: 10px; background: #07090D; cursor: pointer; transition: 0.2s; }
     
+    .op-card { display: flex; align-items: center; gap: 15px; padding: 10px; border: 1px solid var(--border-dark); border-radius: 12px; margin-bottom: 10px; background: #07090D; cursor: pointer; transition: 0.2s; }
+    .op-card:active { border-color: var(--gold); transform: scale(0.98); }
+
     .store-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 10px; }
     .store-item { background: var(--bg-panel); border: 1px solid var(--border-dark); border-radius: 16px; padding: 15px; text-align: center; display: flex; flex-direction: column; align-items: center; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
     .store-img { width: 80px; height: 80px; border-radius: 12px; object-fit: cover; margin-bottom: 10px; border: 2px solid var(--gold); box-shadow: 0 5px 15px var(--gold-glow); }
@@ -104,26 +138,35 @@
     .store-btn.equipped { background: var(--border-dark); color: var(--text-muted); border-color: transparent; }
 
     .lvl-box { background: var(--bg-panel); border-left: 4px solid transparent; border-radius: 16px; padding: 20px; margin-bottom: 15px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; box-shadow: 0 8px 20px rgba(0,0,0,0.4); transition:0.3s;}
+    .lvl-box:active { transform: scale(0.97); }
     .lvl-box.facil { border-left-color: var(--rare-blue); } .lvl-box.medio { border-left-color: var(--epic-purple); } .lvl-box.dificil { border-left-color: var(--legendary-red); }
+    
     .game-card { background: var(--bg-panel); border: 1px solid var(--border-dark); border-radius: 16px; padding: 15px; margin-bottom: 15px; display: flex; align-items: center; gap: 15px; cursor: pointer; transition:0.3s; }
+    .game-card:active { transform: scale(0.97); border-color: var(--gold); }
     .game-icon { width: 60px; height: 60px; border-radius: 12px; background: #07090D; border: 1px solid var(--border-dark); display: flex; align-items: center; justify-content: center; font-size: 30px; }
 
-    /* MINIGAMES (ROLETA, CAIXAS, RASPADINHA) */
+    /* ==========================================
+       TELAS MINIGAMES (ROLETA, CAIXAS, RASPADINHA)
+       ========================================== */
     .boxes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 280px; margin: 30px auto; perspective: 1000px; }
     .m-box { width: 120px; height: 120px; background: linear-gradient(135deg, #1E2535, #151A25); border: 2px solid var(--epic-purple); border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 50px; color: var(--epic-purple); cursor: pointer; transition: 0.4s; box-shadow: inset 0 0 20px rgba(108, 92, 231, 0.2), 0 10px 20px rgba(0,0,0,0.5); position: relative; animation: float3D 3s infinite ease-in-out;}
     .m-box.opened { background: var(--bg-panel); border-color: var(--gold); color: var(--gold); transform: scale(1.1) rotateY(180deg); text-shadow: 0 0 20px var(--gold-glow); box-shadow: inset 0 0 30px var(--gold-glow); z-index: 10; animation:none;}
     .m-box.disabled { filter: grayscale(100%); opacity: 0.3; pointer-events: none; animation:none;}
+
     .wheel-container { position: relative; width: 280px; height: 280px; margin: 40px auto; }
     .wheel { width: 100%; height: 100%; border-radius: 50%; border: 6px solid var(--border-dark); position: relative; overflow: hidden; transition: transform 4s cubic-bezier(0.2, 0.9, 0.2, 1); box-shadow: 0 0 30px rgba(0,0,0,0.8), inset 0 0 30px rgba(0,0,0,0.8); background: conic-gradient(#151A25 0deg 45deg, #1E2535 45deg 90deg, #151A25 90deg 135deg, #1E2535 135deg 180deg, #151A25 180deg 225deg, #1E2535 225deg 270deg, #151A25 270deg 315deg, #1E2535 315deg 360deg); }
     .wheel-text { position: absolute; width: 100%; height: 100%; text-align: center; padding-top: 20px; font-weight: 900; font-size: 16px; color: var(--gold); text-shadow: 0 2px 5px #000; box-sizing: border-box; transform-origin: center; pointer-events: none; z-index: 2; }
     .wheel-marker { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 15px solid transparent; border-right: 15px solid transparent; border-top: 30px solid var(--gold); z-index: 10; filter: drop-shadow(0 4px 5px rgba(0,0,0,0.8)); }
     .wheel-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 80px; height: 80px; background: #07090D; border-radius: 50%; border: 4px solid var(--gold); z-index: 5; display: flex; justify-content: center; align-items: center; box-shadow: 0 0 20px var(--gold-glow); cursor: pointer; font-weight: 900; color: var(--gold); font-size: 14px; }
 
-    /* QUIZ IN-GAME E CRONÔMETRO */
+    /* ==========================================
+       QUIZ IN-GAME
+       ========================================== */
     #t-play { position: fixed; inset:0; background: var(--bg-dark); z-index:300; display:none; flex-direction:column; padding: 20px; overflow-y:auto; background-image: radial-gradient(circle at top, #1E2535, #0B0E14); }
     .timer-badge { background: #07090D; border: 2px solid var(--gold); padding: 10px 20px; border-radius: 12px; font-weight: 900; font-size: 24px; color: var(--gold); box-shadow: 0 0 15px var(--gold-glow); transition: 0.3s; }
     .danger-pulse { animation: pulseRed 0.8s infinite; border-color: var(--legendary-red) !important; color: var(--legendary-red) !important; text-shadow: 0 0 10px var(--legendary-red); }
     @keyframes pulseRed { 0% { box-shadow: 0 0 10px var(--legendary-red); background: rgba(214, 48, 49, 0.1); transform: scale(1); } 100% { box-shadow: 0 0 30px var(--legendary-red); background: rgba(214, 48, 49, 0.4); transform: scale(1.1); } }
+    
     .opt-btn { background: var(--bg-panel); padding: 20px; border-radius: 16px; margin-bottom: 15px; border: 2px solid var(--border-dark); font-weight: bold; cursor: pointer; transition: 0.2s; box-shadow: 0 5px 15px rgba(0,0,0,0.3); color: var(--text-main); display: flex; align-items: center;}
     .flashcard { position: relative; aspect-ratio: 1; perspective: 1000px; cursor: pointer; }
     .flashcard .front, .flashcard .back { width: 100%; height: 100%; position: absolute; top: 0; left: 0; backface-visibility: hidden; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 16px; font-weight: 800; padding: 10px; text-align: center; transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1); }
@@ -131,10 +174,13 @@
     .flashcard .back { transform: rotateY(180deg); color: #000; }
     .flashcard.flipped .front { transform: rotateY(180deg); } .flashcard.flipped .back { transform: rotateY(0deg); }
     .balloon { width: 110px; height: 110px; border-radius: 50%; background: var(--bg-panel); border: 2px solid var(--border-dark); display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--text-main); font-weight: 800; text-align: center; padding: 10px; cursor: pointer; box-shadow: 0 10px 20px rgba(0,0,0,0.5); transition: 0.2s;}
+    
     .xp-float { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 60px; font-weight: 900; z-index: 999999; animation: floatAnim 1.5s forwards; text-shadow: 0 10px 30px rgba(0,0,0,0.8); pointer-events: none; }
     .xp-float.win { color: var(--gold); } .xp-float.lose { color: var(--legendary-red); }
 
-    /* CHAT E ADMIN PAINEL */
+    /* ==========================================
+       CHAT E ADMIN PAINEL
+       ========================================== */
     .c-msg { display: flex; gap: 10px; align-items: flex-end; max-width: 85%; margin-bottom: 15px;} .c-msg.me { align-self: flex-end; flex-direction: row-reverse; }
     .c-bub { background: var(--bg-panel); border: 1px solid var(--border-dark); padding: 12px 16px; border-radius: 16px 16px 16px 0; font-size: 14px; color: var(--text-main);}
     .c-msg.me .c-bub { background: var(--border-dark); border-radius: 16px 16px 0 16px; border-color: var(--text-muted); }
@@ -154,7 +200,11 @@
   <audio id="global-audio" loop></audio>
   <div class="bg-anim"></div>
 
-  <div id="splash"><div class="logo-3d">CSV+</div><div class="cyber-bar"><div class="cyber-fill"></div></div><div class="splash-txt">INICIANDO SISTEMA...</div></div>
+  <div id="splash">
+    <div class="logo-3d">CSV+</div>
+    <div class="cyber-bar"><div class="cyber-fill"></div></div>
+    <div class="splash-txt">INICIANDO SISTEMA...</div>
+  </div>
   
   <div id="ad-modal">
     <div class="ad-content">
@@ -178,7 +228,7 @@
       <h2 style="margin-bottom:5px;font-weight:900;font-size:28px;color:var(--text-main); letter-spacing: 2px;">CSV+</h2>
       <p style="opacity:0.7;margin-bottom:30px;font-size:12px;font-weight:bold;text-transform:uppercase;color:var(--text-muted);">Acesso Restrito</p>
       
-      <input id="u" class="inp" type="text" placeholder="Nome de Usuário (Ex: joao)" autocomplete="off">
+      <input id="u" class="inp" type="text" placeholder="Nome de Usuário (Ex: admin)" autocomplete="off">
       <input id="s" class="inp" type="password" placeholder="Senha de Acesso">
       
       <button class="btn" id="btn-login" onclick="acaoLogin()">CONECTAR</button>
@@ -186,17 +236,25 @@
     </div>
   </div>
 
-  <div id="fab-adm" class="fab-admin" onclick="abrirAdm()"><span class="material-icons-round" style="font-size: 28px;">admin_panel_settings</span></div>
+  <div id="fab-adm" class="fab-admin" onclick="abrirAdm()">
+    <span class="material-icons-round" style="font-size: 28px;">admin_panel_settings</span>
+  </div>
 
   <div id="app-main" class="app-container">
+    
     <div class="top-header">
       <div style="display:flex; align-items:center; gap:15px;" onclick="go('profile', document.getElementById('btn-nav-prof'))">
         <div class="u-av rank-normal av-top" id="h-av"></div>
-        <div><h3 id="h-nome" style="font-size:14px; margin:0; font-weight: 800; text-transform: uppercase;">...</h3><div style="font-size: 9px; color: var(--text-muted); font-weight: bold;" id="p-rank-name-mini">INICIANTE</div></div>
+        <div>
+          <h3 id="h-nome" style="font-size:14px; margin:0; font-weight: 800; text-transform: uppercase;">...</h3>
+          <div style="font-size: 9px; color: var(--text-muted); font-weight: bold;" id="p-rank-name-mini">INICIANTE</div>
+        </div>
       </div>
       <div style="display:flex; gap:10px; align-items: center;">
         <div class="xp-badge"><span class="material-icons-round" style="font-size: 16px;">stars</span><span id="h-xp">0</span></div>
-        <div class="icon-btn" style="background: transparent; border: none; width:30px; height:30px;" onclick="document.getElementById('mod-music').style.display='flex'"><span class="material-icons-round">headphones</span></div>
+        <div class="icon-btn" style="background: transparent; border: none; width:30px; height:30px;" onclick="document.getElementById('mod-music').style.display='flex'">
+          <span class="material-icons-round">headphones</span>
+        </div>
       </div>
     </div>
     
@@ -255,12 +313,12 @@
         <h2 id="p-name" style="font-size:24px;margin-bottom:15px; font-weight: 900; text-transform:uppercase;">Nome</h2>
         <div class="xp-badge" style="width: max-content; margin: 0 auto 20px auto; padding: 10px 20px; font-size: 18px;"><span class="material-icons-round">stars</span><span id="p-xp">0</span></div>
         
-        <label class="adm-lbl" style="text-align:left;">Insígnia (URL Imagem)</label>
+        <label style="font-size:11px; opacity:0.7; display:block; text-align:left; margin-bottom:5px; font-weight:bold; color:var(--text-main); text-transform: uppercase;">Insígnia (URL Imagem)</label>
         <input id="pf-av" class="inp" placeholder="Link externo ou Google Drive">
-        <label class="adm-lbl" style="text-align:left;">Tag de Jogador</label>
+        <label style="font-size:11px; opacity:0.7; display:block; text-align:left; margin-bottom:5px; font-weight:bold; color:var(--text-main); text-transform: uppercase;">Tag de Jogador</label>
         <input id="pf-frase" class="inp" placeholder="Ex: MVP">
         <button class="btn" onclick="savePerf()" style="margin-bottom:15px;">ATUALIZAR DADOS</button>
-        <button class="btn" onclick="location.reload()" style="background:transparent; color:var(--text-muted); border:1px solid var(--border-dark); box-shadow:none;">DESCONECTAR</button>
+        <button class="btn" onclick="logOutUser()" style="background:transparent; color:var(--text-muted); border:1px solid var(--border-dark); box-shadow:none;">DESCONECTAR</button>
       </div>
     </div>
 
@@ -326,7 +384,7 @@
     <div id="q-box" style="flex:1;display:flex;flex-direction:column;justify-content:center;"></div>
   </div>
 
-  <div id="mod-adm" class="adm-overlay">
+  <div id="mod-adm" class="adm-overlay" style="align-items:flex-end;">
     <div class="adm-card">
       <div style="display:flex;justify-content:space-between;margin-bottom:20px;align-items:center">
          <h2 style="font-weight:900; color:var(--gold); text-transform:uppercase;">Admin Console</h2>
@@ -345,17 +403,65 @@
       
       <div id="adm-u" class="adm-view active">
         <div style="font-weight:bold; color:var(--gold); margin-bottom:15px; text-transform:uppercase;">Criar Novo Acesso</div>
-        <label class="adm-lbl">NOME DO COLABORADOR</label><input id="cad-nome" class="inp" placeholder="Ex: João Silva">
-        <label class="adm-lbl">USUÁRIO DE LOGIN (SIMPLES)</label><input id="cad-login" class="inp" type="text" placeholder="Ex: joao (Sem @email)">
+        <label class="adm-lbl">NOME DO COLABORADOR</label>
+        <input id="cad-nome" class="inp" placeholder="Ex: João Silva">
+        <label class="adm-lbl">USUÁRIO DE LOGIN (SIMPLES)</label>
+        <input id="cad-login" class="inp" type="text" placeholder="Ex: joao (Sem @email)">
         <div class="row-grid">
            <div><label class="adm-lbl">SENHA PADRÃO</label><input id="cad-senha" class="inp" value="Ludo@2026" placeholder="Senha"></div>
            <div><label class="adm-lbl">PERMISSÃO</label><select id="cad-nivel" class="inp"><option value="USER">USER</option><option value="ADMIN">ADMIN</option></select></div>
         </div>
-        <button class="btn" onclick="cadastrarUsuarioPeloAdmin()">SALVAR CONTA</button>
+        <button class="btn" onclick="cadastrarUsuarioOficial()">SALVAR CONTA</button>
         <div id="cad-msg" style="margin-top:10px; font-size:12px; font-weight:bold; color:var(--success-green);"></div>
 
         <div style="font-weight:bold; color:var(--gold); margin-top:40px; margin-bottom:15px; text-transform:uppercase;">Gerenciar Equipe</div>
         <div id="adm-users-list">Carregando...</div>
+      </div>
+
+      <div id="adm-m" class="adm-view">
+        <div style="font-size:12px; opacity:0.8; margin-bottom:15px;">Cole links diretos de MP3 para a Rádio.</div>
+        <label class="adm-lbl">NOME DA FAIXA</label>
+        <input id="mu-nome" class="inp" placeholder="Ex: Foco Total">
+        <label class="adm-lbl">LINK DO ÁUDIO (.mp3)</label>
+        <input id="mu-url" class="inp" placeholder="Cole o link .mp3 direto aqui">
+        <button class="btn" onclick="saveMusic()">ADICIONAR MÚSICA</button>
+        <div id="adm-mu-list" style="margin-top:20px;"></div>
+      </div>
+
+      <div id="adm-fx" class="adm-view">
+        <div style="font-size:12px; opacity:0.8; margin-bottom:15px;">Escolha o áudio padrão das interações.</div>
+        <label class="adm-lbl">ROLETA (Giro)</label>
+        <select id="fx-roleta" class="inp">
+            <option value="https://actions.google.com/sounds/v1/tools/ratchet_wrench.ogg">Catraca Metálica</option>
+            <option value="https://actions.google.com/sounds/v1/water/water_drip.ogg">Gotas (Estilo Moedas)</option>
+        </select>
+        <label class="adm-lbl">FLASHCARDS (Virar)</label>
+        <select id="fx-card" class="inp">
+            <option value="https://actions.google.com/sounds/v1/paper/paper_flap.ogg">Swoosh de Papel</option>
+            <option value="https://actions.google.com/sounds/v1/weapons/fast_swoosh.ogg">Swoosh Rápido</option>
+        </select>
+        <label class="adm-lbl">BALÕES (Estouro)</label>
+        <select id="fx-balao" class="inp">
+            <option value="https://actions.google.com/sounds/v1/cartoon/pop.ogg">Estouro Pop</option>
+            <option value="https://actions.google.com/sounds/v1/water/bubbles_pop.ogg">Bolha D'água</option>
+        </select>
+        <label class="adm-lbl">RASPADINHA (Raspar)</label>
+        <select id="fx-raspa" class="inp">
+            <option value="https://actions.google.com/sounds/v1/tools/sandpaper_rub.ogg">Fricção de Lixa (Moeda real)</option>
+            <option value="https://actions.google.com/sounds/v1/paper/crumple_paper_in_hands.ogg">Amassar Papel</option>
+        </select>
+        <button class="btn" onclick="saveSFX()">SALVAR SFX</button>
+      </div>
+
+      <div id="adm-ad" class="adm-view">
+        <label class="adm-lbl">STATUS DO ANÚNCIO</label><select id="ad-ativo" class="inp"><option value="NAO">DESATIVADO (Oculto)</option><option value="SIM">ATIVADO (Mostrar)</option></select>
+        <label class="adm-lbl">TÍTULO DA CAIXA</label><input id="ad-tit" class="inp" placeholder="Ex: Aviso do RH">
+        <label class="adm-lbl">FORMATO</label><select id="ad-tipo" class="inp"><option value="TEXTO">Apenas Texto</option><option value="IMAGEM">Banner (Imagem URL / Drive)</option></select>
+        <label class="adm-lbl">CONTEÚDO</label><textarea id="ad-cont" class="inp" placeholder="Texto ou Link da Imagem" rows="4" style="height:auto;"></textarea>
+        <div style="display: flex; gap: 10px;">
+           <button class="btn" style="flex:2;" onclick="saveAd()">PUBLICAR</button>
+           <button class="btn" style="flex:1; background:var(--legendary-red); color:white; box-shadow:none;" onclick="limparAd()">EXCLUIR</button>
+        </div>
       </div>
 
       <div id="adm-d" class="adm-view">
@@ -376,10 +482,8 @@
             <div><label class="adm-lbl">XP ERRO</label><input id="q-l" class="inp" type="number"></div>
             <div><label class="adm-lbl">TEMPO (s)</label><input id="q-tm" class="inp" type="number"></div>
         </div>
-        
         <label class="adm-lbl" style="color:var(--legendary-red);">USAR NOS DUELOS PVP?</label>
         <select id="q-duelo" class="inp"><option value="SIM">SIM (Aparece na Arena)</option><option value="NAO">NÃO (Só na aba Missões)</option></select>
-
         <div class="glass-card" style="margin-bottom:15px; background: #07090D;">
            <label class="adm-lbl">OPÇÕES (A, B, C, D) - Aceita G.Drive nas Imagens</label>
            <div class="row-grid"><input id="oa" class="inp" placeholder="Texto A"><input id="oai" class="inp" placeholder="Img A (URL)"></div><div class="row-grid"><input id="ob" class="inp" placeholder="Texto B"><input id="obi" class="inp" placeholder="Img B (URL)"></div><div class="row-grid"><input id="oc" class="inp" placeholder="Texto C"><input id="oci" class="inp" placeholder="Img C (URL)"></div><div class="row-grid"><input id="od" class="inp" placeholder="Texto D"><input id="odi" class="inp" placeholder="Img D (URL)"></div>
@@ -393,38 +497,18 @@
       <div id="adm-r" class="adm-view">
         <h3 style="color:var(--gold); margin-bottom:5px; font-size:14px; text-transform: uppercase;">Nomes dos Jogos</h3>
         <div class="row-grid"><div><label class="adm-lbl">Jogo 1</label><input id="nm-roleta" class="inp" value="Roleta de XP"></div><div><label class="adm-lbl">Jogo 2</label><input id="nm-caixa" class="inp" value="Caixa Épica"></div><div><label class="adm-lbl">Jogo 3</label><input id="nm-raspa" class="inp" value="Contrato"></div></div>
+        
         <h3 style="color:var(--gold); margin-bottom:5px; margin-top:10px; font-size:14px; text-transform: uppercase;">ROLETA</h3>
         <label class="adm-lbl">Horas Recarga</label><input id="rl-tm" class="inp" type="number" placeholder="Ex: 12">
         <label class="adm-lbl">8 Fatias de Prêmio (XP)</label><div class="row-grid"><input id="f1" class="inp" type="number"><input id="f2" class="inp" type="number"><input id="f3" class="inp" type="number"><input id="f4" class="inp" type="number"><input id="f5" class="inp" type="number"><input id="f6" class="inp" type="number"><input id="f7" class="inp" type="number"><input id="f8" class="inp" type="number"></div>
+        
         <h3 style="color:var(--epic-purple); margin-bottom:5px; margin-top:20px; font-size:14px; text-transform: uppercase;">BAÚ MISTERIOSO</h3>
         <div class="row-grid"><div><label class="adm-lbl">Horas</label><input id="cx-tm" class="inp" type="number"></div><div><label class="adm-lbl">P1 (XP)</label><input id="cx-p1" class="inp" type="number"></div><div><label class="adm-lbl">P2 (XP)</label><input id="cx-p2" class="inp" type="number"></div><div><label class="adm-lbl">P3 (XP)</label><input id="cx-p3" class="inp" type="number"></div></div>
         <label class="adm-lbl">Frases de Revelação (P1, P2, P3)</label><input id="cx-t1" class="inp" placeholder="Frase 1"><input id="cx-t2" class="inp" placeholder="Frase 2"><input id="cx-t3" class="inp" placeholder="Frase 3">
+        
         <h3 style="color:var(--success-green); margin-bottom:5px; margin-top:20px; font-size:14px; text-transform: uppercase;">RASPADINHA</h3>
         <div class="row-grid"><div><label class="adm-lbl">Horas Recarga</label><input id="rp-tm" class="inp" type="number"></div><div><label class="adm-lbl">Vitória (XP)</label><input id="rp-p1" class="inp" type="number"></div></div>
-        <button class="btn" style="margin-top:20px" onclick="saveGames()">SALVAR REGRAS E NOMES</button>
-      </div>
-
-      <div id="adm-fx" class="adm-view">
-        <label class="adm-lbl">ROLETA (Giro)</label><select id="fx-roleta" class="inp"><option value="https://actions.google.com/sounds/v1/tools/ratchet_wrench.ogg">Catraca Metálica</option><option value="https://actions.google.com/sounds/v1/water/water_drip.ogg">Gotas (Estilo Moedas)</option></select>
-        <label class="adm-lbl">FLASHCARDS (Virar)</label><select id="fx-card" class="inp"><option value="https://actions.google.com/sounds/v1/paper/paper_flap.ogg">Swoosh de Papel</option><option value="https://actions.google.com/sounds/v1/weapons/fast_swoosh.ogg">Swoosh Rápido</option></select>
-        <label class="adm-lbl">BALÕES (Estouro)</label><select id="fx-balao" class="inp"><option value="https://actions.google.com/sounds/v1/cartoon/pop.ogg">Estouro Pop</option><option value="https://actions.google.com/sounds/v1/water/bubbles_pop.ogg">Bolha D'água</option></select>
-        <label class="adm-lbl">RASPADINHA (Raspar)</label><select id="fx-raspa" class="inp"><option value="https://actions.google.com/sounds/v1/tools/sandpaper_rub.ogg">Fricção de Lixa (Moeda real)</option><option value="https://actions.google.com/sounds/v1/paper/crumple_paper_in_hands.ogg">Amassar Papel</option></select>
-        <button class="btn" onclick="saveSFX()">SALVAR SFX</button>
-      </div>
-
-      <div id="adm-ad" class="adm-view">
-        <label class="adm-lbl">STATUS DO ANÚNCIO</label><select id="ad-ativo" class="inp"><option value="NAO">DESATIVADO (Oculto)</option><option value="SIM">ATIVADO (Mostrar)</option></select>
-        <label class="adm-lbl">TÍTULO DA CAIXA</label><input id="ad-tit" class="inp" placeholder="Ex: Aviso do RH">
-        <label class="adm-lbl">FORMATO</label><select id="ad-tipo" class="inp"><option value="TEXTO">Apenas Texto</option><option value="IMAGEM">Banner (Imagem URL / Drive)</option></select>
-        <label class="adm-lbl">CONTEÚDO</label><textarea id="ad-cont" class="inp" placeholder="Texto ou Link da Imagem" rows="4" style="height:auto;"></textarea>
-        <div style="display: flex; gap: 10px;"><button class="btn" style="flex:2;" onclick="saveAd()">PUBLICAR</button><button class="btn" style="flex:1; background:var(--legendary-red); color:white; box-shadow:none;" onclick="limparAd()">EXCLUIR</button></div>
-      </div>
-
-      <div id="adm-m" class="adm-view">
-        <label class="adm-lbl">NOME DA FAIXA</label><input id="mu-nome" class="inp" placeholder="Ex: Foco Total">
-        <label class="adm-lbl">LINK DO ÁUDIO (.mp3)</label><input id="mu-url" class="inp" placeholder="Cole o link .mp3 direto aqui">
-        <button class="btn" onclick="saveMusic()">ADICIONAR MÚSICA</button>
-        <div id="adm-mu-list" style="margin-top:20px;"></div>
+        <button class="btn" style="margin-top:20px" onclick="saveGames()">SALVAR REGRAS</button>
       </div>
 
       <div id="adm-l" class="adm-view">
@@ -442,24 +526,28 @@
   <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
 
   <script>
-    // PARSER G.DRIVE 
+    // PARSER GOOGLE DRIVE
     function parseImg(url) { 
         if(!url) return ''; let u = url.trim(); 
         let match = u.match(/file\/d\/([a-zA-Z0-9_-]+)/) || u.match(/id=([a-zA-Z0-9_-]+)/); 
         if (match) return `https://drive.google.com/uc?export=view&id=${match[1]}`; return u; 
     }
 
-    window.addEventListener('load', () => { setTimeout(() => { document.getElementById('splash').style.opacity = '0'; setTimeout(() => { document.getElementById('splash').style.display = 'none'; document.getElementById('t-login').style.display = 'flex'; }, 500); }, 3500); });
+    window.addEventListener('load', () => { setTimeout(() => { document.getElementById('splash').style.opacity = '0'; setTimeout(() => { document.getElementById('splash').style.display = 'none'; document.getElementById('t-login').style.display = 'flex'; }, 500); }, 2000); });
 
     const firebaseConfig = { apiKey: "AIzaSyBiHQQdfL4X88KEZUMvZS-WP0z2viR-ZHY", authDomain: "csvplus-62502.firebaseapp.com", projectId: "csvplus-62502", storageBucket: "csvplus-62502.firebasestorage.app", messagingSenderId: "879590605354", appId: "1:879590605354:web:368cd1fdc1f1e35ca77953" };
-    firebase.initializeApp(firebaseConfig); const secondaryApp = firebase.initializeApp(firebaseConfig, "Secondary");
+    firebase.initializeApp(firebaseConfig); 
     const auth = firebase.auth(); const db = firebase.firestore();
     
+    // MODO OFFLINE ATIVADO
+    db.enablePersistence().catch(err => { console.log("Offline Info:", err.code); });
+    if ('serviceWorker' in navigator) { window.addEventListener('load', () => { navigator.serviceWorker.register('sw.js'); }); }
+
     let U = null; window.TMR = null; window.LS = []; window.DESAFIO_ATUAL = null; window.PAPEL_ATUAL = null;
     window.GAME_CFG = { rl_tm: 12, rl_p: [0, 50, 0, 100, 0, 200, 0, 500], cx_tm: 12, cx_p: [0, 50, 200], cx_t: ["Azar!", "Bom!", "Jackpot!"], rp_tm: 8, rp_p: 100 };
     window.STORE_ITEMS = []; window.ANUNCIO_MOSTRADO = false;
 
-    // AUDIO ENGINE 
+    // AUDIO ENGINE SEGURA
     const sfxWin = new Audio('https://actions.google.com/sounds/v1/cartoon/cartoon_success_fanfare.ogg');
     const sfxLose = new Audio('https://actions.google.com/sounds/v1/cartoon/cartoon_boing.ogg');
     const sfxMagic = new Audio('https://actions.google.com/sounds/v1/magic/muffled_magic_swoosh.ogg'); 
@@ -467,13 +555,13 @@
     let sfxTick = new Audio('https://actions.google.com/sounds/v1/ui/button_click.ogg'); sfxTick.volume = 0.5;
     let bgMusic = document.getElementById('global-audio'); bgMusic.volume = 0.3;
 
-    function tocarSom(snd) { if(!snd || !snd.src) return; snd.currentTime = 0; let p = snd.play(); if(p !== undefined) p.catch(e => console.log('Audio Blocked')); }
+    function tocarSom(snd) { if(!snd || !snd.src) return; snd.currentTime = 0; let p = snd.play(); if(p !== undefined) p.catch(e => console.log('Audio Autoplay Blocked')); }
     function playMusic(url, el) { bgMusic.src = url; bgMusic.play().catch(e=>console.log(e)); document.querySelectorAll('#mod-music .opt-btn').forEach(b => {b.style.borderColor='var(--border-dark)'; b.style.color='var(--text-main)';}); el.style.borderColor='var(--gold)'; el.style.color='var(--gold)'; }
     function stopMusic() { bgMusic.pause(); document.querySelectorAll('#mod-music .opt-btn').forEach(b => {b.style.borderColor='var(--border-dark)'; b.style.color='var(--text-main)';}); }
     function triggerVibration(type) { if (!("vibrate" in navigator)) return; if (type === 'win') window.navigator.vibrate([100, 50, 100]); else if (type === 'lose') window.navigator.vibrate([300]); else if (type === 'tick') window.navigator.vibrate([30]); }
     function getRankObj(xp) { if(xp < 500) return {c: 'rank-normal', n: 'Iniciante'}; if(xp < 2000) return {c: 'rank-prata', n: 'Prata'}; if(xp < 5000) return {c: 'rank-ouro', n: 'Ouro'}; return {c: 'rank-diamante', n: 'Diamante'}; }
 
-    // CARREGAMENTOS GERAIS
+    // CARREGAR DADOS INICIAIS
     function loadGlobalConfigs() {
         db.collection('sistema').doc('minigames').get().then(doc => { 
             if(doc.exists) {
@@ -484,12 +572,17 @@
                 document.getElementById('name-roleta-tela').innerText = window.GAME_CFG.nome_roleta || 'Roleta de XP';
                 document.getElementById('name-caixa-tela').innerText = window.GAME_CFG.nome_caixa || 'Caixa Épica';
                 document.getElementById('name-raspa-tela').innerText = window.GAME_CFG.nome_raspa || 'Contrato';
-                if(U && U.nivel==='ADMIN') { document.getElementById('nm-roleta').value = window.GAME_CFG.nome_roleta || 'Roleta de XP'; document.getElementById('nm-caixa').value = window.GAME_CFG.nome_caixa || 'Caixa Épica'; document.getElementById('nm-raspa').value = window.GAME_CFG.nome_raspa || 'Contrato'; }
+                if(U && U.nivel==='ADMIN') { 
+                    document.getElementById('nm-roleta').value = window.GAME_CFG.nome_roleta || 'Roleta de XP'; 
+                    document.getElementById('nm-caixa').value = window.GAME_CFG.nome_caixa || 'Caixa Épica'; 
+                    document.getElementById('nm-raspa').value = window.GAME_CFG.nome_raspa || 'Contrato'; 
+                }
             } montarRoletaVisual(); 
         });
         db.collection('sistema').doc('efeitos').get().then(doc => {
             let defR = 'https://actions.google.com/sounds/v1/tools/ratchet_wrench.ogg', defC = 'https://actions.google.com/sounds/v1/paper/paper_flap.ogg', defB = 'https://actions.google.com/sounds/v1/cartoon/pop.ogg', defS = 'https://actions.google.com/sounds/v1/tools/sandpaper_rub.ogg';
-            if(doc.exists) { let d = doc.data(); sfxRoleta.src = d.roleta || defR; sfxCard.src = d.card || defC; sfxBalao.src = d.balao || defB; sfxRaspa.src = d.raspa || defS;
+            if(doc.exists) { 
+                let d = doc.data(); sfxRoleta.src = d.roleta || defR; sfxCard.src = d.card || defC; sfxBalao.src = d.balao || defB; sfxRaspa.src = d.raspa || defS;
                 if(U && U.nivel==='ADMIN') { document.getElementById('fx-roleta').value = d.roleta||defR; document.getElementById('fx-card').value = d.card||defC; document.getElementById('fx-balao').value = d.balao||defB; document.getElementById('fx-raspa').value = d.raspa||defS; }
             } else { sfxRoleta.src=defR; sfxCard.src=defC; sfxBalao.src=defB; sfxRaspa.src=defS; }
         });
@@ -507,59 +600,55 @@
             }
         });
     }
+    function fecharAnuncio() { document.getElementById('ad-modal').style.display = 'none'; }
 
-    // LOGIN POR NOME DE USUÁRIO (O TRUQUE NINJA)
+    // LOGIN SEGURO E RÁPIDO
     function acaoLogin(){
       let loginStr = document.getElementById('u').value.trim().toLowerCase().replace(/\s+/g, ''); 
       let senha = document.getElementById('s').value;
       let btn = document.getElementById('btn-login'); let msg = document.getElementById('login-msg');
       
-      if(!loginStr || !senha) { msg.innerText = "Preencha seu Usuário e Senha."; return; } 
+      if(!loginStr || !senha) { msg.innerText = "Preencha tudo."; return; } 
       btn.innerText = "VERIFICANDO...";
-      
-      // Cria o email fake automático
-      let email = loginStr + '@ludo.com';
+      let email = loginStr + '@csv.app';
 
       auth.signInWithEmailAndPassword(email, senha).then((cred) => {
           db.collection("usuarios").doc(cred.user.uid).get().then((doc) => {
             if (doc.exists) {
               U = doc.data(); U.id = cred.user.uid; 
-              if(U.status === 'BLOQUEADO') { auth.signOut(); msg.innerText = "Sua conta foi desativada pelo Admin."; btn.innerText = "CONECTAR"; return; }
-              if(!U.inventario) U.inventario = []; loadGlobalConfigs(); loadStoreItems();
-              document.getElementById('t-login').style.display = 'none'; document.getElementById('app-main').style.display = 'flex'; 
-              updUI(); checkAds(); if(U.nivel && U.nivel.toUpperCase() === 'ADMIN') document.getElementById('fab-adm').style.display = 'flex'; 
-            } else { msg.innerText = "Perfil corrompido. Fale com o Admin."; btn.innerText = "CONECTAR"; }
+              if(U.status === 'BLOQUEADO') { auth.signOut(); msg.innerText = "Conta bloqueada."; btn.innerText = "CONECTAR"; return; }
+              if(!U.inventario) U.inventario = []; 
+              
+              loadGlobalConfigs(); loadStoreItems();
+              
+              document.getElementById('t-login').style.display = 'none'; 
+              document.getElementById('app-main').style.display = 'flex'; 
+              updUI(); checkAds(); 
+              
+              if(U.nivel && U.nivel.toUpperCase() === 'ADMIN') document.getElementById('fab-adm').style.display = 'flex'; 
+            } else { msg.innerText = "Perfil ausente."; btn.innerText = "CONECTAR"; }
           });
-        }).catch(() => { msg.innerText = "Usuário ou senha incorretos."; btn.innerText = "CONECTAR"; });
+        }).catch(() => { msg.innerText = "Acesso negado. Tente novamente."; btn.innerText = "CONECTAR"; });
     }
+    function logOutUser() { auth.signOut().then(() => { location.reload(); }); }
 
     function updUI(){
       document.getElementById('h-nome').innerText = U.nome.split(' ')[0]; document.getElementById('h-xp').innerText = U.xp;
       document.getElementById('p-name').innerText = U.nome; document.getElementById('p-xp').innerText = U.xp; document.getElementById('pf-frase').value = U.frase || ''; 
       let r = getRankObj(U.xp); document.getElementById('p-rank-name').innerText = r.n; document.getElementById('p-rank-name-mini').innerText = r.n;
       let safeAv = parseImg(U.avatar); let fotoHTML = safeAv ? `<img src="${safeAv}" onerror="this.src='https://api.dicebear.com/7.x/bottts/svg?seed=${U.nome}'">` : `<img src="https://api.dicebear.com/7.x/bottts/svg?seed=${U.nome}">`;
-      let hav = document.getElementById('h-av'); hav.innerHTML = fotoHTML; hav.className = `u-av ${r.c} av-top`; let pav = document.getElementById('p-av'); pav.innerHTML = fotoHTML; pav.className = `u-av ${r.c}`;
+      document.getElementById('h-av').innerHTML = fotoHTML; document.getElementById('h-av').className = `u-av ${r.c} av-top`; 
+      document.getElementById('p-av').innerHTML = fotoHTML; document.getElementById('p-av').className = `u-av ${r.c}`;
     }
 
     function savePerf(){ let novaFrase = document.getElementById('pf-frase').value; let novoAvatar = document.getElementById('pf-av').value.trim(); if(novoAvatar && !U.inventario.includes(novoAvatar) && !novoAvatar.includes('dicebear') && !novoAvatar.includes('drive.google.com')) { pop("Atenção", "Imagens externas devem ser compradas na Loja ou hospedadas no G.Drive!"); return; } db.collection('usuarios').doc(U.id).update({ frase: novaFrase, avatar: novoAvatar }).then(() => { U.frase = novaFrase; U.avatar = novoAvatar; updUI(); pop("Sucesso!", "Perfil atualizado!"); }); }
     function go(t, el){ document.querySelectorAll('.view').forEach(v => { v.classList.remove('active'); v.style.display='none'; }); let tg = document.getElementById('v-'+t); tg.style.display='flex'; setTimeout(() => tg.classList.add('active'), 10); document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active')); el.classList.add('active'); if(t === 'rank') loadRank(); if(t === 'store') renderStore(); if(t === 'chat') loadChat(); if(t === 'arena') loadArena(); }
     function pop(t,m){ document.getElementById('uni-pop').style.display='flex'; document.getElementById('pop-t').innerText=t; document.getElementById('pop-m').innerText=m; }
 
-    // RANKING SEGURO (Oculta Bloqueados)
-    function loadRank() { 
-        let p = document.getElementById('podium-area'), ls = document.getElementById('rank-list'); p.innerHTML = '<div style="text-align:center; width:100%; padding-top:50px; color:var(--text-muted);">Sincronizando...</div>'; ls.innerHTML = ''; 
-        db.collection("usuarios").orderBy("xp", "desc").get().then((snap) => { 
-            let l = []; snap.forEach(doc => { let u = doc.data(); if(u.status !== 'BLOQUEADO') l.push(u); }); p.innerHTML = ''; if(l.length === 0) return; 
-            if(l[1]) pod(l[1], 2, p); if(l[0]) pod(l[0], 1, p); if(l[2]) pod(l[2], 3, p); 
-            l.slice(3, 15).forEach((u, i) => { 
-                let r = getRankObj(u.xp); let safeAv = parseImg(u.avatar); let av = safeAv ? `<img src="${safeAv}">` : `<img src="https://api.dicebear.com/7.x/bottts/svg?seed=${u.nome}">`; 
-                ls.innerHTML += `<div class="r-item" style="background:var(--bg-panel); border:1px solid var(--border-dark); border-radius:12px; padding:12px; margin-bottom:10px; display:flex; align-items:center;"><div style="width:30px;font-weight:900;color:var(--text-muted);font-size:16px">#${i+4}</div><div class="u-av ${r.c} av-list">${av}</div><div style="flex:1;font-weight:bold;font-size:14px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${u.nome.split(' ')[0]}<br><small style="font-weight:bold;color:var(--text-muted);font-size:10px;">${u.frase || ''}</small></div><div style="color:var(--gold);font-weight:900;font-size:16px"><span class="material-icons-round" style="font-size:14px;vertical-align:middle;">stars</span> ${u.xp}</div></div>`; 
-            }); confetti({ particleCount: 100, spread: 80, origin: { y: 0.6 }, colors: ['#FFC312', '#6C5CE7', '#0984E3'] }); 
-        }); 
-    }
+    function loadRank() { let p = document.getElementById('podium-area'), ls = document.getElementById('rank-list'); p.innerHTML = '<div style="text-align:center; width:100%; padding-top:50px; color:var(--text-muted);">Sincronizando...</div>'; ls.innerHTML = ''; db.collection("usuarios").orderBy("xp", "desc").get().then((snap) => { let l = []; snap.forEach(doc => { let u = doc.data(); if(u.status !== 'BLOQUEADO') l.push(u); }); p.innerHTML = ''; if(l.length === 0) return; if(l[1]) pod(l[1], 2, p); if(l[0]) pod(l[0], 1, p); if(l[2]) pod(l[2], 3, p); l.slice(3, 15).forEach((u, i) => { let r = getRankObj(u.xp); let safeAv = parseImg(u.avatar); let av = safeAv ? `<img src="${safeAv}">` : `<img src="https://api.dicebear.com/7.x/bottts/svg?seed=${u.nome}">`; ls.innerHTML += `<div class="r-item" style="background:var(--bg-panel); border:1px solid var(--border-dark); border-radius:12px; padding:12px; margin-bottom:10px; display:flex; align-items:center;"><div style="width:30px;font-weight:900;color:var(--text-muted);font-size:16px">#${i+4}</div><div class="u-av ${r.c} av-list">${av}</div><div style="flex:1;font-weight:bold;font-size:14px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${u.nome.split(' ')[0]}<br><small style="font-weight:bold;color:var(--text-muted);font-size:10px;">${u.frase || ''}</small></div><div style="color:var(--gold);font-weight:900;font-size:16px"><span class="material-icons-round" style="font-size:14px;vertical-align:middle;">stars</span> ${u.xp}</div></div>`; }); confetti({ particleCount: 100, spread: 80, origin: { y: 0.6 }, colors: ['#FFC312', '#6C5CE7', '#0984E3'] }); }); }
     function pod(u, pos, c) { let r = getRankObj(u.xp); let safeAv = parseImg(u.avatar); let av = safeAv ? `<img src="${safeAv}">` : `<img src="https://api.dicebear.com/7.x/bottts/svg?seed=${u.nome}">`; c.innerHTML += `<div class="p-col p${pos}"><div class="u-av ${r.c} av-pod">${av}</div><div class="p-block" style="position:relative;">${u.xp}<div style="position:absolute; top:-35px; width:120px; background:var(--bg-panel); color:var(--text-main); font-size:9px; padding:5px; border-radius:10px; text-align:center; border:1px solid var(--border-dark); font-weight:bold; display: ${u.frase ? 'block' : 'none'}">${u.frase}</div></div><div style="font-size:11px;margin-top:8px;font-weight:800;text-transform:uppercase;color:var(--text-main);">${u.nome.split(' ')[0]}</div></div>`; }
 
-    // CHAT (COM EDIÇÃO)
+    // CHAT COM EDIÇÃO
     let escutaChat = null; 
     function loadChat(){ if(escutaChat) escutaChat(); let b = document.getElementById('chat-msgs'); b.innerHTML = '<div style="text-align:center; padding:20px; color:var(--text-muted);">Conectando servidor...</div>'; escutaChat = db.collection('chat').orderBy('data', 'asc').limit(50).onSnapshot((snap) => { b.innerHTML = ''; if(snap.empty) { b.innerHTML = '<div style="text-align:center; padding:20px; color:var(--text-muted);">Lobby vazio.</div>'; } snap.forEach((doc) => { let m = doc.data(); let me = m.uid === U.id ? 'me' : ''; let r = getRankObj(m.xp||0); let safeAv = parseImg(m.av); let av = safeAv ? `<img src="${safeAv}" onerror="this.style.display='none'">` : `<img src="https://api.dicebear.com/7.x/bottts/svg?seed=${m.nome}">`; let safeOld = m.msg.replace(/'/g, "\\'").replace(/"/g, '&quot;'); let editBtn = (m.uid === U.id) ? `<span class="material-icons-round" style="font-size:12px; margin-left:8px; cursor:pointer; opacity:0.5; vertical-align:middle;" onclick="editarMsgChat('${doc.id}', '${safeOld}')">edit</span>` : ''; let editMark = m.editado ? `<span style="font-size:9px; opacity:0.5; margin-left:5px; font-style:italic;">(edit)</span>` : ''; b.innerHTML += `<div class="c-msg ${me}"><div class="u-av ${r.c} av-chat">${av}</div><div class="c-bub"><span style="font-size:10px;color:var(--gold);display:block;margin-bottom:3px;font-weight:900;text-transform:uppercase;">${m.nome}</span>${m.msg} ${editMark} ${editBtn}</div></div>`; }); b.scrollTop = b.scrollHeight; }); }
     function sendChat(){ let i = document.getElementById('c-txt'); let t = i.value.trim(); if(!t) return; i.value = ''; db.collection('chat').add({ uid: U.id, nome: U.nome, av: U.avatar || '', xp: U.xp, msg: t, data: firebase.firestore.FieldValue.serverTimestamp() }); }
@@ -584,20 +673,10 @@
         });
     }
     function abrirModalDesafio() { let b = document.getElementById('op-list'); b.innerHTML = 'Buscando alvos...'; document.getElementById('mod-desafiar').style.display='flex'; db.collection('usuarios').where('status','!=','BLOQUEADO').get().then(snap => { b.innerHTML = ''; snap.forEach(doc => { let u = doc.data(); if(doc.id === U.id) return; let safeAv = parseImg(u.avatar); let av = safeAv ? `<img src="${safeAv}">` : `<img src="https://api.dicebear.com/7.x/bottts/svg?seed=${u.nome}">`; b.innerHTML += `<div class="op-card" onclick="lancarDesafio('${doc.id}', '${u.nome}', '${u.avatar||''}')"><div class="u-av av-chat">${av}</div><div style="flex:1; font-weight:bold; color:var(--text-main); font-size:14px;">${u.nome}</div><span class="material-icons-round" style="color:var(--gold);">sports_martial_arts</span></div>`; }); if(b.innerHTML === '') b.innerHTML = '<div style="color:var(--text-muted); text-align:center;">Nenhum alvo encontrado.</div>'; }); }
-    
-    // NOVO: Puxa só as perguntas marcadas com duelo='SIM'
-    function lancarDesafio(alvoId, alvoNome, alvoAv) { 
-        db.collection('perguntas').where('status','==','ATIVA').where('duelo','==','SIM').get().then(snap => { 
-            let qs = []; snap.forEach(doc => qs.push(doc.data())); 
-            if(qs.length === 0) { pop("Atenção", "O Admin ainda não marcou nenhuma pergunta para Duelos!"); return; } 
-            let q = qs[Math.floor(Math.random() * qs.length)]; 
-            let desafio = { c_id: U.id, c_nome: U.nome, c_av: U.avatar||'', c_resp: false, c_acerto: false, a_id: alvoId, a_nome: alvoNome, a_av: alvoAv, a_resp: false, a_acerto: false, q_obj: q, q_win: q.xpGanho||10, q_lose: q.xpPerda||5, status: 'PENDENTE', data: firebase.firestore.FieldValue.serverTimestamp() }; 
-            db.collection('desafios').add(desafio).then(() => { document.getElementById('mod-desafiar').style.display='none'; pop("Lançado!", "Jogue a sua vez agora."); }); 
-        }); 
-    }
+    function lancarDesafio(alvoId, alvoNome, alvoAv) { db.collection('perguntas').where('status','==','ATIVA').where('duelo','==','SIM').get().then(snap => { let qs = []; snap.forEach(doc => qs.push(doc.data())); if(qs.length === 0) { pop("Atenção", "O Admin ainda não marcou nenhuma pergunta para Duelos!"); return; } let q = qs[Math.floor(Math.random() * qs.length)]; let desafio = { c_id: U.id, c_nome: U.nome, c_av: U.avatar||'', c_resp: false, c_acerto: false, a_id: alvoId, a_nome: alvoNome, a_av: alvoAv, a_resp: false, a_acerto: false, q_obj: q, q_win: q.xpGanho||10, q_lose: q.xpPerda||5, status: 'PENDENTE', data: firebase.firestore.FieldValue.serverTimestamp() }; db.collection('desafios').add(desafio).then(() => { document.getElementById('mod-desafiar').style.display='none'; pop("Lançado!", "Jogue a sua vez agora."); }); }); }
     function iniciarDuelo(id_desafio, papel) { db.collection('desafios').doc(id_desafio).get().then(doc => { if(doc.exists) { window.DESAFIO_ATUAL = doc.id; window.PAPEL_ATUAL = papel; let d = doc.data(); runQ([d.q_obj], 0, true); } }); }
 
-    // LOJA E MUSIC LIST
+    // LOJA
     function loadStoreItems() { db.collection('sistema').doc('loja').get().then(doc => { if(doc.exists) window.STORE_ITEMS = doc.data().itens || []; }); }
     function renderStore() { let h = ''; let defaults = [ {n:'Robô (Grátis)', i:`https://api.dicebear.com/7.x/bottts/svg?seed=${U.id}`, p:0}, {n:'Humano (Grátis)', i:`https://api.dicebear.com/7.x/adventurer/svg?seed=${U.id}`, p:0} ]; let allItems = defaults.concat(window.STORE_ITEMS); allItems.forEach((it) => { let owned = U.inventario.includes(it.i) || it.p === 0; let isCurrent = U.avatar === it.i; let btnHTML = isCurrent ? `<button class="store-btn equipped">EM USO</button>` : (owned ? `<button class="store-btn owned" onclick="usarAvatar('${it.i}')">EQUIPAR</button>` : `<button class="store-btn" onclick="comprarAvatar('${it.i}', ${it.p})"><span class="material-icons-round" style="font-size:12px;vertical-align:middle">stars</span> ${it.p}</button>`); h += `<div class="store-item"><img src="${parseImg(it.i)}" class="store-img"><div class="store-price">${it.n}</div>${btnHTML}</div>`; }); document.getElementById('store-list').innerHTML = h; }
     function comprarAvatar(url, preco) { if(U.xp < preco) { pop("Negado", "XP Insuficiente!"); return; } U.xp -= preco; U.inventario.push(url); U.avatar = url; db.collection("usuarios").doc(U.id).update({ xp: U.xp, inventario: U.inventario, avatar: url }).then(() => { tocarSom(sfxMagic); confetti({ particleCount: 100, spread: 70 }); updUI(); renderStore(); pop("Sucesso", "Skin equipada."); }); }
@@ -615,7 +694,7 @@
     function startCaixaGame() { document.getElementById('app-main').style.display='none'; document.getElementById('t-caixa').style.display='flex'; document.getElementById('caixa-msg').innerText=''; document.getElementById('caixa-sub').innerText=''; let grid = document.getElementById('box-grid'); grid.innerHTML=''; for(let i=0; i<4; i++) { grid.innerHTML += `<div class="m-box" onclick="abrirCaixa(this)"><span class="material-icons-round">help_outline</span></div>`; } JOGANDO_MINI=false; CAIXA_ABERTA=false; }
     function abrirCaixa(el) { if(JOGANDO_MINI || CAIXA_ABERTA) return; checarCooldown('caixa', window.GAME_CFG.cx_tm || 12, (dados, agora) => { JOGANDO_MINI = true; CAIXA_ABERTA = true; document.querySelectorAll('.m-box').forEach(b => { if(b !== el) b.classList.add('disabled'); }); el.style.transform = 'scale(1.1) rotate(5deg)'; setTimeout(() => { tocarSom(sfxMagic); el.classList.add('opened'); let pArr = window.GAME_CFG.cx_p || [0, 50, 200]; let tArr = window.GAME_CFG.cx_t || ["Azar", "Bom!", "Jackpot!"]; let idx = Math.floor(Math.random() * pArr.length); let premio = parseInt(pArr[idx]); el.innerHTML = `<span class="material-icons-round" style="font-size:40px;">${premio > 0 ? 'diamond' : 'close'}</span>`; document.getElementById('caixa-sub').innerText = tArr[idx] || ''; processarGanho('caixa', premio, dados, agora, document.getElementById('caixa-msg')); }, 800); }); }
     
-    // RASPADINHA COM CANVAS TOUCH 
+    // RASPADINHA COM CANVAS
     function startRaspaGame() { 
         checarCooldown('raspa', window.GAME_CFG.rp_tm || 8, (dados, agora) => {
             document.getElementById('app-main').style.display='none'; document.getElementById('t-raspa').style.display='flex'; 
@@ -631,6 +710,7 @@
             setTimeout(() => { for(let i=0; i<4; i++) initScratchCanvas(i); }, 100);
         });
     }
+
     function initScratchCanvas(i) {
         let canvas = document.getElementById(`raspa-canvas-${i}`); let ctx = canvas.getContext('2d'); let resDiv = document.getElementById(`raspa-res-${i}`);
         ctx.fillStyle = '#2C3A47'; ctx.fillRect(0, 0, canvas.width, canvas.height); ctx.font = 'bold 16px Poppins'; ctx.fillStyle = 'rgba(255,255,255,0.4)'; ctx.textAlign = 'center'; ctx.fillText('RASPAR', canvas.width/2, canvas.height/2 + 5);
@@ -640,7 +720,11 @@
         function getMousePos(evt) { let rect = canvas.getBoundingClientRect(); let clientX = evt.touches ? evt.touches[0].clientX : evt.clientX; let clientY = evt.touches ? evt.touches[0].clientY : evt.clientY; return { x: (clientX - rect.left) * (canvas.width / rect.width), y: (clientY - rect.top) * (canvas.height / rect.height) }; }
         function startDraw(e) { if(revealed || JOGANDO_MINI) return; isDrawing = true; scratch(e); }
         function stopDraw() { isDrawing = false; checkReveal(); sfxRaspa.pause(); }
-        function scratch(e) { if (!isDrawing || revealed || JOGANDO_MINI) return; e.preventDefault(); let pos = getMousePos(e); ctx.globalCompositeOperation = 'destination-out'; ctx.beginPath(); ctx.arc(pos.x, pos.y, 20, 0, Math.PI * 2); ctx.fill(); if(sfxRaspa.paused) { sfxRaspa.currentTime = 0; tocarSom(sfxRaspa); } }
+        function scratch(e) {
+            if (!isDrawing || revealed || JOGANDO_MINI) return; e.preventDefault(); let pos = getMousePos(e);
+            ctx.globalCompositeOperation = 'destination-out'; ctx.beginPath(); ctx.arc(pos.x, pos.y, 20, 0, Math.PI * 2); ctx.fill();
+            if(sfxRaspa.paused) { sfxRaspa.currentTime = 0; tocarSom(sfxRaspa); }
+        }
         function checkReveal() {
             if(revealed) return; let pixels = ctx.getImageData(0, 0, canvas.width, canvas.height).data; let trans = 0;
             for (let j = 3; j < pixels.length; j += 4) { if (pixels[j] < 10) trans++; }
@@ -661,10 +745,10 @@
     }
     function sairMinigame() { if(JOGANDO_MINI) return; document.getElementById('t-roleta').style.display='none'; document.getElementById('t-caixa').style.display='none'; document.getElementById('t-raspa').style.display='none'; document.getElementById('app-main').style.display='flex'; updUI(); }
 
-    // QUIZ LOGIC E DUELOS
-    function play(nivel){ document.getElementById('app-main').style.display = 'none'; document.getElementById('t-play').style.display = 'flex'; document.getElementById('q-box').innerHTML = '<div style="text-align:center; color:var(--gold); font-weight:900; font-size:20px;">CARREGANDO...</div>'; db.collection('perguntas').where('nivel', '==', nivel).where('status', '==', 'ATIVA').get().then((snap) => { let perguntas = []; snap.forEach(doc => perguntas.push(doc.data())); if(perguntas.length === 0){ pop("Vazio", "Nenhuma missão cadastrada."); sairJogo(); return; } perguntas = perguntas.sort(() => 0.5 - Math.random()); window.DESAFIO_ATUAL = null; runQ(perguntas, 0, false); }); }
+    // QUIZ LOGIC (MISSÃO E DUELOS)
+    function play(nivel){ document.getElementById('app-main').style.display = 'none'; document.getElementById('t-play').style.display = 'flex'; document.getElementById('q-box').innerHTML = '<div style="text-align:center; color:var(--gold); font-weight:900; font-size:20px;">CARREGANDO...</div>'; db.collection('perguntas').where('nivel', '==', nivel).where('status', '==', 'ATIVA').get().then((snap) => { let perguntas = []; snap.forEach(doc => perguntas.push(doc.data())); if(perguntas.length === 0){ pop("Vazio", "Nenhuma missão."); sairJogo(); return; } perguntas = perguntas.sort(() => 0.5 - Math.random()); window.DESAFIO_ATUAL = null; runQ(perguntas, 0, false); }); }
     function runQ(l, i, isDuelo){
-      if(i >= l.length){ pop("Concluído", "Treinamento finalizado!"); sairJogo(); return; }
+      if(i >= l.length){ pop("Missão Cumprida", "Você finalizou o treinamento!"); sairJogo(); return; }
       let q = l[i], b = document.getElementById('q-box'); document.getElementById('app-main').style.display = 'none'; document.getElementById('t-play').style.display = 'flex';
       let imgHtml = q.imagem ? `<img src="${parseImg(q.imagem)}" style="max-height:160px; width:100%; object-fit:contain; margin-bottom:20px; border-radius:10px;">` : ''; 
       let html = `${imgHtml}<div style="text-align:center; font-size:20px; font-weight:900; margin-bottom:20px; text-transform:uppercase;">${q.enunciado}</div>`;
@@ -688,21 +772,40 @@
     }
     function sairJogo(){ clearInterval(window.TMR); document.getElementById('t-play').style.display='none'; document.getElementById('app-main').style.display='flex'; document.getElementById('timer-box').classList.remove('danger-pulse'); updUI(); window.DESAFIO_ATUAL = null; }
 
-    // ADMIN TABS E FUNÇÕES MASTER
+    // ADMIN TABS E LÓGICA DE CADASTRO 
     function abrirAdm(){ document.getElementById('mod-adm').style.display='flex'; tab('u'); }
     function tab(v){ document.querySelectorAll('.adm-tab').forEach(e => e.classList.remove('active')); document.querySelectorAll('.adm-view').forEach(e => e.classList.remove('active')); document.getElementById('tb-'+v).classList.add('active'); document.getElementById('adm-'+v).classList.add('active'); if(v === 'u') loadUsersAdmin(); if(v === 'q') ldQ(); if(v === 'l') ldL(); if(v === 'ad') loadAdConfig(); if(v === 'd') loadAdminDuelos(); }
 
-    // NOVO: LOGIN SIMPLES (USERNAME) + EXCLUIR CONTA
-    function cadastrarUsuarioPeloAdmin() { let nome = document.getElementById('cad-nome').value.trim(); let loginInput = document.getElementById('cad-login').value.trim().toLowerCase().replace(/\s+/g, ''); let senha = document.getElementById('cad-senha').value; let nivel = document.getElementById('cad-nivel').value; let msg = document.getElementById('cad-msg'); if(!nome || !loginInput || !senha) { msg.style.color = 'var(--legendary-red)'; msg.innerText = "Preencha tudo!"; return; } msg.style.color = 'var(--gold)'; msg.innerText = "Criando..."; let emailFantasma = loginInput + '@csv.app'; secondaryApp.auth().createUserWithEmailAndPassword(emailFantasma, senha).then((cred) => { db.collection('usuarios').doc(cred.user.uid).set({ nome: nome, login: loginInput, email: emailFantasma, xp: 0, nivel: nivel, frase: "", avatar: "", inventario: [], status: 'ATIVO' }).then(() => { secondaryApp.auth().signOut(); document.getElementById('cad-nome').value = ''; document.getElementById('cad-login').value = ''; msg.style.color = 'var(--success-green)'; msg.innerText = "Acesso gerado com sucesso."; loadUsersAdmin(); }); }).catch(error => { msg.style.color = 'var(--legendary-red)'; msg.innerText = "Erro: " + error.message; }); }
-    function loadUsersAdmin() { let list = document.getElementById('adm-users-list'); list.innerHTML = "Buscando..."; db.collection("usuarios").get().then(snap => { let h = ''; snap.forEach(doc => { let u = doc.data(); let uid = doc.id; h += `<div class="user-card"><div style="display:flex; justify-content:space-between; margin-bottom:10px;"><div><strong style="color:var(--gold);">${u.nome}</strong><br><span style="font-size:10px; color:var(--text-muted);">@${u.login || 'antigo'} | ${u.nivel}</span></div><div style="display:flex; gap:5px;"><input id="xp-${uid}" type="number" value="${u.xp}" style="width:60px; padding:5px; border-radius:5px; background:#07090D; color:white; border:1px solid var(--border-dark);"><button class="btn-sm" style="background:var(--rare-blue);" onclick="updateUserXP('${uid}')">Salvar</button></div></div><button class="btn-sm" style="background:var(--legendary-red); width:100%;" onclick="deletarUsuario('${uid}')"><span class="material-icons-round" style="font-size:12px; vertical-align:middle;">delete</span> Excluir Usuário</button></div>`; }); list.innerHTML = h; }); }
+    function cadastrarUsuarioPeloAdmin() { 
+        let nome = document.getElementById('cad-nome').value.trim(); 
+        let loginInput = document.getElementById('cad-login').value.trim().toLowerCase().replace(/\s+/g, ''); 
+        let senha = document.getElementById('cad-senha').value; 
+        let nivel = document.getElementById('cad-nivel').value; 
+        let msg = document.getElementById('cad-msg'); 
+        
+        if(!nome || !loginInput || !senha) { msg.style.color = 'var(--legendary-red)'; msg.innerText = "Preencha tudo!"; return; } 
+        msg.style.color = 'var(--gold)'; msg.innerText = "Criando..."; 
+        let emailFantasma = loginInput + '@csv.app'; 
+        
+        // TRUQUE NINJA: Força o Firebase a registrar sem derrubar a tela atual
+        firebase.auth().createUserWithEmailAndPassword(emailFantasma, senha)
+        .then((cred) => { 
+            db.collection('usuarios').doc(cred.user.uid).set({ nome: nome, login: loginInput, email: emailFantasma, xp: 0, nivel: nivel, frase: "", avatar: "", inventario: [], status: 'ATIVO' })
+            .then(() => { 
+                alert("Usuário criado com sucesso. O sistema será reiniciado por segurança.");
+                location.reload(); // Refresh obrigatório para proteger o Admin
+            }); 
+        }).catch(error => { msg.style.color = 'var(--legendary-red)'; msg.innerText = "Erro: " + error.message; }); 
+    }
+    
+    function loadUsersAdmin() { let list = document.getElementById('adm-users-list'); list.innerHTML = "Buscando..."; db.collection("usuarios").get().then(snap => { let h = ''; snap.forEach(doc => { let u = doc.data(); let uid = doc.id; let bg = u.status === 'BLOQUEADO' ? 'rgba(214, 48, 49, 0.1)' : 'var(--bg-panel)'; let btnBlock = u.status === 'BLOQUEADO' ? `<button class="btn-sm" style="background:var(--success-green); color:#000;" onclick="toggleBlock('${uid}', 'ATIVO')">Desbloquear</button>` : `<button class="btn-sm" style="background:var(--legendary-red);" onclick="toggleBlock('${uid}', 'BLOQUEADO')">Bloquear</button>`; h += `<div class="user-card" style="background:${bg};"><div style="display:flex; justify-content:space-between; margin-bottom:10px;"><div><strong style="color:var(--gold);">${u.nome}</strong><br><span style="font-size:10px; color:var(--text-muted);">@${u.login || 'antigo'} | ${u.nivel}</span></div><div style="display:flex; gap:5px;"><input id="xp-${uid}" type="number" value="${u.xp}" style="width:60px; padding:5px; border-radius:5px; background:#07090D; color:white; border:1px solid var(--border-dark);"><button class="btn-sm" style="background:var(--rare-blue);" onclick="updateUserXP('${uid}')">Salvar</button></div></div><button class="btn-sm" style="background:var(--legendary-red); width:100%;" onclick="deletarUsuario('${uid}')"><span class="material-icons-round" style="font-size:12px; vertical-align:middle;">delete</span> Excluir Usuário</button></div>`; }); list.innerHTML = h; }); }
     function updateUserXP(uid) { let nxp = parseInt(document.getElementById(`xp-${uid}`).value) || 0; db.collection("usuarios").doc(uid).update({xp: nxp}).then(()=> pop("Salvo", "XP alterado!")); }
+    function toggleBlock(uid, status) { db.collection("usuarios").doc(uid).update({status: status}).then(()=> loadUsersAdmin()); }
     function deletarUsuario(uid) { if(confirm("Tem certeza que deseja apagar os dados deste funcionário do portal?")) { db.collection('usuarios').doc(uid).delete().then(() => { loadUsersAdmin(); }); } }
 
-    // NOVO: GERENCIAR DUELOS
     function loadAdminDuelos() { let list = document.getElementById('adm-duelos-list'); list.innerHTML = 'Buscando...'; db.collection('desafios').orderBy('data', 'desc').limit(30).get().then(snap => { let h = ''; snap.forEach(doc => { let d = doc.data(); h += `<div class="glass-card" style="padding:15px; margin-bottom:10px; background:#07090D; display:flex; justify-content:space-between; align-items:center;"><div><strong style="color:var(--gold); font-size:14px;">${d.c_nome.split(' ')[0]} vs ${d.a_nome.split(' ')[0]}</strong><br><span style="font-size:10px; color:var(--text-muted);">Status: ${d.status}</span></div><button class="btn-sm" style="background:var(--legendary-red);" onclick="deletarDueloAdmin('${doc.id}')">Excluir</button></div>`; }); list.innerHTML = h || '<div style="color:var(--text-muted); text-align:center;">Nenhum duelo.</div>'; }); }
     function deletarDueloAdmin(id) { db.collection('desafios').doc(id).delete().then(()=>loadAdminDuelos()); }
 
-    // OUTROS ADMINS
     function saveAd() { let d = { ativo: document.getElementById('ad-ativo').value, titulo: document.getElementById('ad-tit').value, tipo: document.getElementById('ad-tipo').value, conteudo: document.getElementById('ad-cont').value }; db.collection('sistema').doc('anuncio').set(d, {merge:true}).then(()=> pop("Salvo", "Anúncio configurado.")); }
     function limparAd() { document.getElementById('ad-ativo').value = 'NAO'; document.getElementById('ad-tit').value = ''; document.getElementById('ad-cont').value = ''; saveAd(); }
     function saveSFX() { let d = { roleta: document.getElementById('fx-roleta').value, card: document.getElementById('fx-card').value, balao: document.getElementById('fx-balao').value, raspa: document.getElementById('fx-raspa').value }; db.collection('sistema').doc('efeitos').set(d, {merge:true}).then(()=> { loadGlobalConfigs(); pop("Salvo", "O áudio foi atualizado."); }); }
@@ -715,7 +818,6 @@
     function ldM() { db.collection('sistema').doc('musicas').get().then(doc => { let list = doc.exists ? doc.data().lista || [] : []; let h=''; list.forEach((it,i) => { h+= `<div style="display:flex; gap:10px; margin-bottom:5px; background:var(--bg-panel); padding:10px; border-radius:8px;"><div style="flex:1; font-weight:bold;">${it.nome}</div><button class="btn-sm" onclick="delMusic(${i}, ${JSON.stringify(list).replace(/"/g, '&quot;')})" style="background:var(--legendary-red); padding:0 10px;">X</button></div>`; }); document.getElementById('adm-mu-list').innerHTML = h; }); }
     function delMusic(i, list) { list.splice(i,1); db.collection('sistema').doc('musicas').set({lista: list}, {merge:true}).then(()=>{ ldM(); loadMusicList(); }); }
     
-    // PERGUNTAS (AGORA COM CAMPO DUELO)
     function clearQForm() { document.getElementById('q-id').value=''; document.getElementById('q-e').value=''; document.getElementById('q-i').value=''; document.getElementById('q-w').value=''; document.getElementById('q-l').value=''; document.getElementById('q-tm').value=''; document.getElementById('oa').value=''; document.getElementById('oai').value=''; document.getElementById('ob').value=''; document.getElementById('obi').value=''; document.getElementById('oc').value=''; document.getElementById('oci').value=''; document.getElementById('od').value=''; document.getElementById('odi').value=''; pop("Limpo", "Pronto para nova missão."); }
     function saveQ(){ let id = document.getElementById('q-id').value || "P" + Date.now(); let o = { id: id, nivel: document.getElementById('q-n').value, tipo: document.getElementById('q-t').value, duelo: document.getElementById('q-duelo').value, enunciado: document.getElementById('q-e').value, imagem: document.getElementById('q-i').value, opcoes: {A: document.getElementById('oa').value, A_img: document.getElementById('oai').value, B: document.getElementById('ob').value, B_img: document.getElementById('obi').value, C: document.getElementById('oc').value, C_img: document.getElementById('oci').value, D: document.getElementById('od').value, D_img: document.getElementById('odi').value}, correta: document.getElementById('q-c-sel').value, xpGanho: parseInt(document.getElementById('q-w').value) || 10, xpPerda: parseInt(document.getElementById('q-l').value) || 5, tempo: parseInt(document.getElementById('q-tm').value) || 30, status: 'ATIVA' }; db.collection('perguntas').doc(id).set(o).then(() => { pop("Salvo","Missão adicionada no banco."); ldQ(); clearQForm(); }); }
     function ldQ(){ let list = document.getElementById('adm-list'); list.innerHTML = 'A carregar...'; db.collection('perguntas').get().then((snap) => { window.G_QS = []; let h = ''; snap.forEach(doc => { let q = doc.data(); window.G_QS.push(q); let idx = window.G_QS.length - 1; let isD = q.duelo === 'SIM' ? '⚔️ ' : ''; h += `<div class="glass-card" style="margin-bottom:10px; display:flex; align-items:center; padding:10px; background:#07090D; border:1px solid var(--border-dark);"><div style="flex:1"><span style="color:var(--gold);font-size:10px;font-weight:bold;">${isD}[${q.nivel} | ${q.tipo}]</span><br><span style="font-size:12px;">${q.enunciado}</span></div><div style="display:flex;gap:10px;"><div style="color:var(--rare-blue);cursor:pointer" onclick="editQ(${idx})"><span class="material-icons-round">edit</span></div><div style="color:var(--legendary-red);cursor:pointer" onclick="delQ('${q.id}')"><span class="material-icons-round">delete</span></div></div></div>`; }); list.innerHTML = h || "Nenhuma missão."; }); }
