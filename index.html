@@ -4,6 +4,11 @@
   <base target="_top">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  
   <title>CSV+ | Gamification App</title>
   
   <link rel="manifest" crossorigin="use-credentials" href="manifest.json">
@@ -15,23 +20,18 @@
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
   <style>
-    /* ==========================================
-       1. TEMA GAMER E VARIÁVEIS GLOBAIS
-       ========================================== */
+    /* TEMA GAMER E VARIÁVEIS GLOBAIS */
     :root {
       --bg-dark: #0B0E14; --bg-panel: #151A25; --border-dark: #222B3E;
       --text-main: #FFFFFF; --text-muted: #6C7A89;
       --gold: #FFC312; --gold-glow: rgba(255, 195, 18, 0.4);
       --rare-blue: #0984E3; --epic-purple: #6C5CE7; --legendary-red: #D63031; --success-green: #00B894;
     }
-
     * { box-sizing: border-box; margin: 0; padding: 0; outline: none; -webkit-tap-highlight-color: transparent; font-family: 'Poppins', sans-serif; }
     body { background: var(--bg-dark); color: var(--text-main); height: 100dvh; overflow: hidden; display: flex; flex-direction: column; }
     .bg-anim { position: fixed; inset: 0; z-index: -1; background: radial-gradient(circle at 50% 0%, #151A25 0%, #0B0E14 60%); }
 
-    /* ==========================================
-       2. COMPONENTES BÁSICOS
-       ========================================== */
+    /* COMPONENTES BÁSICOS */
     .glass-card { background: var(--bg-panel); border: 1px solid var(--border-dark); border-radius: 20px; padding: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
     .btn { width: 100%; padding: 16px; border-radius: 12px; border: none; background: linear-gradient(to right, #F8EFBA, #FFC312); color: #000; font-weight: 900; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; box-shadow: 0 5px 15px var(--gold-glow); display: flex; justify-content: center; align-items: center; gap: 10px;}
     .btn:active { transform: scale(0.96); box-shadow: 0 2px 5px rgba(255, 195, 18, 0.3); }
@@ -41,9 +41,7 @@
     .inp:focus { border-color: var(--gold); box-shadow: 0 0 10px var(--gold-glow); }
     .adm-lbl { font-size: 10px; color: var(--gold); font-weight: 900; margin-bottom: 4px; display: block; text-transform: uppercase; letter-spacing: 1px; }
 
-    /* ==========================================
-       3. SISTEMA DE TELAS BLINDADAS (Splash e Login)
-       ========================================== */
+    /* TELAS DE OVERLAY (INTRO E LOGIN) */
     #splash { position: fixed; inset: 0; background: var(--bg-dark); z-index: 10000; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.5s ease; }
     .logo-3d { font-size: 70px; font-weight: 900; color: transparent; -webkit-text-stroke: 2px var(--gold); animation: float3D 3s infinite ease-in-out; text-shadow: 0 0 30px var(--gold-glow); letter-spacing: 5px; }
     @keyframes float3D { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
@@ -51,30 +49,27 @@
     .cyber-fill { width: 0%; height: 100%; background: var(--gold); animation: fillBar 1.5s forwards cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 0 10px var(--gold); }
     @keyframes fillBar { 0% { width: 0%; } 50% { width: 60%; } 100% { width: 100%; } }
 
-    /* Login oculto inicialmente */
     #t-login { position: fixed; inset: 0; background: var(--bg-dark); z-index: 9999; display: none; flex-direction: column; justify-content: center; align-items: center; padding: 20px; }
     .login-box { max-width: 380px; width: 100%; text-align: center; padding: 40px 30px; border-radius: 20px; background: var(--bg-panel); border: 1px solid var(--border-dark); box-shadow: 0 20px 40px rgba(0,0,0,0.8); animation: fadeUp 0.8s ease; }
     .logo-login { width: 90px; height: 90px; border-radius: 20px; background: linear-gradient(45deg, var(--gold), #ff9f43); display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; color: #000; box-shadow: 0 10px 25px var(--gold-glow);}
 
-    /* POPUPS OVERLAYS */
+    /* POPUPS GENÉRICOS */
     #ad-modal, #uni-pop, .adm-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 999999; display: none; justify-content: center; align-items: center; padding: 20px; backdrop-filter: blur(5px); }
     .ad-content { background: var(--bg-panel); border: 2px solid var(--gold); border-radius: 20px; padding: 30px; text-align: center; position: relative; max-width: 90vw; max-height: 85vh; overflow-y: auto; box-shadow: 0 0 50px var(--gold-glow); animation: pulse3D 2s infinite alternate;}
     .ad-close { position: absolute; top: 10px; right: 10px; background: var(--legendary-red); color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; cursor: pointer; border: none; }
 
+    /* EFEITO ÉPICO DE XP ESTILO CONTA BANCÁRIA */
     #epic-xp-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 8000; display: none; flex-direction: column; justify-content: center; align-items: center; backdrop-filter: blur(10px); animation: fadeIn 0.3s; }
     .epic-number { font-size: 80px; font-weight: 900; color: var(--gold); text-shadow: 0 0 40px var(--gold-glow); margin-bottom: 20px; font-variant-numeric: tabular-nums; }
     .epic-number.lose { color: var(--legendary-red); text-shadow: 0 0 40px rgba(214, 48, 49, 0.6); }
     .epic-text { font-size: 20px; font-weight: 900; text-transform: uppercase; color: var(--text-main); letter-spacing: 2px; }
     @keyframes fadeIn { from {opacity:0; transform:scale(0.8);} to {opacity:1; transform:scale(1);} }
 
-    /* ==========================================
-       4. LAYOUT PRINCIPAL BLINDADO (display: none !important;)
-       ========================================== */
+    /* LAYOUT PRINCIPAL E NAVEGAÇÃO */
     .app-container { width: 100%; height: 100%; position: relative; overflow: hidden; display: none !important; flex-direction: column; }
     .app-container.ready { display: flex !important; }
 
     .top-header { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; background: var(--bg-panel); border-bottom: 1px solid var(--border-dark); z-index: 10; box-shadow: 0 4px 10px rgba(0,0,0,0.3);}
-    
     .view { flex: 1; display: none; flex-direction: column; overflow-x: hidden; overflow-y: auto; padding: 20px; padding-bottom: 100px; }
     .view.active { display: flex; animation: fadeUp 0.4s ease; }
     @keyframes fadeUp { from {opacity:0; transform:translateY(20px);} to {opacity:1; transform:translateY(0);} }
@@ -82,16 +77,13 @@
     .nav-bar-wrapper { position: absolute; bottom: 0; left: 0; width: 100%; background: var(--bg-panel); border-top: 1px solid var(--border-dark); z-index: 40; padding-bottom: env(safe-area-inset-bottom); overflow-x: auto;}
     .nav-bar { display: inline-flex; justify-content: space-between; align-items: center; height: 70px; min-width: 100%; padding: 0 15px; gap: 20px;}
     .nav-bar-wrapper::-webkit-scrollbar { display: none; }
-    
     .nav-btn { display: flex; flex-direction: column; align-items: center; color: var(--text-muted); font-size: 10px; font-weight: 800; cursor: pointer; transition: 0.3s; text-transform: uppercase; }
     .nav-btn.active { color: var(--gold); transform: translateY(-3px); }
     .nav-btn span { font-size: 26px; margin-bottom: 4px; transition: 0.3s; }
 
     .fab-admin { position: fixed; bottom: 90px; right: 20px; width: 55px; height: 55px; border-radius: 16px; background: var(--rare-blue); color: white; display: none; align-items: center; justify-content: center; box-shadow: 0 10px 20px rgba(9, 132, 227, 0.4); cursor: pointer; z-index: 100; transition: 0.3s; }
 
-    /* ==========================================
-       5. AVATARES E RANKING
-       ========================================== */
+    /* AVATARES, RANKS E PÓDIO */
     .u-av { border-radius: 14px; background: #07090D; overflow: hidden; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 5px 15px rgba(0,0,0,0.3); color:white; font-weight:bold; border: 2px solid var(--border-dark); transition: 0.3s; }
     .u-av img, .u-av svg { width: 100% !important; height: 100% !important; max-width: 100% !important; max-height: 100% !important; object-fit: cover !important; border-radius: inherit; }
     .av-top { width: 45px; min-width: 45px; max-width: 45px; height: 45px; min-height: 45px; max-height: 45px; }
@@ -110,9 +102,7 @@
     .p-block { width: 100%; border-radius: 8px 8px 4px 4px; display: flex; justify-content: center; align-items: flex-end; padding-bottom: 10px; font-weight: 900; color: #000; box-shadow: inset 0 -10px 20px rgba(0,0,0,0.5), 0 10px 20px rgba(0,0,0,0.5); }
     .p1 .p-block { height: 140px; background: linear-gradient(to top, #FFC312, #F8EFBA); } .p2 .p-block { height: 100px; background: linear-gradient(to top, #7f8fa6, #dcdde1); } .p3 .p-block { height: 70px; background: linear-gradient(to top, #b33939, #ff7979); }
 
-    /* ==========================================
-       6. MAPA DE AVANÇO (RPG)
-       ========================================== */
+    /* TRILHA DE MAPA RPG */
     .map-container { display: flex; flex-direction: column; align-items: center; padding: 20px 0; position: relative; }
     .map-line { position: absolute; top: 0; bottom: 0; left: 50%; width: 4px; background: var(--border-dark); transform: translateX(-50%); z-index: 1; }
     .map-node { position: relative; z-index: 2; display: flex; width: 100%; justify-content: space-between; align-items: center; margin-bottom: 50px; }
@@ -124,9 +114,7 @@
     .node-players { display: flex; flex-wrap: wrap; gap: 5px; justify-content: center; margin-top: 10px; }
     .node-players .u-av { width: 25px; min-width: 25px; height: 25px; min-height: 25px; border-radius: 8px; border-width: 1px;}
 
-    /* ==========================================
-       7. ARENA (PVP) E LOJA
-       ========================================== */
+    /* ARENA E LOJA */
     .arena-card { background: var(--bg-panel); border: 1px solid var(--border-dark); border-radius: 16px; padding: 15px; margin-bottom: 15px; box-shadow: 0 8px 20px rgba(0,0,0,0.4); display: flex; flex-direction: column; position: relative; overflow: hidden;}
     .arena-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; position: relative; z-index: 2;}
     .arena-vs { font-size: 24px; font-weight: 900; color: var(--gold); text-shadow: 0 0 15px var(--gold-glow); font-style: italic; }
@@ -136,10 +124,8 @@
     .res-win { color: var(--success-green); text-shadow: 0 0 10px rgba(0,184,148,0.5);} .res-lose { color: var(--legendary-red); } .res-wait { color: var(--text-muted); font-size: 10px; }
     .arena-bg-win { position: absolute; inset:0; background: radial-gradient(circle at center, rgba(0,184,148,0.2) 0%, transparent 70%); z-index: 1;}
     .arena-bg-lose { position: absolute; inset:0; background: radial-gradient(circle at center, rgba(214,48,49,0.1) 0%, transparent 70%); z-index: 1;}
-    
     .op-card { display: flex; align-items: center; gap: 15px; padding: 10px; border: 1px solid var(--border-dark); border-radius: 12px; margin-bottom: 10px; background: #07090D; cursor: pointer; transition: 0.2s; }
-    .op-card:active { border-color: var(--gold); transform: scale(0.98); }
-
+    
     .store-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 10px; }
     .store-item { background: var(--bg-panel); border: 1px solid var(--border-dark); border-radius: 16px; padding: 15px; text-align: center; display: flex; flex-direction: column; align-items: center; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
     .store-img { width: 80px; height: 80px; border-radius: 12px; object-fit: cover; margin-bottom: 10px; border: 2px solid var(--gold); box-shadow: 0 5px 15px var(--gold-glow); }
@@ -153,23 +139,19 @@
     .game-card { background: var(--bg-panel); border: 1px solid var(--border-dark); border-radius: 16px; padding: 15px; margin-bottom: 15px; display: flex; align-items: center; gap: 15px; cursor: pointer; transition:0.3s; }
     .game-icon { width: 60px; height: 60px; border-radius: 12px; background: #07090D; border: 1px solid var(--border-dark); display: flex; align-items: center; justify-content: center; font-size: 30px; }
 
-    /* ==========================================
-       8. TELAS DE MINIGAMES OVERLAY
-       ========================================== */
+    /* MINIGAMES ROLETA E CAIXAS */
     .boxes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 280px; margin: 30px auto; perspective: 1000px; }
     .m-box { width: 120px; height: 120px; background: linear-gradient(135deg, #1E2535, #151A25); border: 2px solid var(--epic-purple); border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 50px; color: var(--epic-purple); cursor: pointer; transition: 0.4s; box-shadow: inset 0 0 20px rgba(108, 92, 231, 0.2), 0 10px 20px rgba(0,0,0,0.5); position: relative; animation: float3D 3s infinite ease-in-out;}
     .m-box.opened { background: var(--bg-panel); border-color: var(--gold); color: var(--gold); transform: scale(1.1) rotateY(180deg); text-shadow: 0 0 20px var(--gold-glow); box-shadow: inset 0 0 30px var(--gold-glow); z-index: 10; animation:none;}
     .m-box.disabled { filter: grayscale(100%); opacity: 0.3; pointer-events: none; animation:none;}
 
     .wheel-container { position: relative; width: 280px; height: 280px; margin: 40px auto; }
-    .wheel { width: 100%; height: 100%; border-radius: 50%; border: 6px solid var(--border-dark); position: relative; overflow: hidden; transition: transform 4s cubic-bezier(0.2, 0.9, 0.2, 1); box-shadow: 0 0 30px rgba(0,0,0,0.8), inset 0 0 30px rgba(0,0,0,0.8); background: conic-gradient(#151A25 0deg 45deg, #1E2535 45deg 90deg, #151A25 90deg 135deg, #1E2535 135deg 180deg, #151A25 180deg 225deg, #1E2535 225deg 270deg, #151A25 270deg 315deg, #1E2535 315deg 360deg); }
+    .wheel { width: 100%; height: 100%; border-radius: 50%; border: 6px solid var(--border-dark); position: relative; overflow: hidden; box-shadow: 0 0 30px rgba(0,0,0,0.8), inset 0 0 30px rgba(0,0,0,0.8); background: conic-gradient(#151A25 0deg 45deg, #1E2535 45deg 90deg, #151A25 90deg 135deg, #1E2535 135deg 180deg, #151A25 180deg 225deg, #1E2535 225deg 270deg, #151A25 270deg 315deg, #1E2535 315deg 360deg); }
     .wheel-text { position: absolute; width: 100%; height: 100%; text-align: center; padding-top: 20px; font-weight: 900; font-size: 16px; color: var(--gold); text-shadow: 0 2px 5px #000; box-sizing: border-box; transform-origin: center; pointer-events: none; z-index: 2; }
     .wheel-marker { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 15px solid transparent; border-right: 15px solid transparent; border-top: 30px solid var(--gold); z-index: 10; filter: drop-shadow(0 4px 5px rgba(0,0,0,0.8)); }
     .wheel-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 80px; height: 80px; background: #07090D; border-radius: 50%; border: 4px solid var(--gold); z-index: 5; display: flex; justify-content: center; align-items: center; box-shadow: 0 0 20px var(--gold-glow); cursor: pointer; font-weight: 900; color: var(--gold); font-size: 14px; }
 
-    /* ==========================================
-       9. QUIZ IN-GAME, CRONÔMETRO E CHAT
-       ========================================== */
+    /* QUIZ IN-GAME E CRONÔMETRO */
     #t-play { position: fixed; inset:0; background: var(--bg-dark); z-index:300; display:none; flex-direction:column; padding: 20px; overflow-y:auto; background-image: radial-gradient(circle at top, #1E2535, #0B0E14); }
     .timer-badge { background: #07090D; border: 2px solid var(--gold); padding: 10px 20px; border-radius: 12px; font-weight: 900; font-size: 24px; color: var(--gold); box-shadow: 0 0 15px var(--gold-glow); transition: 0.3s; }
     .danger-pulse { animation: pulseRed 0.8s infinite; border-color: var(--legendary-red) !important; color: var(--legendary-red) !important; text-shadow: 0 0 10px var(--legendary-red); }
@@ -183,13 +165,11 @@
     .flashcard.flipped .front { transform: rotateY(180deg); } .flashcard.flipped .back { transform: rotateY(0deg); }
     .balloon { width: 110px; height: 110px; border-radius: 50%; background: var(--bg-panel); border: 2px solid var(--border-dark); display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--text-main); font-weight: 800; text-align: center; padding: 10px; cursor: pointer; box-shadow: 0 10px 20px rgba(0,0,0,0.5); transition: 0.2s;}
 
+    /* CHAT E ADMIN PAINEL */
     .c-msg { display: flex; gap: 10px; align-items: flex-end; max-width: 85%; margin-bottom: 15px;} .c-msg.me { align-self: flex-end; flex-direction: row-reverse; }
     .c-bub { background: var(--bg-panel); border: 1px solid var(--border-dark); padding: 12px 16px; border-radius: 16px 16px 16px 0; font-size: 14px; color: var(--text-main);}
     .c-msg.me .c-bub { background: var(--border-dark); border-radius: 16px 16px 0 16px; border-color: var(--text-muted); }
 
-    /* ==========================================
-       10. PAINEL ADMIN
-       ========================================== */
     .adm-overlay { z-index: 5000; align-items: flex-end; display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); justify-content: center;}
     .adm-card { width: 100%; height: 95%; border-radius: 24px 24px 0 0; display: flex; flex-direction: column; padding: 20px; background: var(--bg-dark); border-top: 2px solid var(--gold); }
     .adm-tabs { display: flex; gap: 10px; margin-bottom: 20px; overflow-x: auto; padding-bottom:10px; }
@@ -204,10 +184,10 @@
 
   <script>
     if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.getRegistrations().then(function(registrations) {
-            for(let registration of registrations) { registration.unregister(); }
-        });
-        caches.keys().then(keys => { keys.forEach(key => caches.delete(key)); });
+      navigator.serviceWorker.getRegistrations().then(function(registrations) {
+        for(let registration of registrations) { registration.unregister(); }
+      });
+      caches.keys().then(keys => { keys.forEach(key => caches.delete(key)); });
     }
   </script>
 
@@ -217,10 +197,10 @@
   <audio id="sfx-fail-duo" src="https://assets.mixkit.co/active_storage/sfx/2956/2956-preview.mp3"></audio>
   <audio id="sfx-magic" src="https://assets.mixkit.co/active_storage/sfx/2955/2955-preview.mp3"></audio>
   <audio id="sfx-tick" src="https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3"></audio>
-  <audio id="sfx-roleta"></audio>
-  <audio id="sfx-card"></audio>
-  <audio id="sfx-balao"></audio>
-  <audio id="sfx-raspa"></audio>
+  <audio id="sfx-roleta" src="https://assets.mixkit.co/active_storage/sfx/2003/2003-preview.mp3"></audio>
+  <audio id="sfx-card" src="https://assets.mixkit.co/active_storage/sfx/2955/2955-preview.mp3"></audio>
+  <audio id="sfx-balao" src="https://assets.mixkit.co/active_storage/sfx/2605/2605-preview.mp3"></audio>
+  <audio id="sfx-raspa" src="https://assets.mixkit.co/active_storage/sfx/3005/3005-preview.mp3"></audio>
   
   <div class="bg-anim"></div>
 
@@ -357,7 +337,7 @@
         <label style="font-size:11px; opacity:0.7; display:block; text-align:left; margin-bottom:5px; font-weight:bold; color:var(--text-main); text-transform: uppercase;">Tag de Jogador</label>
         <input id="pf-frase" class="inp" placeholder="Ex: MVP">
         <button class="btn" onclick="savePerf()" style="margin-bottom:15px;">ATUALIZAR DADOS</button>
-        <button class="btn" onclick="logOutUser()" style="background:transparent; color:var(--text-muted); border:1px solid var(--border-dark); box-shadow:none;">DESCONECTAR</button>
+        <button class="btn" onclick="logOutUser()" style="background:transparent; color:var(--text-muted); border:1px solid var(--border-dark); box-shadow:none;">DESCONECTAR DO APP</button>
       </div>
     </div>
 
@@ -377,7 +357,7 @@
 
   <div id="mod-music" class="adm-overlay" style="align-items:center;">
     <div class="login-box" style="width:90%; max-width:350px;">
-      <h2 style="color:var(--text-main); margin-bottom:20px; font-weight:900; text-transform: uppercase;">Ajustes de Áudio</h2>
+      <h2 style="color:var(--text-main); margin-bottom:20px; font-weight:900; text-transform: uppercase;">Rádio Interna</h2>
       <div id="music-list">Carregando faixas...</div>
       <button class="btn" style="background:var(--border-dark); margin-top:10px; color: var(--text-main);" onclick="stopMusic()">MUDO (Desligar)</button>
       <button class="btn" style="background:transparent; border:1px solid var(--border-dark); color:var(--text-muted); margin-top:15px; box-shadow:none;" onclick="document.getElementById('mod-music').style.display='none'">FECHAR</button>
@@ -387,7 +367,7 @@
   <div id="mod-desafiar" class="adm-overlay" style="align-items:center;">
     <div class="login-box" style="width:90%; max-width:400px; padding:20px; max-height:80vh; display:flex; flex-direction:column;">
       <h2 style="color:var(--legendary-red); margin-bottom:10px; font-weight:900; text-transform: uppercase;">Escolha um Alvo</h2>
-      <p style="font-size:12px; color:var(--text-muted); margin-bottom:20px;">Vocês responderão a mesma pergunta. Acertem juntos para ganhar XP.</p>
+      <p style="font-size:12px; color:var(--text-muted); margin-bottom:20px;">Vocês responderão a mesma pergunta. Se AMBOS acertarem, vitória da dupla!</p>
       <div id="op-list" style="flex:1; overflow-y:auto; padding-right:5px;"></div>
       <button class="btn" style="background:transparent; border:1px solid var(--border-dark); color:var(--text-muted); margin-top:15px; box-shadow:none;" onclick="document.getElementById('mod-desafiar').style.display='none'">CANCELAR</button>
     </div>
@@ -396,7 +376,7 @@
   <div id="t-roleta" style="position:fixed;inset:0;background:var(--bg-dark);z-index:1000;display:none;flex-direction:column;padding:20px; background-image: radial-gradient(circle at center, #151A25, #0B0E14);">
     <div style="background:#07090D; width:40px; height:40px; border-radius:10px; display:flex; align-items:center; justify-content:center; cursor:pointer; border:1px solid var(--border-dark);" onclick="sairMinigame()"><span class="material-icons-round">close</span></div>
     <div style="text-align:center; font-size:24px; font-weight:900; margin-top:10px; text-transform:uppercase;" id="name-roleta-tela">Roleta de XP</div>
-    <div style="position:relative; width:300px; height:300px; margin:40px auto;"><div style="position:absolute; top:-15px; left:50%; transform:translateX(-50%); width:0; height:0; border-left:15px solid transparent; border-right:15px solid transparent; border-top:30px solid var(--gold); z-index:10; filter:drop-shadow(0 4px 5px rgba(0,0,0,0.8));"></div><div id="wheel-el" style="width:100%; height:100%; border-radius:50%; border:6px solid var(--border-dark); position:relative; overflow:hidden; transition:transform 4s cubic-bezier(0.2, 0.9, 0.2, 1); box-shadow:0 0 30px rgba(0,0,0,0.8); background:conic-gradient(#151A25 0deg 45deg, #1E2535 45deg 90deg, #151A25 90deg 135deg, #1E2535 135deg 180deg, #151A25 180deg 225deg, #1E2535 225deg 270deg, #151A25 270deg 315deg, #1E2535 315deg 360deg);"></div><div style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); width:80px; height:80px; background:#07090D; border-radius:50%; border:4px solid var(--gold); z-index:5; display:flex; justify-content:center; align-items:center; box-shadow:0 0 20px var(--gold-glow); cursor:pointer; font-weight:900; color:var(--gold);" onclick="girarRoletaReal()">GIRAR</div></div>
+    <div style="position:relative; width:300px; height:300px; margin:40px auto;"><div style="position:absolute; top:-15px; left:50%; transform:translateX(-50%); width:0; height:0; border-left:15px solid transparent; border-right:15px solid transparent; border-top:30px solid var(--gold); z-index:10; filter:drop-shadow(0 4px 5px rgba(0,0,0,0.8));"></div><div id="wheel-el" style="width:100%; height:100%; border-radius:50%; border:6px solid var(--border-dark); position:relative; overflow:hidden; box-shadow:0 0 30px rgba(0,0,0,0.8); background:conic-gradient(#151A25 0deg 45deg, #1E2535 45deg 90deg, #151A25 90deg 135deg, #1E2535 135deg 180deg, #151A25 180deg 225deg, #1E2535 225deg 270deg, #151A25 270deg 315deg, #1E2535 315deg 360deg);"></div><div style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); width:80px; height:80px; background:#07090D; border-radius:50%; border:4px solid var(--gold); z-index:5; display:flex; justify-content:center; align-items:center; box-shadow:0 0 20px var(--gold-glow); cursor:pointer; font-weight:900; color:var(--gold);" onclick="girarRoletaReal()">GIRAR</div></div>
     <div id="roleta-msg" style="text-align:center; font-weight:900; color:var(--text-main); font-size:18px; text-transform:uppercase;">TOQUE PARA GIRAR</div>
   </div>
 
@@ -430,7 +410,6 @@
          <h2 style="font-weight:900; color:var(--gold); text-transform:uppercase;">Admin Console</h2>
          <span class="material-icons-round" style="cursor:pointer; color:var(--text-muted);" onclick="document.getElementById('mod-adm').style.display='none'">close</span>
       </div>
-      
       <div class="adm-tabs">
         <div id="tb-u" class="adm-tab active" onclick="tab('u')">EQUIPE</div>
         <div id="tb-q" class="adm-tab" onclick="tab('q')">MISSÕES</div>
@@ -444,7 +423,7 @@
       
       <div id="adm-u" class="adm-view active">
         <div style="font-weight:bold; color:var(--gold); margin-bottom:15px; text-transform:uppercase;">Criar Novo Acesso</div>
-        <label class="adm-lbl">NOME DO COLABORADOR</label><input id="cad-nome" class="inp" placeholder="Nome Completo">
+        <label class="adm-lbl">NOME DO COLABORADOR</label><input id="cad-nome" class="inp" placeholder="Ex: João Silva">
         <label class="adm-lbl">USUÁRIO DE LOGIN (SIMPLES)</label><input id="cad-login" class="inp" type="text" placeholder="Ex: joao">
         <div class="row-grid">
            <div><label class="adm-lbl">SENHA PADRÃO</label><input id="cad-senha" class="inp" value="Ludo@2026" placeholder="Senha"></div>
@@ -466,7 +445,7 @@
       </div>
 
       <div id="adm-fx" class="adm-view">
-        <div style="font-size:12px; opacity:0.8; margin-bottom:15px;">Sons seguros do banco do servidor.</div>
+        <div style="font-size:12px; opacity:0.8; margin-bottom:15px;">Sons seguros dos Servidores Mixkit.</div>
         <label class="adm-lbl">ROLETA (Giro)</label><select id="fx-roleta" class="inp"><option value="https://assets.mixkit.co/active_storage/sfx/2003/2003-preview.mp3">Catraca</option><option value="https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3">Cassino Rápido</option></select>
         <label class="adm-lbl">FLASHCARDS (Virar)</label><select id="fx-card" class="inp"><option value="https://assets.mixkit.co/active_storage/sfx/2955/2955-preview.mp3">Swoosh de Papel</option></select>
         <label class="adm-lbl">BALÕES (Estouro)</label><select id="fx-balao" class="inp"><option value="https://assets.mixkit.co/active_storage/sfx/2605/2605-preview.mp3">Estouro Pop</option></select>
@@ -503,7 +482,7 @@
         </div>
         <label class="adm-lbl" style="color:var(--legendary-red);">USAR NOS DUELOS PVP?</label><select id="q-duelo" class="inp"><option value="SIM">SIM (Aparece na Arena)</option><option value="NAO">NÃO (Apenas Missões Padrão)</option></select>
         <div class="glass-card" style="margin-bottom:15px; background: #07090D;">
-           <label class="adm-lbl">OPÇÕES (A, B, C, D) - Aceita G.Drive</label>
+           <label class="adm-lbl">OPÇÕES (A, B, C, D) - Aceita G.Drive nas Imagens</label>
            <div class="row-grid"><input id="oa" class="inp" placeholder="Texto A"><input id="oai" class="inp" placeholder="Img A (URL)"></div><div class="row-grid"><input id="ob" class="inp" placeholder="Texto B"><input id="obi" class="inp" placeholder="Img B (URL)"></div><div class="row-grid"><input id="oc" class="inp" placeholder="Texto C"><input id="oci" class="inp" placeholder="Img C (URL)"></div><div class="row-grid"><input id="od" class="inp" placeholder="Texto D"><input id="odi" class="inp" placeholder="Img D (URL)"></div>
            <label class="adm-lbl" style="margin-top: 10px;">RESPOSTA CORRETA</label><select id="q-c-sel" class="inp" style="margin-bottom:0"><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option></select>
         </div>
@@ -515,15 +494,18 @@
       <div id="adm-r" class="adm-view">
         <h3 style="color:var(--gold); margin-bottom:5px; font-size:14px; text-transform: uppercase;">Nomes dos Jogos</h3>
         <div class="row-grid"><div><label class="adm-lbl">Jogo 1</label><input id="nm-roleta" class="inp" value="Roleta de XP"></div><div><label class="adm-lbl">Jogo 2</label><input id="nm-caixa" class="inp" value="Caixa Épica"></div><div><label class="adm-lbl">Jogo 3</label><input id="nm-raspa" class="inp" value="Contrato"></div></div>
+        
         <h3 style="color:var(--gold); margin-bottom:5px; margin-top:10px; font-size:14px; text-transform: uppercase;">ROLETA</h3>
         <label class="adm-lbl">Horas Recarga</label><input id="rl-tm" class="inp" type="number" placeholder="Ex: 12">
         <label class="adm-lbl">8 Fatias de Prêmio (XP)</label><div class="row-grid"><input id="f1" class="inp" type="number"><input id="f2" class="inp" type="number"><input id="f3" class="inp" type="number"><input id="f4" class="inp" type="number"><input id="f5" class="inp" type="number"><input id="f6" class="inp" type="number"><input id="f7" class="inp" type="number"><input id="f8" class="inp" type="number"></div>
+        
         <h3 style="color:var(--epic-purple); margin-bottom:5px; margin-top:20px; font-size:14px; text-transform: uppercase;">BAÚ MISTERIOSO</h3>
         <div class="row-grid"><div><label class="adm-lbl">Horas</label><input id="cx-tm" class="inp" type="number"></div><div><label class="adm-lbl">P1 (XP)</label><input id="cx-p1" class="inp" type="number"></div><div><label class="adm-lbl">P2 (XP)</label><input id="cx-p2" class="inp" type="number"></div><div><label class="adm-lbl">P3 (XP)</label><input id="cx-p3" class="inp" type="number"></div></div>
         <label class="adm-lbl">Frases de Revelação (P1, P2, P3)</label><input id="cx-t1" class="inp" placeholder="Frase 1"><input id="cx-t2" class="inp" placeholder="Frase 2"><input id="cx-t3" class="inp" placeholder="Frase 3">
+        
         <h3 style="color:var(--success-green); margin-bottom:5px; margin-top:20px; font-size:14px; text-transform: uppercase;">RASPADINHA</h3>
         <div class="row-grid"><div><label class="adm-lbl">Horas Recarga</label><input id="rp-tm" class="inp" type="number"></div><div><label class="adm-lbl">Vitória (XP)</label><input id="rp-p1" class="inp" type="number"></div></div>
-        <button class="btn" style="margin-top:20px" onclick="saveGames()">SALVAR REGRAS</button>
+        <button class="btn" style="margin-top:20px" onclick="saveGames()">SALVAR REGRAS E NOMES</button>
       </div>
 
       <div id="adm-l" class="adm-view">
@@ -541,24 +523,16 @@
   <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
 
   <script>
-    // PARSER GOOGLE DRIVE
+    // PARSER G.DRIVE 
     function parseImg(url) { if(!url) return ''; let u = url.trim(); let match = u.match(/file\/d\/([a-zA-Z0-9_-]+)/) || u.match(/id=([a-zA-Z0-9_-]+)/); if (match) return `https://drive.google.com/uc?export=view&id=${match[1]}`; return u; }
 
-    // CONTROLE DE TELA FLUIDO (SEALED)
-    window.addEventListener('load', () => { 
-        setTimeout(() => { 
-            document.getElementById('splash').style.opacity = '0'; 
-            setTimeout(() => { 
-                document.getElementById('splash').style.display = 'none'; 
-                document.getElementById('t-login').style.display = 'flex'; 
-            }, 500); 
-        }, 1500); 
-    });
+    window.addEventListener('load', () => { setTimeout(() => { document.getElementById('splash').style.opacity = '0'; setTimeout(() => { document.getElementById('splash').style.display = 'none'; document.getElementById('t-login').style.display = 'flex'; }, 500); }, 1500); });
 
     const firebaseConfig = { apiKey: "AIzaSyBiHQQdfL4X88KEZUMvZS-WP0z2viR-ZHY", authDomain: "csvplus-62502.firebaseapp.com", projectId: "csvplus-62502", storageBucket: "csvplus-62502.firebasestorage.app", messagingSenderId: "879590605354", appId: "1:879590605354:web:368cd1fdc1f1e35ca77953" };
     firebase.initializeApp(firebaseConfig); 
     const auth = firebase.auth(); const db = firebase.firestore();
     
+    // OFFLINE MODE
     db.enablePersistence().catch(err => { console.log("Offline Info:", err.code); });
     
     let U = null; window.TMR = null; window.LS = []; window.DESAFIO_ATUAL = null; window.PAPEL_ATUAL = null; window.TOTAL_XP_ACUMULADO = 0;
@@ -569,7 +543,7 @@
     let sfxWin = document.getElementById('sfx-win'); let sfxLose = document.getElementById('sfx-lose'); let sfxMagic = document.getElementById('sfx-magic'); let sfxFailDuo = document.getElementById('sfx-fail-duo'); let sfxTick = document.getElementById('sfx-tick'); let bgMusic = document.getElementById('global-audio'); bgMusic.volume = 0.3;
     let sfxRoleta = document.getElementById('sfx-roleta'); let sfxCard = document.getElementById('sfx-card'); let sfxBalao = document.getElementById('sfx-balao'); let sfxRaspa = document.getElementById('sfx-raspa');
 
-    function tocarSom(snd) { if(snd && snd.src) { snd.currentTime = 0; let p = snd.play(); if(p !== undefined) p.catch(e => console.log('Áudio Bloqueado Pelo Browser')); } }
+    function tocarSom(snd) { if(snd && snd.src && snd.src !== window.location.href) { snd.currentTime = 0; let p = snd.play(); if(p !== undefined) p.catch(e => console.log('Audio Blocked')); } }
     function playMusic(url, el) { bgMusic.src = url; bgMusic.play().catch(e=>console.log(e)); document.querySelectorAll('#mod-music .opt-btn').forEach(b => {b.style.borderColor='var(--border-dark)'; b.style.color='var(--text-main)';}); el.style.borderColor='var(--gold)'; el.style.color='var(--gold)'; }
     function stopMusic() { bgMusic.pause(); document.querySelectorAll('#mod-music .opt-btn').forEach(b => {b.style.borderColor='var(--border-dark)'; b.style.color='var(--text-main)';}); }
     function triggerVibration(type) { if (!("vibrate" in navigator)) return; if (type === 'win') window.navigator.vibrate([100, 50, 100]); else if (type === 'lose') window.navigator.vibrate([300]); else if (type === 'tick') window.navigator.vibrate([30]); }
@@ -663,7 +637,7 @@
     }
 
     function abrirModalDesafio() { let b = document.getElementById('op-list'); b.innerHTML = 'Buscando alvos...'; document.getElementById('mod-desafiar').style.display='flex'; db.collection('usuarios').where('status','!=','BLOQUEADO').get().then(snap => { b.innerHTML = ''; snap.forEach(doc => { let u = doc.data(); if(doc.id === U.id) return; let safeAv = parseImg(u.avatar); let av = safeAv ? `<img src="${safeAv}">` : `<img src="https://api.dicebear.com/7.x/bottts/svg?seed=${u.nome}">`; b.innerHTML += `<div class="op-card" onclick="lancarDesafio('${doc.id}', '${u.nome}', '${u.avatar||''}')"><div class="u-av av-chat">${av}</div><div style="flex:1; font-weight:bold; color:var(--text-main); font-size:14px;">${u.nome}</div><span class="material-icons-round" style="color:var(--gold);">sports_martial_arts</span></div>`; }); if(b.innerHTML === '') b.innerHTML = '<div style="color:var(--text-muted); text-align:center;">Nenhum alvo encontrado.</div>'; }); }
-    function lancarDesafio(alvoId, alvoNome, alvoAv) { db.collection('perguntas').where('status','==','ATIVA').where('duelo','==','SIM').get().then(snap => { let qs = []; snap.forEach(doc => qs.push(doc.data())); if(qs.length === 0) { pop("Atenção", "Nenhuma missão para Duelos!"); return; } let q = qs[Math.floor(Math.random() * qs.length)]; let desafio = { c_id: U.id, c_nome: U.nome, c_av: U.avatar||'', c_resp: false, c_acerto: false, a_id: alvoId, a_nome: alvoNome, a_av: alvoAv, a_resp: false, a_acerto: false, q_obj: q, q_win: q.xpGanho||10, q_lose: q.xpPerda||5, status: 'PENDENTE', data: firebase.firestore.FieldValue.serverTimestamp() }; db.collection('desafios').add(desafio).then(() => { document.getElementById('mod-desafiar').style.display='none'; pop("Lançado!", "Jogue a sua vez agora."); }); }); }
+    function lancarDesafio(alvoId, alvoNome, alvoAv) { db.collection('perguntas').where('status','==','ATIVA').where('duelo','==','SIM').get().then(snap => { let qs = []; snap.forEach(doc => qs.push(doc.data())); if(qs.length === 0) { pop("Atenção", "O Admin não marcou nenhuma missão para Duelos!"); return; } let q = qs[Math.floor(Math.random() * qs.length)]; let desafio = { c_id: U.id, c_nome: U.nome, c_av: U.avatar||'', c_resp: false, c_acerto: false, a_id: alvoId, a_nome: alvoNome, a_av: alvoAv, a_resp: false, a_acerto: false, q_obj: q, q_win: q.xpGanho||10, q_lose: q.xpPerda||5, status: 'PENDENTE', data: firebase.firestore.FieldValue.serverTimestamp() }; db.collection('desafios').add(desafio).then(() => { document.getElementById('mod-desafiar').style.display='none'; pop("Lançado!", "Jogue a sua vez agora."); }); }); }
     function iniciarDuelo(id_desafio, papel) { db.collection('desafios').doc(id_desafio).get().then(doc => { if(doc.exists) { window.DESAFIO_ATUAL = doc.id; window.PAPEL_ATUAL = papel; let d = doc.data(); window.TOTAL_XP_ACUMULADO = 0; runQ([d.q_obj], 0, true); } }); }
 
     function loadStoreItems() { db.collection('sistema').doc('loja').get().then(doc => { if(doc.exists) window.STORE_ITEMS = doc.data().itens || []; }); }
@@ -672,12 +646,28 @@
     function usarAvatar(url) { U.avatar = url; db.collection("usuarios").doc(U.id).update({ avatar: url }).then(() => { updUI(); renderStore(); pop("Sucesso", "Skin atualizada."); }); }
     function loadMusicList() { db.collection('sistema').doc('musicas').get().then(doc => { if(doc.exists) { let ms = doc.data().lista || []; let h = ''; ms.forEach(m => { h += `<div class="opt-btn" style="background:#07090D;" onclick="playMusic('${m.url}', this)"><span class="material-icons-round" style="margin-right:10px;">play_arrow</span> ${m.nome}</div>`; }); if(h) document.getElementById('music-list').innerHTML = h; } }); }
 
+    // ROLETA ANTI-TRAVAMENTO
     function checarCooldown(jogo, tempoHoras, callback) { db.collection("usuarios").doc(U.id).get().then((doc) => { let dados = doc.data(); let ultimo = dados['ultimo_' + jogo] || 0; let agora = new Date().getTime(); let cooldown = tempoHoras * 60 * 60 * 1000; if (U.nivel !== 'ADMIN' && (agora - ultimo) < cooldown) { let h = Math.floor(((ultimo + cooldown) - agora) / (1000*60*60)); let m = Math.floor((((ultimo + cooldown) - agora) % (1000*60*60)) / (1000*60)); pop("Aguarde", `Caixa travada. Volte em ${h}h e ${m}m.`); return; } callback(dados, agora); }); }
     function processarGanho(jogo, premio, dados, agora, elMsg) { let novoXP = (dados.xp || 0) + premio; let objUpdate = { xp: novoXP }; objUpdate['ultimo_' + jogo] = agora; db.collection("usuarios").doc(U.id).update(objUpdate).then(() => { triggerVibration(premio > 0 ? 'win' : 'lose'); U.xp = novoXP; if(premio > 0) { elMsg.innerText = `+${premio} XP`; elMsg.style.color = 'var(--gold)'; tocarSom(sfxWin); confetti({ particleCount: 100, spread: 70, colors:['#FFC312', '#0984E3'] }); updUI(premio); } else { elMsg.innerText = "AZAR"; elMsg.style.color = 'var(--legendary-red)'; tocarSom(sfxLose); updUI(); } setTimeout(()=>{ JOGANDO_MINI = false; }, 2000); }); }
 
-    function montarRoletaVisual() { let w = document.getElementById('wheel-el'); w.innerHTML = ''; let fatias = window.GAME_CFG.rl_p || [0,50,0,100,0,200,0,500]; for(let i=0; i<8; i++) { let val = fatias[i], txt = val == 0 ? 'AZAR' : val; let div = document.createElement('div'); div.className = 'wheel-text'; div.style.transform = `rotate(${i * 45 + 22.5}deg)`; div.innerText = txt; w.appendChild(div); } }
+    function montarRoletaVisual() { try { let w = document.getElementById('wheel-el'); if(!w)return; w.innerHTML = ''; let fatias = (window.GAME_CFG && window.GAME_CFG.rl_p && window.GAME_CFG.rl_p.length === 8) ? window.GAME_CFG.rl_p : [0, 50, 0, 100, 0, 200, 0, 500]; for(let i=0; i<8; i++) { let val = fatias[i]; let txt = (val == 0 || val == '0') ? 'AZAR' : val; let div = document.createElement('div'); div.className = 'wheel-text'; div.style.transform = `rotate(${i * 45 + 22.5}deg)`; div.innerText = txt; w.appendChild(div); } } catch(e) { console.log(e); } }
     function startRoletaGame() { document.getElementById('app-main').style.display='none'; document.getElementById('t-roleta').style.display='flex'; document.getElementById('roleta-msg').innerText="TOQUE PARA GIRAR"; document.getElementById('roleta-msg').style.color="var(--text-main)"; JOGANDO_MINI=false; }
-    function girarRoletaReal() { if(JOGANDO_MINI) return; checarCooldown('roleta', window.GAME_CFG.rl_tm || 12, (dados, agora) => { JOGANDO_MINI = true; tocarSom(sfxRoleta); let msgEl = document.getElementById('roleta-msg'); msgEl.innerText = "GIRANDO..."; let fatias = window.GAME_CFG.rl_p || [0, 50, 0, 100, 0, 200, 0, 500]; let idx = Math.floor(Math.random() * fatias.length); let premio = parseInt(fatias[idx]); ROL_CURRENT_ROTATION = ROL_CURRENT_ROTATION + 3600 + (360 - (idx * 45 + 22.5) - (ROL_CURRENT_ROTATION % 360)); if ((360 - (idx * 45 + 22.5) - (ROL_CURRENT_ROTATION % 360)) < 0) ROL_CURRENT_ROTATION += 360; document.getElementById('wheel-el').style.transform = `rotate(${ROL_CURRENT_ROTATION}deg)`; setTimeout(() => processarGanho('roleta', premio, dados, agora, msgEl), 4000); }); }
+    function girarRoletaReal() { 
+        if(JOGANDO_MINI) return; 
+        checarCooldown('roleta', window.GAME_CFG.rl_tm || 12, (dados, agora) => { 
+            try {
+                JOGANDO_MINI = true; tocarSom(sfxRoleta); 
+                let msgEl = document.getElementById('roleta-msg'); msgEl.innerText = "GIRANDO..."; 
+                let fatias = (window.GAME_CFG && window.GAME_CFG.rl_p && window.GAME_CFG.rl_p.length === 8) ? window.GAME_CFG.rl_p : [0, 50, 0, 100, 0, 200, 0, 500]; 
+                let idx = Math.floor(Math.random() * 8); 
+                let premio = parseInt(fatias[idx]); if(isNaN(premio)) premio = 0;
+                ROL_CURRENT_ROTATION = ROL_CURRENT_ROTATION + 3600 + (360 - (idx * 45 + 22.5) - (ROL_CURRENT_ROTATION % 360)); 
+                let w = document.getElementById('wheel-el');
+                if(w) { w.style.transition = 'transform 4s cubic-bezier(0.2, 0.9, 0.2, 1)'; w.style.transform = `rotate(${ROL_CURRENT_ROTATION}deg)`; }
+                setTimeout(() => processarGanho('roleta', premio, dados, agora, msgEl), 4000); 
+            } catch(e) { console.log(e); JOGANDO_MINI = false; }
+        }); 
+    }
     
     function startCaixaGame() { document.getElementById('app-main').style.display='none'; document.getElementById('t-caixa').style.display='flex'; document.getElementById('caixa-msg').innerText=''; document.getElementById('caixa-sub').innerText=''; let grid = document.getElementById('box-grid'); grid.innerHTML=''; for(let i=0; i<4; i++) { grid.innerHTML += `<div class="m-box" onclick="abrirCaixa(this)"><span class="material-icons-round">help_outline</span></div>`; } JOGANDO_MINI=false; CAIXA_ABERTA=false; }
     function abrirCaixa(el) { if(JOGANDO_MINI || CAIXA_ABERTA) return; checarCooldown('caixa', window.GAME_CFG.cx_tm || 12, (dados, agora) => { JOGANDO_MINI = true; CAIXA_ABERTA = true; document.querySelectorAll('.m-box').forEach(b => { if(b !== el) b.classList.add('disabled'); }); el.style.transform = 'scale(1.1) rotate(5deg)'; setTimeout(() => { tocarSom(sfxMagic); el.classList.add('opened'); let pArr = window.GAME_CFG.cx_p || [0, 50, 200]; let tArr = window.GAME_CFG.cx_t || ["Azar", "Bom!", "Jackpot!"]; let idx = Math.floor(Math.random() * pArr.length); let premio = parseInt(pArr[idx]); el.innerHTML = `<span class="material-icons-round" style="font-size:40px;">${premio > 0 ? 'diamond' : 'close'}</span>`; document.getElementById('caixa-sub').innerText = tArr[idx] || ''; processarGanho('caixa', premio, dados, agora, document.getElementById('caixa-msg')); }, 800); }); }
