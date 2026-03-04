@@ -12,95 +12,438 @@
 
   <style>
     /* ==========================================
-       TEMA GAMER E VARIÁVEIS
+       1. TEMA GAMER E VARIÁVEIS GLOBAIS
        ========================================== */
     :root {
-      --bg-dark: #0B0E14; --bg-panel: #151A25; --bg-panel-hover: #1E2535; --border-dark: #222B3E;
-      --text-main: #FFFFFF; --text-muted: #6C7A89;
-      --gold: #FFC312; --gold-glow: rgba(255, 195, 18, 0.4);
-      --rare-blue: #0984E3; --epic-purple: #6C5CE7; --legendary-red: #D63031; --success-green: #00B894;
+      --bg-dark: #0B0E14; 
+      --bg-panel: #151A25; 
+      --bg-panel-hover: #1E2535; 
+      --border-dark: #222B3E;
+      --text-main: #FFFFFF; 
+      --text-muted: #6C7A89;
+      --gold: #FFC312; 
+      --gold-glow: rgba(255, 195, 18, 0.4);
+      --rare-blue: #0984E3; 
+      --epic-purple: #6C5CE7; 
+      --legendary-red: #D63031; 
+      --success-green: #00B894;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; outline: none; -webkit-tap-highlight-color: transparent; font-family: 'Poppins', sans-serif; }
-    body { background: var(--bg-dark); color: var(--text-main); height: 100dvh; overflow: hidden; display: flex; flex-direction: column; }
-    .bg-anim { position: fixed; inset: 0; z-index: -1; background: radial-gradient(circle at 50% 0%, #151A25 0%, #0B0E14 60%); }
+
+    * { 
+      box-sizing: border-box; 
+      margin: 0; 
+      padding: 0; 
+      outline: none; 
+      -webkit-tap-highlight-color: transparent; 
+      font-family: 'Poppins', sans-serif; 
+    }
+
+    body { 
+      background: var(--bg-dark); 
+      color: var(--text-main); 
+      height: 100dvh; 
+      overflow: hidden; 
+      display: flex; 
+      flex-direction: column; 
+    }
+
+    .bg-anim { 
+      position: fixed; 
+      inset: 0; 
+      z-index: -1; 
+      background: radial-gradient(circle at 50% 0%, #151A25 0%, #0B0E14 60%); 
+    }
 
     /* ==========================================
-       BÁSICOS
+       2. CLASSES BÁSICAS (Botões, Inputs, Cards)
        ========================================== */
-    .glass-card { background: var(--bg-panel); border: 1px solid var(--border-dark); border-radius: 20px; padding: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-    .btn { width: 100%; padding: 16px; border-radius: 12px; border: none; background: linear-gradient(to right, #F8EFBA, #FFC312); color: #000; font-weight: 900; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; box-shadow: 0 5px 15px var(--gold-glow); display: flex; justify-content: center; align-items: center; gap: 10px;}
-    .btn:active { transform: scale(0.96); box-shadow: 0 2px 5px rgba(255, 195, 18, 0.3); }
-    .btn-sm { padding: 8px 12px; font-size: 11px; border-radius: 8px; font-weight: bold; cursor: pointer; border: none; color: white; text-transform: uppercase; text-align: center; transition: 0.2s;}
-    .btn-sm:active { transform: scale(0.9); }
-    .inp { width: 100%; padding: 14px; border-radius: 12px; margin-bottom: 12px; font-weight: 600; background: #07090D; border: 1px solid var(--border-dark); color: var(--text-main); transition: 0.3s; font-size: 13px;}
-    .inp:focus { border-color: var(--gold); box-shadow: 0 0 10px var(--gold-glow); }
-    .adm-lbl { font-size: 10px; color: var(--gold); font-weight: 900; margin-bottom: 4px; display: block; text-transform: uppercase; letter-spacing: 1px; }
+    .glass-card { 
+      background: var(--bg-panel); 
+      border: 1px solid var(--border-dark); 
+      border-radius: 20px; 
+      padding: 20px; 
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
+    }
+
+    .btn { 
+      width: 100%; 
+      padding: 16px; 
+      border-radius: 12px; 
+      border: none; 
+      background: linear-gradient(to right, #F8EFBA, #FFC312); 
+      color: #000; 
+      font-weight: 900; 
+      cursor: pointer; 
+      text-transform: uppercase; 
+      letter-spacing: 1px; 
+      transition: 0.3s; 
+      box-shadow: 0 5px 15px var(--gold-glow); 
+      display: flex; 
+      justify-content: center; 
+      align-items: center; 
+      gap: 10px;
+    }
+
+    .btn:active { 
+      transform: scale(0.96); 
+      box-shadow: 0 2px 5px rgba(255, 195, 18, 0.3); 
+    }
+
+    .btn-sm { 
+      padding: 10px 15px; 
+      font-size: 12px; 
+      border-radius: 8px; 
+      font-weight: bold; 
+      cursor: pointer; 
+      border: none; 
+      color: white; 
+      text-transform: uppercase; 
+      text-align: center; 
+      transition: 0.2s;
+    }
+
+    .btn-sm:active { 
+      transform: scale(0.9); 
+    }
+
+    .inp { 
+      width: 100%; 
+      padding: 14px; 
+      border-radius: 12px; 
+      margin-bottom: 12px; 
+      font-weight: 600; 
+      background: #07090D; 
+      border: 1px solid var(--border-dark); 
+      color: var(--text-main); 
+      transition: 0.3s; 
+      font-size: 13px;
+    }
+
+    .inp:focus { 
+      border-color: var(--gold); 
+      box-shadow: 0 0 10px var(--gold-glow); 
+    }
+
+    .adm-lbl { 
+      font-size: 10px; 
+      color: var(--gold); 
+      font-weight: 900; 
+      margin-bottom: 4px; 
+      display: block; 
+      text-transform: uppercase; 
+      letter-spacing: 1px; 
+    }
 
     /* ==========================================
-       LOGIN E INTRO
+       3. SISTEMA DE TELAS (Login, Splash, Popups)
        ========================================== */
-    #splash { position: fixed; inset: 0; background: var(--bg-dark); z-index: 10000; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.5s ease; }
-    .logo-3d { font-size: 70px; font-weight: 900; color: transparent; -webkit-text-stroke: 2px var(--gold); animation: float3D 3s infinite ease-in-out; text-shadow: 0 0 30px var(--gold-glow); letter-spacing: 5px; }
-    @keyframes float3D { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
-    .cyber-bar { width: 200px; height: 4px; background: var(--border-dark); margin-top: 40px; border-radius: 5px; overflow: hidden; }
-    .cyber-fill { width: 0%; height: 100%; background: var(--gold); animation: fillBar 3s forwards cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 0 10px var(--gold); }
-    @keyframes fillBar { 0% { width: 0%; } 50% { width: 60%; } 100% { width: 100%; } }
+    #splash { 
+      position: fixed; 
+      inset: 0; 
+      background: var(--bg-dark); 
+      z-index: 10000; 
+      display: flex; 
+      flex-direction: column; 
+      align-items: center; 
+      justify-content: center; 
+      transition: opacity 0.5s ease; 
+    }
 
-    #t-login { position: fixed; inset: 0; z-index: 9999; display: none; flex-direction: column; justify-content: center; align-items: center; padding: 20px; background: var(--bg-dark); }
-    .login-box { max-width: 380px; width: 100%; text-align: center; padding: 40px 30px; border-radius: 20px; background: var(--bg-panel); border: 1px solid var(--border-dark); box-shadow: 0 20px 40px rgba(0,0,0,0.5); animation: fadeUp 0.8s ease; }
-    .logo-login { width: 90px; height: 90px; border-radius: 20px; background: linear-gradient(45deg, var(--gold), #ff9f43); display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; color: #000; box-shadow: 0 10px 25px var(--gold-glow);}
+    .logo-3d { 
+      font-size: 70px; 
+      font-weight: 900; 
+      color: transparent; 
+      -webkit-text-stroke: 2px var(--gold); 
+      animation: float3D 3s infinite ease-in-out; 
+      text-shadow: 0 0 30px var(--gold-glow); 
+      letter-spacing: 5px; 
+    }
+
+    @keyframes float3D { 
+      0%, 100% { transform: translateY(0); } 
+      50% { transform: translateY(-15px); } 
+    }
+
+    .cyber-bar { 
+      width: 200px; 
+      height: 4px; 
+      background: var(--border-dark); 
+      margin-top: 40px; 
+      border-radius: 5px; 
+      overflow: hidden; 
+    }
+
+    .cyber-fill { 
+      width: 0%; 
+      height: 100%; 
+      background: var(--gold); 
+      animation: fillBar 3s forwards cubic-bezier(0.4, 0, 0.2, 1); 
+      box-shadow: 0 0 10px var(--gold); 
+    }
+
+    @keyframes fillBar { 
+      0% { width: 0%; } 
+      50% { width: 60%; } 
+      100% { width: 100%; } 
+    }
+
+    /* TELA DE LOGIN CORRIGIDA */
+    #t-login { 
+      position: fixed; 
+      inset: 0; 
+      z-index: 9999; 
+      display: none; /* Só aparece após o splash pelo JS */
+      flex-direction: column; 
+      justify-content: center; 
+      align-items: center; 
+      padding: 20px; 
+      background: var(--bg-dark); 
+    }
+
+    .login-box { 
+      max-width: 380px; 
+      width: 100%; 
+      text-align: center; 
+      padding: 40px 30px; 
+      border-radius: 20px; 
+      background: var(--bg-panel); 
+      border: 1px solid var(--border-dark); 
+      box-shadow: 0 20px 40px rgba(0,0,0,0.8); 
+      animation: fadeUp 0.8s ease; 
+    }
+
+    .logo-login { 
+      width: 90px; 
+      height: 90px; 
+      border-radius: 20px; 
+      background: linear-gradient(45deg, var(--gold), #ff9f43); 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      margin: 0 auto 20px; 
+      color: #000; 
+      box-shadow: 0 10px 25px var(--gold-glow);
+    }
+
+    /* POPUPS OVERLAYS (Z-INDEX ALTO) */
+    #ad-modal, #uni-pop, .adm-overlay { 
+      position: fixed; 
+      inset: 0; 
+      background: rgba(0,0,0,0.9); 
+      z-index: 999999; 
+      display: none; 
+      justify-content: center; 
+      align-items: center; 
+      padding: 20px; 
+      backdrop-filter: blur(10px); 
+    }
+
+    .ad-content { 
+      background: var(--bg-panel); 
+      border: 2px solid var(--gold); 
+      border-radius: 20px; 
+      padding: 30px; 
+      text-align: center; 
+      position: relative; 
+      max-width: 90vw; 
+      max-height: 85vh; 
+      overflow-y: auto; 
+      box-shadow: 0 0 50px var(--gold-glow); 
+      animation: pulse3D 2s infinite alternate;
+    }
+
+    .ad-close { 
+      position: absolute; 
+      top: 10px; 
+      right: 10px; 
+      background: var(--legendary-red); 
+      color: white; 
+      width: 30px; 
+      height: 30px; 
+      border-radius: 50%; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      font-weight: bold; 
+      cursor: pointer; 
+      border: none; 
+    }
 
     /* ==========================================
-       POPUPS E MODAIS
+       4. LAYOUT PRINCIPAL DO APP E NAVEGAÇÃO
        ========================================== */
-    #ad-modal, #uni-pop, .adm-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 999999; display: none; justify-content: center; align-items: center; padding: 20px; backdrop-filter: blur(10px); }
-    .ad-content { background: var(--bg-panel); border: 2px solid var(--gold); border-radius: 20px; padding: 30px; text-align: center; position: relative; max-width: 90vw; max-height: 85vh; overflow-y: auto; box-shadow: 0 0 50px var(--gold-glow); animation: pulse3D 2s infinite alternate;}
-    .ad-close { position: absolute; top: 10px; right: 10px; background: var(--legendary-red); color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; cursor: pointer; border: none; }
+    .app-container { 
+      width: 100%; 
+      height: 100%; 
+      position: relative; 
+      overflow: hidden; 
+      display: none; /* Escondido por padrão até o login sucesso */
+      flex-direction: column; 
+    }
 
-    /* ==========================================
-       LAYOUT PRINCIPAL E NAVEGAÇÃO
-       ========================================== */
-    .app-container { width: 100%; height: 100%; position: relative; overflow: hidden; display: flex; flex-direction: column; }
-    .top-header { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; background: var(--bg-panel); border-bottom: 1px solid var(--border-dark); z-index: 10; box-shadow: 0 4px 10px rgba(0,0,0,0.3);}
-    .view { flex: 1; display: none; flex-direction: column; overflow-x: hidden; overflow-y: auto; padding: 20px; padding-bottom: 100px; }
-    .view.active { display: flex; animation: fadeUp 0.4s ease; }
-    @keyframes fadeUp { from {opacity:0; transform:translateY(20px);} to {opacity:1; transform:translateY(0);} }
+    .top-header { 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      padding: 15px 20px; 
+      background: var(--bg-panel); 
+      border-bottom: 1px solid var(--border-dark); 
+      z-index: 10; 
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
 
-    .nav-bar-wrapper { position: absolute; bottom: 0; left: 0; width: 100%; background: var(--bg-panel); border-top: 1px solid var(--border-dark); z-index: 40; padding-bottom: env(safe-area-inset-bottom); overflow-x: auto;}
-    .nav-bar { display: inline-flex; justify-content: space-between; align-items: center; height: 70px; min-width: 100%; padding: 0 15px; gap: 20px;}
+    .view { 
+      flex: 1; 
+      display: none; 
+      flex-direction: column; 
+      overflow-x: hidden; 
+      overflow-y: auto; 
+      padding: 20px; 
+      padding-bottom: 100px; 
+    }
+
+    .view.active { 
+      display: flex; 
+      animation: fadeUp 0.4s ease; 
+    }
+
+    @keyframes fadeUp { 
+      from {opacity:0; transform:translateY(20px);} 
+      to {opacity:1; transform:translateY(0);} 
+    }
+
+    .nav-bar-wrapper { 
+      position: absolute; 
+      bottom: 0; 
+      left: 0; 
+      width: 100%; 
+      background: var(--bg-panel); 
+      border-top: 1px solid var(--border-dark); 
+      z-index: 40; 
+      padding-bottom: env(safe-area-inset-bottom); 
+      overflow-x: auto;
+    }
+
+    .nav-bar { 
+      display: inline-flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      height: 70px; 
+      min-width: 100%; 
+      padding: 0 15px; 
+      gap: 20px;
+    }
+
     .nav-bar-wrapper::-webkit-scrollbar { display: none; }
-    .nav-btn { display: flex; flex-direction: column; align-items: center; color: var(--text-muted); font-size: 10px; font-weight: 800; cursor: pointer; transition: 0.3s; text-transform: uppercase; }
-    .nav-btn.active { color: var(--gold); transform: translateY(-3px); }
-    .nav-btn span { font-size: 26px; margin-bottom: 4px; transition: 0.3s; }
 
-    .fab-admin { position: fixed; bottom: 90px; right: 20px; width: 55px; height: 55px; border-radius: 16px; background: var(--rare-blue); color: white; display: none; align-items: center; justify-content: center; box-shadow: 0 10px 20px rgba(9, 132, 227, 0.4); cursor: pointer; z-index: 100; transition: 0.3s; }
+    .nav-btn { 
+      display: flex; 
+      flex-direction: column; 
+      align-items: center; 
+      color: var(--text-muted); 
+      font-size: 10px; 
+      font-weight: 800; 
+      cursor: pointer; 
+      transition: 0.3s; 
+      text-transform: uppercase; 
+    }
+
+    .nav-btn.active { 
+      color: var(--gold); 
+      transform: translateY(-3px); 
+    }
+
+    .nav-btn span { 
+      font-size: 26px; 
+      margin-bottom: 4px; 
+      transition: 0.3s; 
+    }
+
+    /* BOTÃO ADMIN - ESCONDIDO POR PADRÃO, COM Z-INDEX SEGURO */
+    .fab-admin { 
+      position: fixed; 
+      bottom: 90px; 
+      right: 20px; 
+      width: 55px; 
+      height: 55px; 
+      border-radius: 16px; 
+      background: var(--rare-blue); 
+      color: white; 
+      display: none; 
+      align-items: center; 
+      justify-content: center; 
+      box-shadow: 0 10px 20px rgba(9, 132, 227, 0.4); 
+      cursor: pointer; 
+      z-index: 100; 
+      transition: 0.3s; 
+    }
 
     /* ==========================================
-       AVATARES BLINDADOS (TAMANHO FIXO)
+       5. AVATARES, RANKS E UI ELEMENTS
        ========================================== */
-    .u-av { border-radius: 14px; background: #07090D; overflow: hidden; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 5px 15px rgba(0,0,0,0.3); color:white; font-weight:bold; border: 2px solid var(--border-dark); transition: 0.3s; }
+    .u-av { 
+      border-radius: 14px; 
+      background: #07090D; 
+      overflow: hidden; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      flex-shrink: 0; 
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3); 
+      color: white; 
+      font-weight: bold; 
+      border: 2px solid var(--border-dark); 
+      transition: 0.3s; 
+    }
     
-    /* A trava de segurança das imagens */
-    .u-av img, .u-av svg { width: 100% !important; height: 100% !important; max-width: 100% !important; max-height: 100% !important; object-fit: cover !important; border-radius: inherit; }
+    /* TRAVA DE AÇO NOS AVATARES PARA NÃO DEFORMAREM A TELA */
+    .u-av img, .u-av svg { 
+      width: 100% !important; 
+      height: 100% !important; 
+      max-width: 100% !important; 
+      max-height: 100% !important; 
+      object-fit: cover !important; 
+      border-radius: inherit; 
+    }
     
-    #p-av { width: 100px; min-width: 100px; max-width: 100px; height: 100px; min-height: 100px; max-height: 100px; border-radius: 20px; border-width: 3px; font-size: 40px; margin: 0 auto 10px auto; }
-    .av-top { width: 40px; min-width: 40px; max-width: 40px; height: 40px; min-height: 40px; max-height: 40px; }
+    /* Tamanhos Específicos */
+    .av-top { width: 45px; min-width: 45px; max-width: 45px; height: 45px; min-height: 45px; max-height: 45px; }
     .av-pod { width: 60px; min-width: 60px; max-width: 60px; height: 60px; min-height: 60px; max-height: 60px; z-index: 2; margin-bottom: 10px; }
     .av-list { width: 45px; min-width: 45px; max-width: 45px; height: 45px; min-height: 45px; max-height: 45px; margin-right: 15px; }
     .av-chat { width: 35px; min-width: 35px; max-width: 35px; height: 35px; min-height: 35px; max-height: 35px; font-size: 20px; flex-shrink: 0; }
+    #p-av { width: 100px; min-width: 100px; max-width: 100px; height: 100px; min-height: 100px; max-height: 100px; border-radius: 20px; border-width: 3px; font-size: 40px; margin: 0 auto 10px auto; }
 
-    .rank-prata { border-color: #bdc3c7; box-shadow: 0 0 10px #bdc3c7; } .rank-ouro { border-color: var(--gold); box-shadow: 0 0 15px var(--gold-glow); } .rank-diamante { border-color: #00cec9; box-shadow: 0 0 20px #00cec9; animation: pulseDiamante 1.5s infinite alternate; }
-    @keyframes pulseDiamante { 0% { box-shadow: 0 0 10px #00cec9; } 100% { box-shadow: 0 0 25px #0ff; } }
+    .rank-prata { border-color: #bdc3c7; box-shadow: 0 0 10px #bdc3c7; } 
+    .rank-ouro { border-color: var(--gold); box-shadow: 0 0 15px var(--gold-glow); } 
+    .rank-diamante { border-color: #00cec9; box-shadow: 0 0 20px #00cec9; animation: pulseDiamante 1.5s infinite alternate; }
+    @keyframes pulseDiamante { 
+      0% { box-shadow: 0 0 10px #00cec9; } 
+      100% { box-shadow: 0 0 25px #0ff; } 
+    }
 
-    .xp-badge { background: #07090D; border: 1px solid var(--gold); padding: 5px 12px; border-radius: 8px; color: var(--gold); font-weight: 900; font-size: 14px; display: flex; align-items: center; gap: 5px; box-shadow: inset 0 0 10px rgba(255, 195, 18, 0.1);}
+    .xp-badge { 
+      background: #07090D; 
+      border: 1px solid var(--gold); 
+      padding: 5px 12px; 
+      border-radius: 8px; 
+      color: var(--gold); 
+      font-weight: 900; 
+      font-size: 14px; 
+      display: flex; 
+      align-items: center; 
+      gap: 5px; 
+      box-shadow: inset 0 0 10px rgba(255, 195, 18, 0.1);
+    }
     
     .podium-box { display: flex; justify-content: center; align-items: flex-end; height: 260px; padding-bottom: 20px; margin-top: 10px; }
     .p-col { width: 30%; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; position: relative; margin: 0 5px; }
     .p-block { width: 100%; border-radius: 8px 8px 4px 4px; display: flex; justify-content: center; align-items: flex-end; padding-bottom: 10px; font-weight: 900; color: #000; box-shadow: inset 0 -10px 20px rgba(0,0,0,0.5), 0 10px 20px rgba(0,0,0,0.5); }
-    .p1 .p-block { height: 140px; background: linear-gradient(to top, #FFC312, #F8EFBA); } .p2 .p-block { height: 100px; background: linear-gradient(to top, #7f8fa6, #dcdde1); } .p3 .p-block { height: 70px; background: linear-gradient(to top, #b33939, #ff7979); }
+    .p1 .p-block { height: 140px; background: linear-gradient(to top, #FFC312, #F8EFBA); } 
+    .p2 .p-block { height: 100px; background: linear-gradient(to top, #7f8fa6, #dcdde1); } 
+    .p3 .p-block { height: 70px; background: linear-gradient(to top, #b33939, #ff7979); }
 
     /* ==========================================
-       ARENA DE DUELOS (PVP)
+       6. ARENA DE DUELOS (PVP) E LOJA
        ========================================== */
     .arena-card { background: var(--bg-panel); border: 1px solid var(--border-dark); border-radius: 16px; padding: 15px; margin-bottom: 15px; box-shadow: 0 8px 20px rgba(0,0,0,0.4); display: flex; flex-direction: column; }
     .arena-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
@@ -110,24 +453,34 @@
     .arena-res { font-size: 14px; font-weight: 900; margin-top: 5px; }
     .res-win { color: var(--success-green); } .res-lose { color: var(--legendary-red); } .res-wait { color: var(--text-muted); font-size: 10px; }
     
-    #mod-desafiar { align-items: center; }
     .op-card { display: flex; align-items: center; gap: 15px; padding: 10px; border: 1px solid var(--border-dark); border-radius: 12px; margin-bottom: 10px; background: #07090D; cursor: pointer; transition: 0.2s; }
     .op-card:active { border-color: var(--gold); transform: scale(0.98); }
 
+    .store-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 10px; }
+    .store-item { background: var(--bg-panel); border: 1px solid var(--border-dark); border-radius: 16px; padding: 15px; text-align: center; display: flex; flex-direction: column; align-items: center; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+    .store-img { width: 80px; height: 80px; border-radius: 12px; object-fit: cover; margin-bottom: 10px; border: 2px solid var(--gold); box-shadow: 0 5px 15px var(--gold-glow); }
+    .store-price { color: var(--gold); font-weight: 900; font-size: 14px; margin-bottom: 10px; display:flex; align-items:center; gap:5px;}
+    .store-btn { padding: 10px; border-radius: 8px; border: none; background: #07090D; color: var(--gold); border: 1px solid var(--gold); font-weight: bold; cursor: pointer; width: 100%; transition: 0.2s; font-size:12px; text-transform:uppercase;}
+    .store-btn.owned { background: var(--success-green); color: #000; border-color: var(--success-green); }
+    .store-btn.equipped { background: var(--border-dark); color: var(--text-muted); border-color: transparent; }
+
     /* ==========================================
-       JOGOS (CAIXAS, ROLETA, RASPADINHA)
+       7. TELAS DE JOGOS (Caixas, Roleta, Raspadinha)
        ========================================== */
     .lvl-box { background: var(--bg-panel); border-left: 4px solid transparent; border-radius: 16px; padding: 20px; margin-bottom: 15px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; box-shadow: 0 8px 20px rgba(0,0,0,0.4); transition:0.3s;}
     .lvl-box:active { transform: scale(0.97); }
     .lvl-box.facil { border-left-color: var(--rare-blue); } .lvl-box.medio { border-left-color: var(--epic-purple); } .lvl-box.dificil { border-left-color: var(--legendary-red); }
     .game-card { background: var(--bg-panel); border: 1px solid var(--border-dark); border-radius: 16px; padding: 15px; margin-bottom: 15px; display: flex; align-items: center; gap: 15px; cursor: pointer; transition:0.3s; }
     .game-card:active { transform: scale(0.97); border-color: var(--gold); }
+    .game-icon { width: 60px; height: 60px; border-radius: 12px; background: #07090D; border: 1px solid var(--border-dark); display: flex; align-items: center; justify-content: center; font-size: 30px; }
 
+    /* CAIXA MISTERIOSA */
     .boxes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 280px; margin: 30px auto; perspective: 1000px; }
     .m-box { width: 120px; height: 120px; background: linear-gradient(135deg, #1E2535, #151A25); border: 2px solid var(--epic-purple); border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 50px; color: var(--epic-purple); cursor: pointer; transition: 0.4s; box-shadow: inset 0 0 20px rgba(108, 92, 231, 0.2), 0 10px 20px rgba(0,0,0,0.5); position: relative; animation: float3D 3s infinite ease-in-out;}
     .m-box.opened { background: var(--bg-panel); border-color: var(--gold); color: var(--gold); transform: scale(1.1) rotateY(180deg); text-shadow: 0 0 20px var(--gold-glow); box-shadow: inset 0 0 30px var(--gold-glow); z-index: 10; animation:none;}
     .m-box.disabled { filter: grayscale(100%); opacity: 0.3; pointer-events: none; animation:none;}
 
+    /* ROLETA */
     .wheel-container { position: relative; width: 280px; height: 280px; margin: 40px auto; }
     .wheel { width: 100%; height: 100%; border-radius: 50%; border: 6px solid var(--border-dark); position: relative; overflow: hidden; transition: transform 4s cubic-bezier(0.2, 0.9, 0.2, 1); box-shadow: 0 0 30px rgba(0,0,0,0.8), inset 0 0 30px rgba(0,0,0,0.8); background: conic-gradient(#151A25 0deg 45deg, #1E2535 45deg 90deg, #151A25 90deg 135deg, #1E2535 135deg 180deg, #151A25 180deg 225deg, #1E2535 225deg 270deg, #151A25 270deg 315deg, #1E2535 315deg 360deg); }
     .wheel-text { position: absolute; width: 100%; height: 100%; text-align: center; padding-top: 20px; font-weight: 900; font-size: 16px; color: var(--gold); text-shadow: 0 2px 5px #000; box-sizing: border-box; transform-origin: center; pointer-events: none; z-index: 2; }
@@ -135,32 +488,36 @@
     .wheel-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 80px; height: 80px; background: #07090D; border-radius: 50%; border: 4px solid var(--gold); z-index: 5; display: flex; justify-content: center; align-items: center; box-shadow: 0 0 20px var(--gold-glow); cursor: pointer; font-weight: 900; color: var(--gold); font-size: 14px; }
 
     /* ==========================================
-       QUIZ IN-GAME
+       8. QUIZ IN-GAME E CRONÔMETRO
        ========================================== */
-    #t-play { position: fixed; inset:0; background: var(--bg-dark); z-index:300; display:none; flex-direction:column; padding: 20px; overflow-y:auto; background-image: radial-gradient(circle at top, #1E2535, #0B0E14); }
+    #t-play { position: fixed; inset:0; background: var(--bg-dark); z-index: 500; display:none; flex-direction:column; padding: 20px; overflow-y:auto; background-image: radial-gradient(circle at top, #1E2535, #0B0E14); }
     .timer-badge { background: #07090D; border: 2px solid var(--gold); padding: 10px 20px; border-radius: 12px; font-weight: 900; font-size: 24px; color: var(--gold); box-shadow: 0 0 15px var(--gold-glow); transition: 0.3s; }
     .danger-pulse { animation: pulseRed 0.8s infinite; border-color: var(--legendary-red) !important; color: var(--legendary-red) !important; text-shadow: 0 0 10px var(--legendary-red); }
     @keyframes pulseRed { 0% { box-shadow: 0 0 10px var(--legendary-red); background: rgba(214, 48, 49, 0.1); transform: scale(1); } 100% { box-shadow: 0 0 30px var(--legendary-red); background: rgba(214, 48, 49, 0.4); transform: scale(1.1); } }
     
     .opt-btn { background: var(--bg-panel); padding: 20px; border-radius: 16px; margin-bottom: 15px; border: 2px solid var(--border-dark); font-weight: bold; cursor: pointer; transition: 0.2s; box-shadow: 0 5px 15px rgba(0,0,0,0.3); color: var(--text-main); display: flex; align-items: center;}
+    .opt-btn:active { transform: scale(0.97); border-color: var(--gold); }
+    
     .flashcard { position: relative; aspect-ratio: 1; perspective: 1000px; cursor: pointer; }
     .flashcard .front, .flashcard .back { width: 100%; height: 100%; position: absolute; top: 0; left: 0; backface-visibility: hidden; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 16px; font-weight: 800; padding: 10px; text-align: center; transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1); }
     .flashcard .front { background: var(--bg-panel); border: 2px solid var(--border-dark); color: var(--text-main); }
     .flashcard .back { transform: rotateY(180deg); color: #000; }
     .flashcard.flipped .front { transform: rotateY(180deg); } .flashcard.flipped .back { transform: rotateY(0deg); }
+    
     .balloon { width: 110px; height: 110px; border-radius: 50%; background: var(--bg-panel); border: 2px solid var(--border-dark); display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--text-main); font-weight: 800; text-align: center; padding: 10px; cursor: pointer; box-shadow: 0 10px 20px rgba(0,0,0,0.5); transition: 0.2s;}
     
     .xp-float { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 60px; font-weight: 900; z-index: 999999; animation: floatAnim 1.5s forwards; text-shadow: 0 10px 30px rgba(0,0,0,0.8); pointer-events: none; }
     .xp-float.win { color: var(--gold); } .xp-float.lose { color: var(--legendary-red); }
 
     /* ==========================================
-       CHAT E ADMIN TABS
+       9. CHAT E ADMIN PANEL
        ========================================== */
     .c-msg { display: flex; gap: 10px; align-items: flex-end; max-width: 85%; margin-bottom: 15px;} .c-msg.me { align-self: flex-end; flex-direction: row-reverse; }
     .c-bub { background: var(--bg-panel); border: 1px solid var(--border-dark); padding: 12px 16px; border-radius: 16px 16px 16px 0; font-size: 14px; color: var(--text-main);}
     .c-msg.me .c-bub { background: var(--border-dark); border-radius: 16px 16px 0 16px; border-color: var(--text-muted); }
 
-    .adm-overlay { z-index: 5000; align-items: flex-end; }
+    /* Modal Admin precisa de Z-index altíssimo */
+    .adm-overlay { z-index: 5000; align-items: flex-end; display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); justify-content: center;}
     .adm-card { width: 100%; height: 95%; border-radius: 24px 24px 0 0; display: flex; flex-direction: column; padding: 20px; background: var(--bg-dark); border-top: 2px solid var(--gold); }
     .adm-tabs { display: flex; gap: 10px; margin-bottom: 20px; overflow-x: auto; padding-bottom:10px; }
     .adm-tab { padding: 10px 20px; border-radius: 8px; font-weight: 800; font-size: 11px; cursor: pointer; border: 1px solid var(--border-dark); background: var(--bg-panel); color: var(--text-muted); text-transform: uppercase;}
@@ -175,7 +532,11 @@
   <audio id="global-audio" loop></audio>
   <div class="bg-anim"></div>
 
-  <div id="splash"><div class="logo-3d">CSV+</div><div class="cyber-bar"><div class="cyber-fill"></div></div><div class="splash-txt">INICIANDO SISTEMA...</div></div>
+  <div id="splash">
+    <div class="logo-3d">CSV+</div>
+    <div class="cyber-bar"><div class="cyber-fill"></div></div>
+    <div class="splash-txt">INICIANDO SISTEMA...</div>
+  </div>
   
   <div id="ad-modal">
     <div class="ad-content">
@@ -185,7 +546,7 @@
     </div>
   </div>
 
-  <div id="uni-pop" class="adm-overlay" style="align-items: center;">
+  <div id="uni-pop">
     <div class="login-box" style="padding: 30px; box-shadow:none;">
       <h2 id="pop-t" style="color:var(--gold); margin-bottom:10px; text-transform: uppercase; font-weight:900;">Aviso</h2>
       <p id="pop-m" style="margin-bottom:20px;font-weight:600; color:var(--text-main);">...</p>
@@ -205,27 +566,44 @@
     </div>
   </div>
 
-  <div id="fab-adm" class="fab-admin" onclick="abrirAdm()"><span class="material-icons-round" style="font-size: 28px;">admin_panel_settings</span></div>
+  <div id="fab-adm" class="fab-admin" onclick="abrirAdm()">
+    <span class="material-icons-round" style="font-size: 28px;">admin_panel_settings</span>
+  </div>
 
-  <div id="app-main" class="app-container" style="display:none;">
+  <div id="app-main" class="app-container">
     
     <div class="top-header">
       <div style="display:flex; align-items:center; gap:15px;" onclick="go('profile', document.getElementById('btn-nav-prof'))">
         <div class="u-av rank-normal av-top" id="h-av"></div>
-        <div><h3 id="h-nome" style="font-size:14px; margin:0; font-weight: 800; text-transform: uppercase;">...</h3><div style="font-size: 9px; color: var(--text-muted); font-weight: bold;" id="p-rank-name-mini">INICIANTE</div></div>
+        <div>
+          <h3 id="h-nome" style="font-size:14px; margin:0; font-weight: 800; text-transform: uppercase;">...</h3>
+          <div style="font-size: 9px; color: var(--text-muted); font-weight: bold;" id="p-rank-name-mini">INICIANTE</div>
+        </div>
       </div>
       <div style="display:flex; gap:10px; align-items: center;">
         <div class="xp-badge"><span class="material-icons-round" style="font-size: 16px;">stars</span><span id="h-xp">0</span></div>
-        <div class="icon-btn" style="background: transparent; border: none; width:30px; height:30px;" onclick="document.getElementById('mod-music').style.display='flex'"><span class="material-icons-round">headphones</span></div>
+        <div class="icon-btn" style="background: transparent; border: none; width:30px; height:30px;" onclick="document.getElementById('mod-music').style.display='flex'">
+          <span class="material-icons-round">headphones</span>
+        </div>
       </div>
     </div>
     
     <div id="v-home" class="view active">
       <div style="font-size:20px; font-weight:900; text-transform:uppercase;">Missões</div>
       <div style="font-size:12px; color:var(--text-muted); margin-bottom:20px; font-weight:bold;">Treinamento de XP</div>
-      <div class="lvl-box facil" onclick="play('FACIL')"><div><h2 style="font-size:24px;font-weight:900;margin:0;">FÁCIL</h2><p style="font-size:11px;color:var(--text-muted);margin:0;font-weight:bold;text-transform:uppercase;">Comum</p></div><span class="material-icons-round" style="font-size:40px;color:var(--rare-blue);">military_tech</span></div>
-      <div class="lvl-box medio" onclick="play('MEDIO')"><div><h2 style="font-size:24px;font-weight:900;margin:0;">MÉDIO</h2><p style="font-size:11px;color:var(--text-muted);margin:0;font-weight:bold;text-transform:uppercase;">Épico</p></div><span class="material-icons-round" style="font-size:40px;color:var(--epic-purple);">whatshot</span></div>
-      <div class="lvl-box dificil" onclick="play('DIFICIL')"><div><h2 style="font-size:24px;font-weight:900;margin:0;">DIFÍCIL</h2><p style="font-size:11px;color:var(--text-muted);margin:0;font-weight:bold;text-transform:uppercase;">Lendário</p></div><span class="material-icons-round" style="font-size:40px;color:var(--legendary-red);">diamond</span></div>
+      
+      <div class="lvl-box facil" onclick="play('FACIL')">
+        <div><h2 style="font-size:24px;font-weight:900;margin:0;">FÁCIL</h2><p style="font-size:11px;color:var(--text-muted);margin:0;font-weight:bold;text-transform:uppercase;">Comum</p></div>
+        <span class="material-icons-round" style="font-size:40px;color:var(--rare-blue);">military_tech</span>
+      </div>
+      <div class="lvl-box medio" onclick="play('MEDIO')">
+        <div><h2 style="font-size:24px;font-weight:900;margin:0;">MÉDIO</h2><p style="font-size:11px;color:var(--text-muted);margin:0;font-weight:bold;text-transform:uppercase;">Épico</p></div>
+        <span class="material-icons-round" style="font-size:40px;color:var(--epic-purple);">whatshot</span>
+      </div>
+      <div class="lvl-box dificil" onclick="play('DIFICIL')">
+        <div><h2 style="font-size:24px;font-weight:900;margin:0;">DIFÍCIL</h2><p style="font-size:11px;color:var(--text-muted);margin:0;font-weight:bold;text-transform:uppercase;">Lendário</p></div>
+        <span class="material-icons-round" style="font-size:40px;color:var(--legendary-red);">diamond</span>
+      </div>
     </div>
 
     <div id="v-arena" class="view">
@@ -240,14 +618,29 @@
     </div>
 
     <div id="v-spin" class="view">
-      <div style="font-size:20px; font-weight:900; text-transform:uppercase;">Hub de Sorte</div><div style="font-size:12px; color:var(--text-muted); margin-bottom:20px;">Inventário de Prêmios</div>
-      <div class="game-card" onclick="startRoletaGame()"><div class="game-icon" style="color:var(--gold);"><span class="material-icons-round">data_usage</span></div><div style="flex:1;"><h3 style="font-size:16px;" id="name-roleta-ui">Roleta de XP</h3><span style="font-size:11px;color:var(--text-muted);font-weight:bold;text-transform:uppercase;">Giro Diário</span></div><span class="material-icons-round" style="color:var(--text-muted);">arrow_forward_ios</span></div>
-      <div class="game-card" onclick="startCaixaGame()"><div class="game-icon" style="color:var(--epic-purple);"><span class="material-icons-round">all_inbox</span></div><div style="flex:1;"><h3 style="font-size:16px;" id="name-caixa-ui">Caixa Épica</h3><span style="font-size:11px;color:var(--text-muted);font-weight:bold;text-transform:uppercase;">Escolha 1 de 4</span></div><span class="material-icons-round" style="color:var(--text-muted);">arrow_forward_ios</span></div>
-      <div class="game-card" onclick="startRaspaGame()"><div class="game-icon" style="color:var(--success-green);"><span class="material-icons-round">grid_view</span></div><div style="flex:1;"><h3 style="font-size:16px;" id="name-raspa-ui">Contrato</h3><span style="font-size:11px;color:var(--text-muted);font-weight:bold;text-transform:uppercase;">Raspadinha Real</span></div><span class="material-icons-round" style="color:var(--text-muted);">arrow_forward_ios</span></div>
+      <div style="font-size:20px; font-weight:900; text-transform:uppercase;">Hub de Sorte</div>
+      <div style="font-size:12px; color:var(--text-muted); margin-bottom:20px;">Inventário de Prêmios</div>
+      
+      <div class="game-card" onclick="startRoletaGame()">
+        <div class="game-icon" style="color:var(--gold);"><span class="material-icons-round">data_usage</span></div>
+        <div style="flex:1;"><h3 style="font-size:16px;" id="name-roleta-ui">Roleta de XP</h3><span style="font-size:11px;color:var(--text-muted);font-weight:bold;text-transform:uppercase;">Giro Diário</span></div>
+        <span class="material-icons-round" style="color:var(--text-muted);">arrow_forward_ios</span>
+      </div>
+      <div class="game-card" onclick="startCaixaGame()">
+        <div class="game-icon" style="color:var(--epic-purple);"><span class="material-icons-round">all_inbox</span></div>
+        <div style="flex:1;"><h3 style="font-size:16px;" id="name-caixa-ui">Caixa Épica</h3><span style="font-size:11px;color:var(--text-muted);font-weight:bold;text-transform:uppercase;">Escolha 1 de 4</span></div>
+        <span class="material-icons-round" style="color:var(--text-muted);">arrow_forward_ios</span>
+      </div>
+      <div class="game-card" onclick="startRaspaGame()">
+        <div class="game-icon" style="color:var(--success-green);"><span class="material-icons-round">grid_view</span></div>
+        <div style="flex:1;"><h3 style="font-size:16px;" id="name-raspa-ui">Contrato</h3><span style="font-size:11px;color:var(--text-muted);font-weight:bold;text-transform:uppercase;">Raspadinha Real</span></div>
+        <span class="material-icons-round" style="color:var(--text-muted);">arrow_forward_ios</span>
+      </div>
     </div>
 
     <div id="v-store" class="view">
-      <div style="font-size:20px; font-weight:900; text-transform:uppercase;">Shopping de Itens</div><div style="font-size:12px; color:var(--text-muted); margin-bottom:10px;">Skins exclusivas</div>
+      <div style="font-size:20px; font-weight:900; text-transform:uppercase;">Shopping de Itens</div>
+      <div style="font-size:12px; color:var(--text-muted); margin-bottom:10px;">Skins exclusivas</div>
       <div id="store-list" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;"></div>
     </div>
 
@@ -258,7 +651,8 @@
     </div>
 
     <div id="v-chat" class="view">
-      <div style="font-size:20px; font-weight:900; text-transform:uppercase;">Lobby</div><div style="font-size:12px; color:var(--text-muted); margin-bottom:15px;">Chat Global</div>
+      <div style="font-size:20px; font-weight:900; text-transform:uppercase;">Lobby</div>
+      <div style="font-size:12px; color:var(--text-muted); margin-bottom:15px;">Chat Global</div>
       <div style="display:flex; flex-direction:column; flex: 1;">
         <div id="chat-msgs" style="flex: 1; overflow-y: auto; padding-right: 5px; margin-bottom: 15px;"></div>
         <div style="display: flex; gap: 10px; background: var(--bg-panel); padding: 10px; border-radius: 16px; border: 1px solid var(--border-dark);">
@@ -315,14 +709,14 @@
     </div>
   </div>
 
-  <div id="t-roleta" style="position:fixed;inset:0;background:var(--bg-dark);z-index:300;display:none;flex-direction:column;padding:20px; background-image: radial-gradient(circle at center, #151A25, #0B0E14);">
+  <div id="t-roleta" style="position:fixed;inset:0;background:var(--bg-dark);z-index:1000;display:none;flex-direction:column;padding:20px; background-image: radial-gradient(circle at center, #151A25, #0B0E14);">
     <div style="background:#07090D; width:40px; height:40px; border-radius:10px; display:flex; align-items:center; justify-content:center; cursor:pointer; border:1px solid var(--border-dark);" onclick="sairMinigame()"><span class="material-icons-round">close</span></div>
     <div style="text-align:center; font-size:24px; font-weight:900; margin-top:10px; text-transform:uppercase;" id="name-roleta-tela">Roleta de XP</div>
     <div style="position:relative; width:300px; height:300px; margin:40px auto;"><div style="position:absolute; top:-15px; left:50%; transform:translateX(-50%); width:0; height:0; border-left:15px solid transparent; border-right:15px solid transparent; border-top:30px solid var(--gold); z-index:10; filter:drop-shadow(0 4px 5px rgba(0,0,0,0.8));"></div><div id="wheel-el" style="width:100%; height:100%; border-radius:50%; border:6px solid var(--border-dark); position:relative; overflow:hidden; transition:transform 4s cubic-bezier(0.2, 0.9, 0.2, 1); box-shadow:0 0 30px rgba(0,0,0,0.8); background:conic-gradient(#151A25 0deg 45deg, #1E2535 45deg 90deg, #151A25 90deg 135deg, #1E2535 135deg 180deg, #151A25 180deg 225deg, #1E2535 225deg 270deg, #151A25 270deg 315deg, #1E2535 315deg 360deg);"></div><div style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); width:80px; height:80px; background:#07090D; border-radius:50%; border:4px solid var(--gold); z-index:5; display:flex; justify-content:center; align-items:center; box-shadow:0 0 20px var(--gold-glow); cursor:pointer; font-weight:900; color:var(--gold);" onclick="girarRoletaReal()">GIRAR</div></div>
     <div id="roleta-msg" style="text-align:center; font-weight:900; color:var(--text-main); font-size:18px; text-transform:uppercase;">TOQUE PARA GIRAR</div>
   </div>
 
-  <div id="t-caixa" style="position:fixed;inset:0;background:var(--bg-dark);z-index:300;display:none;flex-direction:column;padding:20px; background-image: radial-gradient(circle at center, #151A25, #0B0E14);">
+  <div id="t-caixa" style="position:fixed;inset:0;background:var(--bg-dark);z-index:1000;display:none;flex-direction:column;padding:20px; background-image: radial-gradient(circle at center, #151A25, #0B0E14);">
     <div style="background:#07090D; width:40px; height:40px; border-radius:10px; display:flex; align-items:center; justify-content:center; cursor:pointer; border:1px solid var(--border-dark);" onclick="sairMinigame()"><span class="material-icons-round">close</span></div>
     <div style="text-align:center; font-size:24px; font-weight:900; margin-top:10px; text-transform:uppercase;" id="name-caixa-tela">Caixa Épica</div>
     <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; max-width:280px; margin:30px auto;" id="box-grid"></div>
@@ -330,7 +724,7 @@
     <div id="caixa-sub" style="text-align:center; font-weight:bold; color:var(--text-main); font-size:14px; margin-top:5px; text-transform: uppercase;"></div>
   </div>
 
-  <div id="t-raspa" style="position:fixed;inset:0;background:var(--bg-dark);z-index:300;display:none;flex-direction:column;padding:20px; background-image: radial-gradient(circle at center, #151A25, #0B0E14);">
+  <div id="t-raspa" style="position:fixed;inset:0;background:var(--bg-dark);z-index:1000;display:none;flex-direction:column;padding:20px; background-image: radial-gradient(circle at center, #151A25, #0B0E14);">
     <div style="background:#07090D; width:40px; height:40px; border-radius:10px; display:flex; align-items:center; justify-content:center; cursor:pointer; border:1px solid var(--border-dark);" onclick="sairMinigame()"><span class="material-icons-round">close</span></div>
     <div style="text-align:center; font-size:24px; font-weight:900; margin-top:10px; text-transform:uppercase;" id="name-raspa-tela">Contrato</div>
     <p style="text-align:center; color:var(--text-muted); font-size: 12px; font-weight: bold; text-transform: uppercase;">Passe o dedo para raspar a tinta</p>
@@ -338,7 +732,7 @@
     <div id="raspa-msg" style="text-align:center; margin-top:20px; font-weight:900; color:var(--gold); font-size:24px; text-transform: uppercase;"></div>
   </div>
 
-  <div id="t-play">
+  <div id="t-play" style="position:fixed;inset:0;background:var(--bg-dark);z-index:1000;display:none;flex-direction:column;padding:20px; background-image: radial-gradient(circle at top, #1E2535, #0B0E14);">
     <div style="display:flex;justify-content:space-between;align-items:center; margin-bottom:30px;">
       <div style="background:#07090D; width:40px; height:40px; border-radius:10px; display:flex; align-items:center; justify-content:center; cursor:pointer; border:1px solid var(--border-dark);" onclick="sairJogo()"><span class="material-icons-round">close</span></div>
       <div class="timer-badge" id="timer-box"><span id="timer">30</span>s</div>
@@ -346,12 +740,13 @@
     <div id="q-box" style="flex:1;display:flex;flex-direction:column;justify-content:center;"></div>
   </div>
 
-  <div id="mod-adm" class="adm-overlay" style="align-items:flex-end;">
+  <div id="mod-adm" class="adm-overlay">
     <div class="adm-card">
       <div style="display:flex;justify-content:space-between;margin-bottom:20px;align-items:center">
          <h2 style="font-weight:900; color:var(--gold); text-transform:uppercase;">Admin Console</h2>
          <span class="material-icons-round" style="cursor:pointer; color:var(--text-muted);" onclick="document.getElementById('mod-adm').style.display='none'">close</span>
       </div>
+      
       <div class="adm-tabs">
         <div id="tb-u" class="adm-tab active" onclick="tab('u')">EQUIPE</div>
         <div id="tb-q" class="adm-tab" onclick="tab('q')">MISSÕES</div>
@@ -359,13 +754,13 @@
         <div id="tb-ad" class="adm-tab" onclick="tab('ad')">ANÚNCIO</div>
         <div id="tb-fx" class="adm-tab" onclick="tab('fx')">SFX</div>
         <div id="tb-l" class="adm-tab" onclick="tab('l')">LOJA</div>
-        <div id="tb-m" class="adm-tab" onclick="tab('m')">MÚSICA</div>
+        <div id="tb-m" class="adm-tab" onclick="tab('m')">RÁDIO</div>
       </div>
       
       <div id="adm-u" class="adm-view active">
         <div style="font-weight:bold; color:var(--gold); margin-bottom:15px; text-transform:uppercase;">Criar Novo Acesso</div>
-        <label class="adm-lbl">NOME DO COLABORADOR</label><input id="cad-nome" class="inp" placeholder="Nome Completo">
-        <label class="adm-lbl">LOGIN (E-MAIL CORPORATIVO)</label><input id="cad-email" class="inp" type="email" placeholder="E-mail">
+        <label class="adm-lbl">NOME DO COLABORADOR</label><input id="cad-nome" class="inp" placeholder="Ex: João Silva">
+        <label class="adm-lbl">LOGIN (E-MAIL CORPORATIVO)</label><input id="cad-email" class="inp" type="email" placeholder="Ex: joao@ludo.com">
         <div class="row-grid">
            <div><label class="adm-lbl">SENHA PADRÃO</label><input id="cad-senha" class="inp" value="Ludo@2026" placeholder="Senha"></div>
            <div><label class="adm-lbl">PERMISSÃO</label><select id="cad-nivel" class="inp"><option value="USER">USER</option><option value="ADMIN">ADMIN</option></select></div>
@@ -378,17 +773,17 @@
       </div>
 
       <div id="adm-m" class="adm-view">
-        <div style="font-size:12px; opacity:0.8; margin-bottom:15px;">Cole links diretos de MP3 para a Rádio.</div>
-        <label class="adm-lbl">Nome da Faixa</label>
+        <div style="font-size:12px; opacity:0.8; margin-bottom:15px;">Adicione faixas de música de fundo.</div>
+        <label class="adm-lbl">NOME DA FAIXA</label>
         <input id="mu-nome" class="inp" placeholder="Ex: Foco Total">
-        <label class="adm-lbl">Link de Áudio (.mp3)</label>
-        <input id="mu-url" class="inp" placeholder="URL do arquivo .mp3">
+        <label class="adm-lbl">LINK DO ÁUDIO (.mp3)</label>
+        <input id="mu-url" class="inp" placeholder="Cole o link .mp3 direto aqui">
         <button class="btn" onclick="saveMusic()">ADICIONAR MÚSICA</button>
         <div id="adm-mu-list" style="margin-top:20px;"></div>
       </div>
 
       <div id="adm-fx" class="adm-view">
-        <div style="font-size:12px; opacity:0.8; margin-bottom:15px;">Mude o áudio padrão das interações (Links Oficiais e Seguros do Google).</div>
+        <div style="font-size:12px; opacity:0.8; margin-bottom:15px;">Escolha o áudio padrão das interações (Anti-Bloqueios do Google).</div>
         <label class="adm-lbl">ROLETA (Giro)</label>
         <select id="fx-roleta" class="inp"><option value="https://actions.google.com/sounds/v1/tools/ratchet_wrench.ogg">Catraca Metálica</option><option value="https://actions.google.com/sounds/v1/water/water_drip.ogg">Gotas (Estilo Moedas)</option></select>
         <label class="adm-lbl">FLASHCARDS (Virar)</label>
@@ -403,7 +798,7 @@
       <div id="adm-ad" class="adm-view">
         <div style="font-size:12px; opacity:0.8; margin-bottom:15px;">Popup gigante no primeiro login (Aceita G.Drive).</div>
         <label class="adm-lbl">STATUS DO ANÚNCIO</label><select id="ad-ativo" class="inp"><option value="NAO">DESATIVADO (Oculto)</option><option value="SIM">ATIVADO (Mostrar)</option></select>
-        <label class="adm-lbl">TÍTULO</label><input id="ad-tit" class="inp" placeholder="Ex: Aviso do RH">
+        <label class="adm-lbl">TÍTULO DA CAIXA</label><input id="ad-tit" class="inp" placeholder="Ex: Aviso do RH">
         <label class="adm-lbl">FORMATO</label><select id="ad-tipo" class="inp"><option value="TEXTO">Apenas Texto</option><option value="IMAGEM">Banner (Imagem URL / Drive)</option></select>
         <label class="adm-lbl">CONTEÚDO</label><textarea id="ad-cont" class="inp" placeholder="Texto ou Link da Imagem" rows="4" style="height:auto;"></textarea>
         <div style="display: flex; gap: 10px;">
@@ -431,28 +826,31 @@
            <label class="adm-lbl" style="margin-top: 10px;">RESPOSTA CORRETA</label><select id="q-c-sel" class="inp" style="margin-bottom:0"><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option></select>
         </div>
         <button class="btn" onclick="saveQ()">SALVAR MISSÃO</button>
-        <button class="btn" style="background:transparent; border:1px solid var(--border-dark); color:var(--text-muted); margin-top:10px; box-shadow:none;" onclick="clearQForm()">NOVA</button>
+        <button class="btn" style="background:transparent; border:1px solid var(--border-dark); color:var(--text-muted); margin-top:10px; box-shadow:none;" onclick="clearQForm()">LIMPAR (NOVA)</button>
         <div id="adm-list" style="margin-top:20px; font-size:12px;"></div>
       </div>
 
       <div id="adm-r" class="adm-view">
         <h3 style="color:var(--gold); margin-bottom:5px; font-size:14px; text-transform: uppercase;">Nomes dos Jogos</h3>
         <div class="row-grid"><div><label class="adm-lbl">Jogo 1</label><input id="nm-roleta" class="inp" value="Roleta de XP"></div><div><label class="adm-lbl">Jogo 2</label><input id="nm-caixa" class="inp" value="Caixa Épica"></div><div><label class="adm-lbl">Jogo 3</label><input id="nm-raspa" class="inp" value="Contrato"></div></div>
+        
         <h3 style="color:var(--gold); margin-bottom:5px; margin-top:10px; font-size:14px; text-transform: uppercase;">ROLETA</h3>
         <label class="adm-lbl">Horas Recarga</label><input id="rl-tm" class="inp" type="number" placeholder="Ex: 12">
-        <label class="adm-lbl">8 Fatias de Prêmio</label><div class="row-grid"><input id="f1" class="inp" type="number"><input id="f2" class="inp" type="number"><input id="f3" class="inp" type="number"><input id="f4" class="inp" type="number"><input id="f5" class="inp" type="number"><input id="f6" class="inp" type="number"><input id="f7" class="inp" type="number"><input id="f8" class="inp" type="number"></div>
+        <label class="adm-lbl">8 Fatias de Prêmio (XP)</label><div class="row-grid"><input id="f1" class="inp" type="number"><input id="f2" class="inp" type="number"><input id="f3" class="inp" type="number"><input id="f4" class="inp" type="number"><input id="f5" class="inp" type="number"><input id="f6" class="inp" type="number"><input id="f7" class="inp" type="number"><input id="f8" class="inp" type="number"></div>
+        
         <h3 style="color:var(--epic-purple); margin-bottom:5px; margin-top:20px; font-size:14px; text-transform: uppercase;">BAÚ MISTERIOSO</h3>
-        <div class="row-grid"><div><label class="adm-lbl">Horas</label><input id="cx-tm" class="inp" type="number"></div><div><label class="adm-lbl">P1</label><input id="cx-p1" class="inp" type="number"></div><div><label class="adm-lbl">P2</label><input id="cx-p2" class="inp" type="number"></div><div><label class="adm-lbl">P3</label><input id="cx-p3" class="inp" type="number"></div></div>
-        <label class="adm-lbl">Frases de Revelação</label><input id="cx-t1" class="inp" placeholder="Frase 1"><input id="cx-t2" class="inp" placeholder="Frase 2"><input id="cx-t3" class="inp" placeholder="Frase 3">
+        <div class="row-grid"><div><label class="adm-lbl">Horas</label><input id="cx-tm" class="inp" type="number"></div><div><label class="adm-lbl">P1 (XP)</label><input id="cx-p1" class="inp" type="number"></div><div><label class="adm-lbl">P2 (XP)</label><input id="cx-p2" class="inp" type="number"></div><div><label class="adm-lbl">P3 (XP)</label><input id="cx-p3" class="inp" type="number"></div></div>
+        <label class="adm-lbl">Frases de Revelação (P1, P2, P3)</label><input id="cx-t1" class="inp" placeholder="Frase 1"><input id="cx-t2" class="inp" placeholder="Frase 2"><input id="cx-t3" class="inp" placeholder="Frase 3">
+        
         <h3 style="color:var(--success-green); margin-bottom:5px; margin-top:20px; font-size:14px; text-transform: uppercase;">RASPADINHA</h3>
-        <div class="row-grid"><div><label class="adm-lbl">Horas</label><input id="rp-tm" class="inp" type="number"></div><div><label class="adm-lbl">Vitória (XP)</label><input id="rp-p1" class="inp" type="number"></div></div>
-        <button class="btn" style="margin-top:20px" onclick="saveGames()">SALVAR REGRAS</button>
+        <div class="row-grid"><div><label class="adm-lbl">Horas Recarga</label><input id="rp-tm" class="inp" type="number"></div><div><label class="adm-lbl">Vitória (XP)</label><input id="rp-p1" class="inp" type="number"></div></div>
+        <button class="btn" style="margin-top:20px" onclick="saveGames()">SALVAR REGRAS E NOMES</button>
       </div>
 
       <div id="adm-l" class="adm-view">
-        <label class="adm-lbl">Link da Skin (Aceita G.Drive)</label><input id="lj-img" class="inp" placeholder="URL">
-        <label class="adm-lbl">Nome do Personagem</label><input id="lj-nome" class="inp" placeholder="Nome">
-        <label class="adm-lbl">Preço de Venda (XP)</label><input id="lj-preco" class="inp" type="number" placeholder="XP">
+        <label class="adm-lbl">Link da Skin (Aceita G.Drive)</label><input id="lj-img" class="inp" placeholder="URL da Imagem">
+        <label class="adm-lbl">Nome do Personagem</label><input id="lj-nome" class="inp" placeholder="Ex: Princesa">
+        <label class="adm-lbl">Preço de Venda (XP)</label><input id="lj-preco" class="inp" type="number" placeholder="Ex: 500">
         <button class="btn" onclick="saveLoja()">ENVIAR PARA LOJA</button>
         <div id="adm-loja-list" style="margin-top:20px;"></div>
       </div>
@@ -464,6 +862,7 @@
   <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
 
   <script>
+    // PARSER G.DRIVE (Converte link visualização para link direto de imagem)
     function parseImg(url) { if(!url) return ''; let u = url.trim(); let match = u.match(/file\/d\/([a-zA-Z0-9_-]+)/) || u.match(/id=([a-zA-Z0-9_-]+)/); if (match) return `https://drive.google.com/uc?export=view&id=${match[1]}`; return u; }
 
     window.addEventListener('load', () => { setTimeout(() => { document.getElementById('splash').style.opacity = '0'; setTimeout(() => { document.getElementById('splash').style.display = 'none'; document.getElementById('t-login').style.display = 'flex'; }, 500); }, 3500); });
@@ -476,7 +875,7 @@
     window.GAME_CFG = { rl_tm: 12, rl_p: [0, 50, 0, 100, 0, 200, 0, 500], cx_tm: 12, cx_p: [0, 50, 200], cx_t: ["Azar!", "Bom!", "Jackpot!"], rp_tm: 8, rp_p: 100 };
     window.STORE_ITEMS = []; window.ANUNCIO_MOSTRADO = false;
 
-    // AUDIO ENGINE SEGURA 
+    // AUDIO ENGINE SEGURA (APIs Google Actions)
     const sfxWin = new Audio('https://actions.google.com/sounds/v1/cartoon/cartoon_success_fanfare.ogg');
     const sfxLose = new Audio('https://actions.google.com/sounds/v1/cartoon/cartoon_boing.ogg');
     const sfxMagic = new Audio('https://actions.google.com/sounds/v1/magic/muffled_magic_swoosh.ogg'); 
@@ -484,13 +883,13 @@
     let sfxTick = new Audio('https://actions.google.com/sounds/v1/ui/button_click.ogg'); sfxTick.volume = 0.5;
     let bgMusic = document.getElementById('global-audio'); bgMusic.volume = 0.3;
 
-    function tocarSom(snd) { if(!snd || !snd.src) return; snd.currentTime = 0; let p = snd.play(); if(p !== undefined) p.catch(e => console.log('Áudio Bloqueado pelo Navegador:', e)); }
+    function tocarSom(snd) { if(!snd || !snd.src) return; snd.currentTime = 0; let p = snd.play(); if(p !== undefined) p.catch(e => console.log('Áudio Bloqueado pelo Navegador.')); }
     function playMusic(url, el) { bgMusic.src = url; bgMusic.play().catch(e=>console.log(e)); document.querySelectorAll('#mod-music .opt-btn').forEach(b => {b.style.borderColor='var(--border-dark)'; b.style.color='var(--text-main)';}); el.style.borderColor='var(--gold)'; el.style.color='var(--gold)'; }
     function stopMusic() { bgMusic.pause(); document.querySelectorAll('#mod-music .opt-btn').forEach(b => {b.style.borderColor='var(--border-dark)'; b.style.color='var(--text-main)';}); }
     function triggerVibration(type) { if (!("vibrate" in navigator)) return; if (type === 'win') window.navigator.vibrate([100, 50, 100]); else if (type === 'lose') window.navigator.vibrate([300]); else if (type === 'tick') window.navigator.vibrate([30]); }
     function getRankObj(xp) { if(xp < 500) return {c: 'rank-normal', n: 'Iniciante'}; if(xp < 2000) return {c: 'rank-prata', n: 'Prata'}; if(xp < 5000) return {c: 'rank-ouro', n: 'Ouro'}; return {c: 'rank-diamante', n: 'Diamante'}; }
 
-    // DADOS INICIAIS
+    // CARREGAMENTOS INICIAIS
     function loadGlobalConfigs() {
         db.collection('sistema').doc('minigames').get().then(doc => { 
             if(doc.exists) {
@@ -510,7 +909,7 @@
                 if(U && U.nivel==='ADMIN') { document.getElementById('fx-roleta').value = d.roleta||defR; document.getElementById('fx-card').value = d.card||defC; document.getElementById('fx-balao').value = d.balao||defB; document.getElementById('fx-raspa').value = d.raspa||defS; }
             } else { sfxRoleta.src=defR; sfxCard.src=defC; sfxBalao.src=defB; sfxRaspa.src=defS; }
         });
-        loadMusicList(); // Recarrega músicas ao iniciar
+        loadMusicList();
     }
     
     function checkAds() {
@@ -553,20 +952,20 @@
       let hav = document.getElementById('h-av'); hav.innerHTML = fotoHTML; hav.className = `u-av ${r.c} av-top`; let pav = document.getElementById('p-av'); pav.innerHTML = fotoHTML; pav.className = `u-av ${r.c}`;
     }
 
-    function savePerf(){ let novaFrase = document.getElementById('pf-frase').value; let novoAvatar = document.getElementById('pf-av').value.trim(); if(novoAvatar && !U.inventario.includes(novoAvatar) && !novoAvatar.includes('dicebear') && !novoAvatar.includes('drive.google.com')) { pop("Atenção", "Imagens externas devem ser compradas na Loja ou G.Drive!"); return; } db.collection('usuarios').doc(U.id).update({ frase: novaFrase, avatar: novoAvatar }).then(() => { U.frase = novaFrase; U.avatar = novoAvatar; updUI(); pop("Sucesso!", "Perfil atualizado!"); }); }
+    function savePerf(){ let novaFrase = document.getElementById('pf-frase').value; let novoAvatar = document.getElementById('pf-av').value.trim(); if(novoAvatar && !U.inventario.includes(novoAvatar) && !novoAvatar.includes('dicebear') && !novoAvatar.includes('drive.google.com')) { pop("Atenção", "Imagens externas devem ser compradas na Loja ou hospedadas no G.Drive!"); return; } db.collection('usuarios').doc(U.id).update({ frase: novaFrase, avatar: novoAvatar }).then(() => { U.frase = novaFrase; U.avatar = novoAvatar; updUI(); pop("Sucesso!", "Perfil atualizado!"); }); }
     function go(t, el){ document.querySelectorAll('.view').forEach(v => { v.classList.remove('active'); v.style.display='none'; }); let tg = document.getElementById('v-'+t); tg.style.display='flex'; setTimeout(() => tg.classList.add('active'), 10); document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active')); el.classList.add('active'); if(t === 'rank') loadRank(); if(t === 'store') renderStore(); if(t === 'chat') loadChat(); if(t === 'arena') loadArena(); }
     function pop(t,m){ document.getElementById('uni-pop').style.display='flex'; document.getElementById('pop-t').innerText=t; document.getElementById('pop-m').innerText=m; }
 
     function loadRank() { let p = document.getElementById('podium-area'), ls = document.getElementById('rank-list'); p.innerHTML = '<div style="text-align:center; width:100%; padding-top:50px; color:var(--text-muted);">Sincronizando...</div>'; ls.innerHTML = ''; db.collection("usuarios").orderBy("xp", "desc").get().then((snap) => { let l = []; snap.forEach(doc => { let u = doc.data(); if(u.status !== 'BLOQUEADO') l.push(u); }); p.innerHTML = ''; if(l.length === 0) return; if(l[1]) pod(l[1], 2, p); if(l[0]) pod(l[0], 1, p); if(l[2]) pod(l[2], 3, p); l.slice(3, 15).forEach((u, i) => { let r = getRankObj(u.xp); let safeAv = parseImg(u.avatar); let av = safeAv ? `<img src="${safeAv}">` : `<img src="https://api.dicebear.com/7.x/bottts/svg?seed=${u.nome}">`; ls.innerHTML += `<div class="r-item" style="background:var(--bg-panel); border:1px solid var(--border-dark); border-radius:12px; padding:12px; margin-bottom:10px; display:flex; align-items:center;"><div style="width:30px;font-weight:900;color:var(--text-muted);font-size:16px">#${i+4}</div><div class="u-av ${r.c} av-list">${av}</div><div style="flex:1;font-weight:bold;font-size:14px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${u.nome.split(' ')[0]}<br><small style="font-weight:bold;color:var(--text-muted);font-size:10px;">${u.frase || ''}</small></div><div style="color:var(--gold);font-weight:900;font-size:16px"><span class="material-icons-round" style="font-size:14px;vertical-align:middle;">stars</span> ${u.xp}</div></div>`; }); confetti({ particleCount: 100, spread: 80, origin: { y: 0.6 }, colors: ['#FFC312', '#6C5CE7', '#0984E3'] }); }); }
     function pod(u, pos, c) { let r = getRankObj(u.xp); let safeAv = parseImg(u.avatar); let av = safeAv ? `<img src="${safeAv}">` : `<img src="https://api.dicebear.com/7.x/bottts/svg?seed=${u.nome}">`; c.innerHTML += `<div class="p-col p${pos}"><div class="u-av ${r.c} av-pod">${av}</div><div class="p-block" style="position:relative;">${u.xp}<div style="position:absolute; top:-35px; width:120px; background:var(--bg-panel); color:var(--text-main); font-size:9px; padding:5px; border-radius:10px; text-align:center; border:1px solid var(--border-dark); font-weight:bold; display: ${u.frase ? 'block' : 'none'}">${u.frase}</div></div><div style="font-size:11px;margin-top:8px;font-weight:800;text-transform:uppercase;color:var(--text-main);">${u.nome.split(' ')[0]}</div></div>`; }
 
-    // CHAT
+    // CHAT (EDIÇÃO E CARREGAMENTO CORRETO)
     let escutaChat = null; 
     function loadChat(){ if(escutaChat) escutaChat(); let b = document.getElementById('chat-msgs'); b.innerHTML = '<div style="text-align:center; padding:20px; color:var(--text-muted);">Conectando servidor...</div>'; escutaChat = db.collection('chat').orderBy('data', 'asc').limit(50).onSnapshot((snap) => { b.innerHTML = ''; if(snap.empty) { b.innerHTML = '<div style="text-align:center; padding:20px; color:var(--text-muted);">Lobby vazio.</div>'; } snap.forEach((doc) => { let m = doc.data(); let me = m.uid === U.id ? 'me' : ''; let r = getRankObj(m.xp||0); let safeAv = parseImg(m.av); let av = safeAv ? `<img src="${safeAv}" onerror="this.style.display='none'">` : `<img src="https://api.dicebear.com/7.x/bottts/svg?seed=${m.nome}">`; let safeOld = m.msg.replace(/'/g, "\\'").replace(/"/g, '&quot;'); let editBtn = (m.uid === U.id) ? `<span class="material-icons-round" style="font-size:12px; margin-left:8px; cursor:pointer; opacity:0.5; vertical-align:middle;" onclick="editarMsgChat('${doc.id}', '${safeOld}')">edit</span>` : ''; let editMark = m.editado ? `<span style="font-size:9px; opacity:0.5; margin-left:5px; font-style:italic;">(edit)</span>` : ''; b.innerHTML += `<div class="c-msg ${me}"><div class="u-av ${r.c} av-chat">${av}</div><div class="c-bub"><span style="font-size:10px;color:var(--gold);display:block;margin-bottom:3px;font-weight:900;text-transform:uppercase;">${m.nome}</span>${m.msg} ${editMark} ${editBtn}</div></div>`; }); b.scrollTop = b.scrollHeight; }); }
     function sendChat(){ let i = document.getElementById('c-txt'); let t = i.value.trim(); if(!t) return; i.value = ''; db.collection('chat').add({ uid: U.id, nome: U.nome, av: U.avatar || '', xp: U.xp, msg: t, data: firebase.firestore.FieldValue.serverTimestamp() }); }
     function editarMsgChat(id, oldMsg) { let n = prompt("Edite sua mensagem:", oldMsg); if(n !== null && n.trim() !== "" && n !== oldMsg) { db.collection('chat').doc(id).update({ msg: n.trim(), editado: true }); } }
 
-    // ARENA DE DUELOS (PVP)
+    // ARENA DE DUELOS
     let escutaArena = null;
     function loadArena() {
         if(escutaArena) escutaArena(); let b = document.getElementById('arena-list'); b.innerHTML = '<div style="text-align:center; color:var(--text-muted);">Sincronizando Duelos...</div>';
@@ -580,28 +979,12 @@
                     if(d.c_id === U.id && !d.c_resp) actionBtn = `<button class="btn-sm" style="background:var(--rare-blue); width:100%; padding:15px; font-size:14px; margin-top:10px;" onclick="iniciarDuelo('${did}', 'c')">JOGAR MINHA VEZ</button>`;
                     if(d.a_id === U.id && !d.a_resp) actionBtn = `<button class="btn-sm" style="background:var(--rare-blue); width:100%; padding:15px; font-size:14px; margin-top:10px;" onclick="iniciarDuelo('${did}', 'a')">ACEITAR DESAFIO</button>`;
                 }
-                b.innerHTML += `<div class="arena-card"><div class="arena-header"><div class="arena-player"><div class="u-av" style="width:40px;height:40px;min-width:40px;min-height:40px;">${cA}</div><div class="arena-name">${d.c_nome.split(' ')[0]}</div>${resA}</div><div class="arena-vs">VS</div><div class="arena-player"><div class="u-av" style="width:40px;height:40px;min-width:40px;min-height:40px;">${cB}</div><div class="arena-name">${d.a_nome.split(' ')[0]}</div>${resB}</div></div>${actionBtn}</div>`;
+                b.innerHTML += `<div class="arena-card"><div class="arena-header"><div class="arena-player"><div class="u-av av-top">${cA}</div><div class="arena-name">${d.c_nome.split(' ')[0]}</div>${resA}</div><div class="arena-vs">VS</div><div class="arena-player"><div class="u-av av-top">${cB}</div><div class="arena-name">${d.a_nome.split(' ')[0]}</div>${resB}</div></div>${actionBtn}</div>`;
             });
         });
     }
-
-    function abrirModalDesafio() {
-        let b = document.getElementById('op-list'); b.innerHTML = 'Buscando colegas...'; document.getElementById('mod-desafiar').style.display='flex';
-        db.collection('usuarios').where('status','!=','BLOQUEADO').get().then(snap => {
-            b.innerHTML = ''; snap.forEach(doc => { let u = doc.data(); if(doc.id === U.id) return; let safeAv = parseImg(u.avatar); let av = safeAv ? `<img src="${safeAv}">` : `<img src="https://api.dicebear.com/7.x/bottts/svg?seed=${u.nome}">`; b.innerHTML += `<div class="op-card" onclick="lancarDesafio('${doc.id}', '${u.nome}', '${u.avatar||''}')"><div class="u-av" style="width:35px;height:35px;min-width:35px;min-height:35px;">${av}</div><div style="flex:1; font-weight:bold; color:var(--text-main); font-size:14px;">${u.nome}</div><span class="material-icons-round" style="color:var(--gold);">sports_martial_arts</span></div>`; });
-            if(b.innerHTML === '') b.innerHTML = '<div style="color:var(--text-muted); text-align:center;">Nenhum colega disponível.</div>';
-        });
-    }
-
-    function lancarDesafio(alvoId, alvoNome, alvoAv) {
-        db.collection('perguntas').where('status','==','ATIVA').get().then(snap => {
-            let qs = []; snap.forEach(doc => qs.push(doc.data())); if(qs.length === 0) { pop("Vazio", "Não há missões cadastradas para duelos."); return; }
-            let q = qs[Math.floor(Math.random() * qs.length)];
-            let desafio = { c_id: U.id, c_nome: U.nome, c_av: U.avatar||'', c_resp: false, c_acerto: false, a_id: alvoId, a_nome: alvoNome, a_av: alvoAv, a_resp: false, a_acerto: false, q_obj: q, q_win: q.xpGanho||10, q_lose: q.xpPerda||5, status: 'PENDENTE', data: firebase.firestore.FieldValue.serverTimestamp() };
-            db.collection('desafios').add(desafio).then(() => { document.getElementById('mod-desafiar').style.display='none'; pop("Desafio Lançado!", "Jogue a sua vez na Arena!"); });
-        });
-    }
-
+    function abrirModalDesafio() { let b = document.getElementById('op-list'); b.innerHTML = 'Buscando colegas...'; document.getElementById('mod-desafiar').style.display='flex'; db.collection('usuarios').where('status','!=','BLOQUEADO').get().then(snap => { b.innerHTML = ''; snap.forEach(doc => { let u = doc.data(); if(doc.id === U.id) return; let safeAv = parseImg(u.avatar); let av = safeAv ? `<img src="${safeAv}">` : `<img src="https://api.dicebear.com/7.x/bottts/svg?seed=${u.nome}">`; b.innerHTML += `<div class="op-card" onclick="lancarDesafio('${doc.id}', '${u.nome}', '${u.avatar||''}')"><div class="u-av av-chat">${av}</div><div style="flex:1; font-weight:bold; color:var(--text-main); font-size:14px;">${u.nome}</div><span class="material-icons-round" style="color:var(--gold);">sports_martial_arts</span></div>`; }); if(b.innerHTML === '') b.innerHTML = '<div style="color:var(--text-muted); text-align:center;">Nenhum colega disponível.</div>'; }); }
+    function lancarDesafio(alvoId, alvoNome, alvoAv) { db.collection('perguntas').where('status','==','ATIVA').get().then(snap => { let qs = []; snap.forEach(doc => qs.push(doc.data())); if(qs.length === 0) { pop("Vazio", "Não há missões cadastradas para duelos."); return; } let q = qs[Math.floor(Math.random() * qs.length)]; let desafio = { c_id: U.id, c_nome: U.nome, c_av: U.avatar||'', c_resp: false, c_acerto: false, a_id: alvoId, a_nome: alvoNome, a_av: alvoAv, a_resp: false, a_acerto: false, q_obj: q, q_win: q.xpGanho||10, q_lose: q.xpPerda||5, status: 'PENDENTE', data: firebase.firestore.FieldValue.serverTimestamp() }; db.collection('desafios').add(desafio).then(() => { document.getElementById('mod-desafiar').style.display='none'; pop("Desafio Lançado!", "Jogue a sua vez na Arena!"); }); }); }
     function iniciarDuelo(id_desafio, papel) { db.collection('desafios').doc(id_desafio).get().then(doc => { if(doc.exists) { window.DESAFIO_ATUAL = doc.id; window.PAPEL_ATUAL = papel; let d = doc.data(); runQ([d.q_obj], 0, true); } }); }
 
     // LOJA
@@ -622,31 +1005,60 @@
     function startCaixaGame() { document.getElementById('app-main').style.display='none'; document.getElementById('t-caixa').style.display='flex'; document.getElementById('caixa-msg').innerText=''; document.getElementById('caixa-sub').innerText=''; let grid = document.getElementById('box-grid'); grid.innerHTML=''; for(let i=0; i<4; i++) { grid.innerHTML += `<div class="m-box" onclick="abrirCaixa(this)"><span class="material-icons-round">help_outline</span></div>`; } JOGANDO_MINI=false; CAIXA_ABERTA=false; }
     function abrirCaixa(el) { if(JOGANDO_MINI || CAIXA_ABERTA) return; checarCooldown('caixa', window.GAME_CFG.cx_tm || 12, (dados, agora) => { JOGANDO_MINI = true; CAIXA_ABERTA = true; document.querySelectorAll('.m-box').forEach(b => { if(b !== el) b.classList.add('disabled'); }); el.style.transform = 'scale(1.1) rotate(5deg)'; setTimeout(() => { tocarSom(sfxMagic); el.classList.add('opened'); let pArr = window.GAME_CFG.cx_p || [0, 50, 200]; let tArr = window.GAME_CFG.cx_t || ["Azar", "Bom!", "Jackpot!"]; let idx = Math.floor(Math.random() * pArr.length); let premio = parseInt(pArr[idx]); el.innerHTML = `<span class="material-icons-round" style="font-size:40px;">${premio > 0 ? 'diamond' : 'close'}</span>`; document.getElementById('caixa-sub').innerText = tArr[idx] || ''; processarGanho('caixa', premio, dados, agora, document.getElementById('caixa-msg')); }, 800); }); }
     
+    // RASPADINHA COM CANVAS TOUCH
     function startRaspaGame() { 
         checarCooldown('raspa', window.GAME_CFG.rp_tm || 8, (dados, agora) => {
             document.getElementById('app-main').style.display='none'; document.getElementById('t-raspa').style.display='flex'; 
             document.getElementById('raspa-msg').innerText=''; let g = document.getElementById('raspa-grid'); g.innerHTML=''; 
             window.RASPA_CLICKS=0; window.RASPA_RES=[]; window.RASPA_DADOS = dados; window.RASPA_AGORA = agora; JOGANDO_MINI = false;
-            for(let i=0; i<4; i++) { g.innerHTML += `<div style="position:relative; width:100%; height:100px; border-radius:12px; overflow:hidden; border:2px dashed var(--border-dark);"><div id="raspa-res-${i}" style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:35px; background:var(--bg-panel); color:var(--text-main); font-weight:900;"></div><canvas id="raspa-canvas-${i}" width="150" height="100" style="position:absolute; inset:0; width:100%; height:100%; touch-action:none; cursor:pointer;"></canvas></div>`; }
+            for(let i=0; i<4; i++) { 
+                g.innerHTML += `
+                <div style="position:relative; width:100%; height:100px; border-radius:12px; overflow:hidden; border:2px dashed var(--border-dark);">
+                   <div id="raspa-res-${i}" style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:35px; background:var(--bg-panel); color:var(--text-main); font-weight:900;"></div>
+                   <canvas id="raspa-canvas-${i}" width="150" height="100" style="position:absolute; inset:0; width:100%; height:100%; touch-action:none; cursor:pointer;"></canvas>
+                </div>`; 
+            }
             setTimeout(() => { for(let i=0; i<4; i++) initScratchCanvas(i); }, 100);
         });
     }
 
     function initScratchCanvas(i) {
         let canvas = document.getElementById(`raspa-canvas-${i}`); let ctx = canvas.getContext('2d'); let resDiv = document.getElementById(`raspa-res-${i}`);
-        ctx.fillStyle = '#2C3A47'; ctx.fillRect(0, 0, canvas.width, canvas.height); ctx.font = 'bold 16px Poppins'; ctx.fillStyle = 'rgba(255,255,255,0.4)'; ctx.textAlign = 'center'; ctx.fillText('RASPAR', canvas.width/2, canvas.height/2 + 5);
+        ctx.fillStyle = '#2C3A47'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.font = 'bold 16px Poppins'; ctx.fillStyle = 'rgba(255,255,255,0.4)'; ctx.textAlign = 'center'; ctx.fillText('RASPAR', canvas.width/2, canvas.height/2 + 5);
         let simbolos = ['⭐', '💎', '🔥']; let s = simbolos[Math.floor(Math.random() * simbolos.length)]; resDiv.innerText = s;
         let isDrawing = false; let revealed = false;
+
         function getMousePos(evt) { let rect = canvas.getBoundingClientRect(); let clientX = evt.touches ? evt.touches[0].clientX : evt.clientX; let clientY = evt.touches ? evt.touches[0].clientY : evt.clientY; return { x: (clientX - rect.left) * (canvas.width / rect.width), y: (clientY - rect.top) * (canvas.height / rect.height) }; }
         function startDraw(e) { if(revealed || JOGANDO_MINI) return; isDrawing = true; scratch(e); }
         function stopDraw() { isDrawing = false; checkReveal(); sfxRaspa.pause(); }
-        function scratch(e) { if (!isDrawing || revealed || JOGANDO_MINI) return; e.preventDefault(); let pos = getMousePos(e); ctx.globalCompositeOperation = 'destination-out'; ctx.beginPath(); ctx.arc(pos.x, pos.y, 20, 0, Math.PI * 2); ctx.fill(); if(sfxRaspa.paused) { sfxRaspa.currentTime = 0; tocarSom(sfxRaspa); } }
-        function checkReveal() { if(revealed) return; let pixels = ctx.getImageData(0, 0, canvas.width, canvas.height).data; let trans = 0; for (let j = 3; j < pixels.length; j += 4) { if (pixels[j] < 10) trans++; } if (trans / (pixels.length / 4) > 0.3) { revealed = true; canvas.style.transition = 'opacity 0.3s'; canvas.style.opacity = '0'; sfxRaspa.pause(); window.RASPA_RES.push(s); window.RASPA_CLICKS++; if(window.RASPA_CLICKS === 4) { JOGANDO_MINI = true; let counts = {}; window.RASPA_RES.forEach(x => counts[x] = (counts[x]||0)+1); let max = Math.max(...Object.values(counts)); let winSimbol = Object.keys(counts).find(key => counts[key] === max); let premio = max >= 3 ? (window.GAME_CFG.rp_p || 100) : 0; if(premio > 0) { for(let k=0; k<4; k++) { let el = document.getElementById(`raspa-res-${k}`); if(el.innerText === winSimbol) { el.style.background = 'var(--success-green)'; el.style.color = '#000'; el.parentElement.style.animation = 'pulseDiamante 1s infinite alternate'; } } } processarGanho('raspa', premio, window.RASPA_DADOS, window.RASPA_AGORA, document.getElementById('raspa-msg')); } setTimeout(() => canvas.remove(), 300); } }
-        canvas.addEventListener('mousedown', startDraw); canvas.addEventListener('mousemove', scratch); canvas.addEventListener('mouseup', stopDraw); canvas.addEventListener('mouseleave', stopDraw); canvas.addEventListener('touchstart', startDraw, {passive: false}); canvas.addEventListener('touchmove', scratch, {passive: false}); canvas.addEventListener('touchend', stopDraw);
+        function scratch(e) {
+            if (!isDrawing || revealed || JOGANDO_MINI) return; e.preventDefault(); let pos = getMousePos(e);
+            ctx.globalCompositeOperation = 'destination-out'; ctx.beginPath(); ctx.arc(pos.x, pos.y, 20, 0, Math.PI * 2); ctx.fill();
+            if(sfxRaspa.paused) { sfxRaspa.currentTime = 0; tocarSom(sfxRaspa); }
+        }
+        function checkReveal() {
+            if(revealed) return; let pixels = ctx.getImageData(0, 0, canvas.width, canvas.height).data; let trans = 0;
+            for (let j = 3; j < pixels.length; j += 4) { if (pixels[j] < 10) trans++; }
+            if (trans / (pixels.length / 4) > 0.3) { 
+                revealed = true; canvas.style.transition = 'opacity 0.3s'; canvas.style.opacity = '0'; sfxRaspa.pause();
+                window.RASPA_RES.push(s); window.RASPA_CLICKS++;
+                if(window.RASPA_CLICKS === 4) {
+                    JOGANDO_MINI = true;
+                    let counts = {}; window.RASPA_RES.forEach(x => counts[x] = (counts[x]||0)+1); let max = Math.max(...Object.values(counts)); let winSimbol = Object.keys(counts).find(key => counts[key] === max);
+                    let premio = max >= 3 ? (window.GAME_CFG.rp_p || 100) : 0;
+                    if(premio > 0) { for(let k=0; k<4; k++) { let el = document.getElementById(`raspa-res-${k}`); if(el.innerText === winSimbol) { el.style.background = 'var(--success-green)'; el.style.color = '#000'; el.parentElement.style.animation = 'pulseDiamante 1s infinite alternate'; } } }
+                    processarGanho('raspa', premio, window.RASPA_DADOS, window.RASPA_AGORA, document.getElementById('raspa-msg'));
+                }
+                setTimeout(() => canvas.remove(), 300);
+            }
+        }
+        canvas.addEventListener('mousedown', startDraw); canvas.addEventListener('mousemove', scratch); canvas.addEventListener('mouseup', stopDraw); canvas.addEventListener('mouseleave', stopDraw);
+        canvas.addEventListener('touchstart', startDraw, {passive: false}); canvas.addEventListener('touchmove', scratch, {passive: false}); canvas.addEventListener('touchend', stopDraw);
     }
     function sairMinigame() { if(JOGANDO_MINI) return; document.getElementById('t-roleta').style.display='none'; document.getElementById('t-caixa').style.display='none'; document.getElementById('t-raspa').style.display='none'; document.getElementById('app-main').style.display='flex'; updUI(); }
 
-    // QUIZ (COM DRIVE PARSER E DUELOS)
+    // QUIZ (MISSÃO E DUELOS)
     function play(nivel){ document.getElementById('app-main').style.display = 'none'; document.getElementById('t-play').style.display = 'flex'; document.getElementById('q-box').innerHTML = '<div style="text-align:center; color:var(--gold); font-weight:900; font-size:20px;">CARREGANDO...</div>'; db.collection('perguntas').where('nivel', '==', nivel).where('status', '==', 'ATIVA').get().then((snap) => { let perguntas = []; snap.forEach(doc => perguntas.push(doc.data())); if(perguntas.length === 0){ pop("Vazio", "Nenhuma missão."); sairJogo(); return; } perguntas = perguntas.sort(() => 0.5 - Math.random()); window.DESAFIO_ATUAL = null; runQ(perguntas, 0, false); }); }
     function runQ(l, i, isDuelo){
       if(i >= l.length){ pop("Missão Cumprida", "Você finalizou o treinamento!"); sairJogo(); return; }
@@ -673,9 +1085,9 @@
     }
     function sairJogo(){ clearInterval(window.TMR); document.getElementById('t-play').style.display='none'; document.getElementById('app-main').style.display='flex'; document.getElementById('timer-box').classList.remove('danger-pulse'); updUI(); window.DESAFIO_ATUAL = null; }
 
-    // ADMIN TABS
+    // ADMIN TABS E FUNCOES
     function abrirAdm(){ document.getElementById('mod-adm').style.display='flex'; tab('u'); }
-    function tab(v){ document.querySelectorAll('.adm-tab').forEach(e => e.classList.remove('active')); document.querySelectorAll('.adm-view').forEach(e => e.classList.remove('active')); document.getElementById('tb-'+v).classList.add('active'); document.getElementById('adm-'+v).classList.add('active'); if(v === 'u') loadUsersAdmin(); if(v === 'q') ldQ(); if(v === 'l') ldL(); }
+    function tab(v){ document.querySelectorAll('.adm-tab').forEach(e => e.classList.remove('active')); document.querySelectorAll('.adm-view').forEach(e => e.classList.remove('active')); document.getElementById('tb-'+v).classList.add('active'); document.getElementById('adm-'+v).classList.add('active'); if(v === 'u') loadUsersAdmin(); if(v === 'q') ldQ(); if(v === 'l') ldL(); if(v === 'ad') loadAdConfig(); }
 
     function cadastrarUsuarioPeloAdmin() { let nome = document.getElementById('cad-nome').value.trim(); let email = document.getElementById('cad-email').value.trim(); let senha = document.getElementById('cad-senha').value; let nivel = document.getElementById('cad-nivel').value; let msg = document.getElementById('cad-msg'); if(!nome || !email || !senha) { msg.style.color = 'var(--legendary-red)'; msg.innerText = "Preencha tudo!"; return; } msg.style.color = 'var(--gold)'; msg.innerText = "Criando..."; secondaryApp.auth().createUserWithEmailAndPassword(email, senha).then((cred) => { db.collection('usuarios').doc(cred.user.uid).set({ nome: nome, xp: 0, nivel: nivel, frase: "", avatar: "", inventario: [], status: 'ATIVO' }).then(() => { secondaryApp.auth().signOut(); document.getElementById('cad-nome').value = ''; document.getElementById('cad-email').value = ''; msg.style.color = 'var(--success-green)'; msg.innerText = "Usuário criado."; pop("Sucesso", "Acesso gerado."); loadUsersAdmin(); }); }).catch(error => { msg.style.color = 'var(--legendary-red)'; msg.innerText = "Erro: " + error.message; }); }
     function loadUsersAdmin() { let list = document.getElementById('adm-users-list'); list.innerHTML = "Buscando..."; db.collection("usuarios").get().then(snap => { let h = ''; snap.forEach(doc => { let u = doc.data(); let uid = doc.id; let bg = u.status === 'BLOQUEADO' ? 'rgba(214, 48, 49, 0.1)' : 'var(--bg-panel)'; let btnBlock = u.status === 'BLOQUEADO' ? `<button class="btn-sm" style="background:var(--success-green); color:#000;" onclick="toggleBlock('${uid}', 'ATIVO')">Desbloquear</button>` : `<button class="btn-sm" style="background:var(--legendary-red);" onclick="toggleBlock('${uid}', 'BLOQUEADO')">Bloquear</button>`; h += `<div class="user-card" style="background:${bg};"><div style="display:flex; justify-content:space-between; margin-bottom:10px;"><div><strong style="color:var(--gold);">${u.nome}</strong><br><span style="font-size:10px; color:var(--text-muted);">${u.nivel}</span></div><div style="display:flex; gap:5px;"><input id="xp-${uid}" type="number" value="${u.xp}" style="width:60px; padding:5px; border-radius:5px; background:#07090D; color:white; border:1px solid var(--border-dark);"><button class="btn-sm" style="background:var(--rare-blue);" onclick="updateUserXP('${uid}')">Salvar</button></div></div><div style="display:flex; gap:10px;">${btnBlock}<button class="btn-sm" style="background:var(--border-dark);" onclick="resetPass('${u.email || ''}')">Resetar Senha</button></div></div>`; }); list.innerHTML = h; }); }
@@ -683,6 +1095,7 @@
     function toggleBlock(uid, status) { db.collection("usuarios").doc(uid).update({status: status}).then(()=> loadUsersAdmin()); }
     function resetPass(email) { if(!email) { pop("Erro", "E-mail não salvo na base."); return; } auth.sendPasswordResetEmail(email).then(() => pop("Enviado!", `Um link foi enviado para ${email}.`)); }
 
+    function loadAdConfig() { db.collection('sistema').doc('anuncio').get().then(doc => { if(doc.exists) { let d = doc.data(); document.getElementById('ad-ativo').value = d.ativo || 'NAO'; document.getElementById('ad-tit').value = d.titulo || ''; document.getElementById('ad-tipo').value = d.tipo || 'TEXTO'; document.getElementById('ad-cont').value = d.conteudo || ''; } }); }
     function saveAd() { let d = { ativo: document.getElementById('ad-ativo').value, titulo: document.getElementById('ad-tit').value, tipo: document.getElementById('ad-tipo').value, conteudo: document.getElementById('ad-cont').value }; db.collection('sistema').doc('anuncio').set(d, {merge:true}).then(()=> pop("Salvo", "Anúncio configurado.")); }
     function limparAd() { document.getElementById('ad-ativo').value = 'NAO'; document.getElementById('ad-tit').value = ''; document.getElementById('ad-cont').value = ''; saveAd(); }
     function saveSFX() { let d = { roleta: document.getElementById('fx-roleta').value, card: document.getElementById('fx-card').value, balao: document.getElementById('fx-balao').value, raspa: document.getElementById('fx-raspa').value }; db.collection('sistema').doc('efeitos').set(d, {merge:true}).then(()=> { loadGlobalConfigs(); pop("Salvo", "O áudio foi atualizado."); }); }
