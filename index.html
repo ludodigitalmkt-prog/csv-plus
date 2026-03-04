@@ -4,7 +4,7 @@
   <base target="_top">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>CSV+</title>
+  <title>CSV+ </title>
   
   <link rel="manifest" crossorigin="use-credentials" href="manifest.json">
   <meta name="theme-color" content="#0B0E14">
@@ -16,13 +16,20 @@
 
   <style>
     /* ==========================================
-       TEMA GAMER E VARIÁVEIS GLOBAIS
+       1. TEMA GAMER E VARIÁVEIS GLOBAIS
        ========================================== */
     :root {
-      --bg-dark: #0B0E14; --bg-panel: #151A25; --border-dark: #222B3E;
-      --text-main: #FFFFFF; --text-muted: #6C7A89;
-      --gold: #FFC312; --gold-glow: rgba(255, 195, 18, 0.4);
-      --rare-blue: #0984E3; --epic-purple: #6C5CE7; --legendary-red: #D63031; --success-green: #00B894;
+      --bg-dark: #0B0E14; 
+      --bg-panel: #151A25; 
+      --border-dark: #222B3E;
+      --text-main: #FFFFFF; 
+      --text-muted: #6C7A89;
+      --gold: #FFC312; 
+      --gold-glow: rgba(255, 195, 18, 0.4);
+      --rare-blue: #0984E3; 
+      --epic-purple: #6C5CE7; 
+      --legendary-red: #D63031; 
+      --success-green: #00B894;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; outline: none; -webkit-tap-highlight-color: transparent; font-family: 'Poppins', sans-serif; }
@@ -30,19 +37,20 @@
     .bg-anim { position: fixed; inset: 0; z-index: -1; background: radial-gradient(circle at 50% 0%, #151A25 0%, #0B0E14 60%); }
 
     /* ==========================================
-       COMPONENTES BÁSICOS
+       2. CLASSES BÁSICAS (Botões, Inputs, Cards)
        ========================================== */
     .glass-card { background: var(--bg-panel); border: 1px solid var(--border-dark); border-radius: 20px; padding: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
     .btn { width: 100%; padding: 16px; border-radius: 12px; border: none; background: linear-gradient(to right, #F8EFBA, #FFC312); color: #000; font-weight: 900; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; box-shadow: 0 5px 15px var(--gold-glow); display: flex; justify-content: center; align-items: center; gap: 10px;}
     .btn:active { transform: scale(0.96); box-shadow: 0 2px 5px rgba(255, 195, 18, 0.3); }
     .btn-sm { padding: 8px 12px; font-size: 11px; border-radius: 8px; font-weight: bold; cursor: pointer; border: none; color: white; text-transform: uppercase; text-align: center; transition: 0.2s;}
     .btn-sm:active { transform: scale(0.9); }
+    
     .inp { width: 100%; padding: 14px; border-radius: 12px; margin-bottom: 12px; font-weight: 600; background: #07090D; border: 1px solid var(--border-dark); color: var(--text-main); transition: 0.3s; font-size: 13px;}
     .inp:focus { border-color: var(--gold); box-shadow: 0 0 10px var(--gold-glow); }
     .adm-lbl { font-size: 10px; color: var(--gold); font-weight: 900; margin-bottom: 4px; display: block; text-transform: uppercase; letter-spacing: 1px; }
 
     /* ==========================================
-       TELAS DE OVERLAY (INTRO E LOGIN)
+       3. SISTEMA DE TELAS (Splash, Login, Popups)
        ========================================== */
     #splash { position: fixed; inset: 0; background: var(--bg-dark); z-index: 10000; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.5s ease; }
     .logo-3d { font-size: 70px; font-weight: 900; color: transparent; -webkit-text-stroke: 2px var(--gold); animation: float3D 3s infinite ease-in-out; text-shadow: 0 0 30px var(--gold-glow); letter-spacing: 5px; }
@@ -51,16 +59,14 @@
     .cyber-fill { width: 0%; height: 100%; background: var(--gold); animation: fillBar 3s forwards cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 0 10px var(--gold); }
     @keyframes fillBar { 0% { width: 0%; } 50% { width: 60%; } 100% { width: 100%; } }
 
-    #t-login { position: fixed; inset: 0; background: var(--bg-dark); z-index: 9999; display: none; flex-direction: column; justify-content: center; align-items: center; padding: 20px; }
-    .login-box { max-width: 380px; width: 100%; text-align: center; padding: 40px 30px; border-radius: 20px; background: var(--bg-panel); border: 1px solid var(--border-dark); box-shadow: 0 20px 40px rgba(0,0,0,0.5); animation: fadeUp 0.8s ease; }
+    #t-login { position: fixed; inset: 0; z-index: 9999; display: none; flex-direction: column; justify-content: center; align-items: center; padding: 20px; background: var(--bg-dark); }
+    .login-box { max-width: 380px; width: 100%; text-align: center; padding: 40px 30px; border-radius: 20px; background: var(--bg-panel); border: 1px solid var(--border-dark); box-shadow: 0 20px 40px rgba(0,0,0,0.8); animation: fadeUp 0.8s ease; }
     .logo-login { width: 90px; height: 90px; border-radius: 20px; background: linear-gradient(45deg, var(--gold), #ff9f43); display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; color: #000; box-shadow: 0 10px 25px var(--gold-glow);}
 
-    /* POPUPS GENÉRICOS */
-    #ad-modal, #uni-pop, .adm-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 999999; display: none; justify-content: center; align-items: center; padding: 20px; backdrop-filter: blur(5px); }
+    #ad-modal, #uni-pop, .adm-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 999999; display: none; justify-content: center; align-items: center; padding: 20px; backdrop-filter: blur(10px); }
     .ad-content { background: var(--bg-panel); border: 2px solid var(--gold); border-radius: 20px; padding: 30px; text-align: center; position: relative; max-width: 90vw; max-height: 85vh; overflow-y: auto; box-shadow: 0 0 50px var(--gold-glow); animation: pulse3D 2s infinite alternate;}
     .ad-close { position: absolute; top: 10px; right: 10px; background: var(--legendary-red); color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; cursor: pointer; border: none; }
 
-    /* NOVO: EFEITO ÉPICO DE XP ESTILO CONTA BANCÁRIA */
     #epic-xp-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 8000; display: none; flex-direction: column; justify-content: center; align-items: center; backdrop-filter: blur(10px); animation: fadeIn 0.3s; }
     .epic-number { font-size: 80px; font-weight: 900; color: var(--gold); text-shadow: 0 0 40px var(--gold-glow); margin-bottom: 20px; font-variant-numeric: tabular-nums; }
     .epic-number.lose { color: var(--legendary-red); text-shadow: 0 0 40px rgba(214, 48, 49, 0.6); }
@@ -68,9 +74,9 @@
     @keyframes fadeIn { from {opacity:0; transform:scale(0.8);} to {opacity:1; transform:scale(1);} }
 
     /* ==========================================
-       LAYOUT PRINCIPAL E NAVEGAÇÃO
+       4. LAYOUT DO APP E NAVEGAÇÃO
        ========================================== */
-    .app-container { width: 100%; height: 100%; position: relative; overflow: hidden; display: flex; flex-direction: column; }
+    .app-container { width: 100%; height: 100%; position: relative; overflow: hidden; display: none; flex-direction: column; }
     .top-header { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; background: var(--bg-panel); border-bottom: 1px solid var(--border-dark); z-index: 10; box-shadow: 0 4px 10px rgba(0,0,0,0.3);}
     
     .view { flex: 1; display: none; flex-direction: column; overflow-x: hidden; overflow-y: auto; padding: 20px; padding-bottom: 100px; }
@@ -88,11 +94,10 @@
     .fab-admin { position: fixed; bottom: 90px; right: 20px; width: 55px; height: 55px; border-radius: 16px; background: var(--rare-blue); color: white; display: none; align-items: center; justify-content: center; box-shadow: 0 10px 20px rgba(9, 132, 227, 0.4); cursor: pointer; z-index: 100; transition: 0.3s; }
 
     /* ==========================================
-       UI ELEMENTS E MAPA (TRILHA RPG)
+       5. AVATARES, RANKS E PÓDIO
        ========================================== */
     .u-av { border-radius: 14px; background: #07090D; overflow: hidden; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 5px 15px rgba(0,0,0,0.3); color:white; font-weight:bold; border: 2px solid var(--border-dark); transition: 0.3s; }
     .u-av img, .u-av svg { width: 100% !important; height: 100% !important; max-width: 100% !important; max-height: 100% !important; object-fit: cover !important; border-radius: inherit; }
-    
     .av-top { width: 45px; min-width: 45px; max-width: 45px; height: 45px; min-height: 45px; max-height: 45px; }
     .av-pod { width: 60px; min-width: 60px; max-width: 60px; height: 60px; min-height: 60px; max-height: 60px; z-index: 2; margin-bottom: 10px; }
     .av-list { width: 40px; min-width: 40px; max-width: 40px; height: 40px; min-height: 40px; max-height: 40px; margin-right: 15px; }
@@ -104,13 +109,14 @@
     
     .xp-badge { background: #07090D; border: 1px solid var(--gold); padding: 5px 12px; border-radius: 8px; color: var(--gold); font-weight: 900; font-size: 14px; display: flex; align-items: center; gap: 5px; box-shadow: inset 0 0 10px rgba(255, 195, 18, 0.1); font-variant-numeric: tabular-nums;}
     
-    /* RANKING PÓDIO */
     .podium-box { display: flex; justify-content: center; align-items: flex-end; height: 260px; padding-bottom: 20px; margin-top: 10px; }
     .p-col { width: 30%; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; position: relative; margin: 0 5px; }
     .p-block { width: 100%; border-radius: 8px 8px 4px 4px; display: flex; justify-content: center; align-items: flex-end; padding-bottom: 10px; font-weight: 900; color: #000; box-shadow: inset 0 -10px 20px rgba(0,0,0,0.5), 0 10px 20px rgba(0,0,0,0.5); }
     .p1 .p-block { height: 140px; background: linear-gradient(to top, #FFC312, #F8EFBA); } .p2 .p-block { height: 100px; background: linear-gradient(to top, #7f8fa6, #dcdde1); } .p3 .p-block { height: 70px; background: linear-gradient(to top, #b33939, #ff7979); }
 
-    /* NOVO: MAPA DE AVANÇO (TRILHA RPG) */
+    /* ==========================================
+       6. TRILHA DE MAPA RPG
+       ========================================== */
     .map-container { display: flex; flex-direction: column; align-items: center; padding: 20px 0; position: relative; }
     .map-line { position: absolute; top: 0; bottom: 0; left: 50%; width: 4px; background: var(--border-dark); transform: translateX(-50%); z-index: 1; }
     .map-node { position: relative; z-index: 2; display: flex; width: 100%; justify-content: space-between; align-items: center; margin-bottom: 50px; }
@@ -123,7 +129,7 @@
     .node-players .u-av { width: 25px; min-width: 25px; height: 25px; min-height: 25px; border-radius: 8px; border-width: 1px;}
 
     /* ==========================================
-       ARENA, LOJA E JOGOS
+       7. ARENA (PVP), LOJA E JOGOS
        ========================================== */
     .arena-card { background: var(--bg-panel); border: 1px solid var(--border-dark); border-radius: 16px; padding: 15px; margin-bottom: 15px; box-shadow: 0 8px 20px rgba(0,0,0,0.4); display: flex; flex-direction: column; position: relative; overflow: hidden;}
     .arena-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; position: relative; z-index: 2;}
@@ -134,7 +140,6 @@
     .res-win { color: var(--success-green); text-shadow: 0 0 10px rgba(0,184,148,0.5);} .res-lose { color: var(--legendary-red); } .res-wait { color: var(--text-muted); font-size: 10px; }
     .arena-bg-win { position: absolute; inset:0; background: radial-gradient(circle at center, rgba(0,184,148,0.2) 0%, transparent 70%); z-index: 1;}
     .arena-bg-lose { position: absolute; inset:0; background: radial-gradient(circle at center, rgba(214,48,49,0.1) 0%, transparent 70%); z-index: 1;}
-    
     .op-card { display: flex; align-items: center; gap: 15px; padding: 10px; border: 1px solid var(--border-dark); border-radius: 12px; margin-bottom: 10px; background: #07090D; cursor: pointer; transition: 0.2s; }
     .op-card:active { border-color: var(--gold); transform: scale(0.98); }
 
@@ -147,6 +152,7 @@
     .store-btn.equipped { background: var(--border-dark); color: var(--text-muted); border-color: transparent; }
 
     .lvl-box { background: var(--bg-panel); border-left: 4px solid transparent; border-radius: 16px; padding: 20px; margin-bottom: 15px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; box-shadow: 0 8px 20px rgba(0,0,0,0.4); transition:0.3s;}
+    .lvl-box:active { transform: scale(0.97); }
     .lvl-box.facil { border-left-color: var(--rare-blue); } .lvl-box.medio { border-left-color: var(--epic-purple); } .lvl-box.dificil { border-left-color: var(--legendary-red); }
     
     .game-card { background: var(--bg-panel); border: 1px solid var(--border-dark); border-radius: 16px; padding: 15px; margin-bottom: 15px; display: flex; align-items: center; gap: 15px; cursor: pointer; transition:0.3s; }
@@ -154,7 +160,7 @@
     .game-icon { width: 60px; height: 60px; border-radius: 12px; background: #07090D; border: 1px solid var(--border-dark); display: flex; align-items: center; justify-content: center; font-size: 30px; }
 
     /* ==========================================
-       TELAS DOS JOGOS
+       8. ANIMAÇÕES DOS JOGOS (Roleta, Caixas, Raspa)
        ========================================== */
     .boxes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 280px; margin: 30px auto; perspective: 1000px; }
     .m-box { width: 120px; height: 120px; background: linear-gradient(135deg, #1E2535, #151A25); border: 2px solid var(--epic-purple); border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 50px; color: var(--epic-purple); cursor: pointer; transition: 0.4s; box-shadow: inset 0 0 20px rgba(108, 92, 231, 0.2), 0 10px 20px rgba(0,0,0,0.5); position: relative; animation: float3D 3s infinite ease-in-out;}
@@ -167,7 +173,9 @@
     .wheel-marker { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 15px solid transparent; border-right: 15px solid transparent; border-top: 30px solid var(--gold); z-index: 10; filter: drop-shadow(0 4px 5px rgba(0,0,0,0.8)); }
     .wheel-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 80px; height: 80px; background: #07090D; border-radius: 50%; border: 4px solid var(--gold); z-index: 5; display: flex; justify-content: center; align-items: center; box-shadow: 0 0 20px var(--gold-glow); cursor: pointer; font-weight: 900; color: var(--gold); font-size: 14px; }
 
-    /* QUIZ IN-GAME E CRONÔMETRO */
+    /* ==========================================
+       9. QUIZ, CHAT E ADMIN PANEL
+       ========================================== */
     #t-play { position: fixed; inset:0; background: var(--bg-dark); z-index:300; display:none; flex-direction:column; padding: 20px; overflow-y:auto; background-image: radial-gradient(circle at top, #1E2535, #0B0E14); }
     .timer-badge { background: #07090D; border: 2px solid var(--gold); padding: 10px 20px; border-radius: 12px; font-weight: 900; font-size: 24px; color: var(--gold); box-shadow: 0 0 15px var(--gold-glow); transition: 0.3s; }
     .danger-pulse { animation: pulseRed 0.8s infinite; border-color: var(--legendary-red) !important; color: var(--legendary-red) !important; text-shadow: 0 0 10px var(--legendary-red); }
@@ -180,13 +188,14 @@
     .flashcard .back { transform: rotateY(180deg); color: #000; }
     .flashcard.flipped .front { transform: rotateY(180deg); } .flashcard.flipped .back { transform: rotateY(0deg); }
     .balloon { width: 110px; height: 110px; border-radius: 50%; background: var(--bg-panel); border: 2px solid var(--border-dark); display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--text-main); font-weight: 800; text-align: center; padding: 10px; cursor: pointer; box-shadow: 0 10px 20px rgba(0,0,0,0.5); transition: 0.2s;}
+    
+    .xp-float { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 60px; font-weight: 900; z-index: 999999; animation: floatAnim 1.5s forwards; text-shadow: 0 10px 30px rgba(0,0,0,0.8); pointer-events: none; }
+    .xp-float.win { color: var(--gold); } .xp-float.lose { color: var(--legendary-red); }
 
-    /* CHAT E ADMIN PAINEL */
     .c-msg { display: flex; gap: 10px; align-items: flex-end; max-width: 85%; margin-bottom: 15px;} .c-msg.me { align-self: flex-end; flex-direction: row-reverse; }
     .c-bub { background: var(--bg-panel); border: 1px solid var(--border-dark); padding: 12px 16px; border-radius: 16px 16px 16px 0; font-size: 14px; color: var(--text-main);}
     .c-msg.me .c-bub { background: var(--border-dark); border-radius: 16px 16px 0 16px; border-color: var(--text-muted); }
 
-    .adm-overlay { z-index: 5000; align-items: flex-end; display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); justify-content: center;}
     .adm-card { width: 100%; height: 95%; border-radius: 24px 24px 0 0; display: flex; flex-direction: column; padding: 20px; background: var(--bg-dark); border-top: 2px solid var(--gold); }
     .adm-tabs { display: flex; gap: 10px; margin-bottom: 20px; overflow-x: auto; padding-bottom:10px; }
     .adm-tab { padding: 10px 20px; border-radius: 8px; font-weight: 800; font-size: 11px; cursor: pointer; border: 1px solid var(--border-dark); background: var(--bg-panel); color: var(--text-muted); text-transform: uppercase;}
@@ -199,6 +208,16 @@
 <body>
 
   <audio id="global-audio" loop></audio>
+  <audio id="sfx-win" src="https://actions.google.com/sounds/v1/cartoon/cartoon_success_fanfare.ogg"></audio>
+  <audio id="sfx-lose" src="https://actions.google.com/sounds/v1/cartoon/cartoon_boing.ogg"></audio>
+  <audio id="sfx-fail-duo" src="https://actions.google.com/sounds/v1/cartoon/slide_whistle_to_drum_hit.ogg"></audio>
+  <audio id="sfx-magic" src="https://actions.google.com/sounds/v1/magic/muffled_magic_swoosh.ogg"></audio>
+  <audio id="sfx-tick" src="https://actions.google.com/sounds/v1/ui/button_click.ogg"></audio>
+  <audio id="sfx-roleta"></audio>
+  <audio id="sfx-card"></audio>
+  <audio id="sfx-balao"></audio>
+  <audio id="sfx-raspa"></audio>
+  
   <div class="bg-anim"></div>
 
   <div id="splash">
@@ -224,7 +243,7 @@
   </div>
 
   <div id="epic-xp-overlay">
-      <div class="epic-text" id="epic-title">RECOMPENSA DE MISSÃO</div>
+      <div class="epic-text" id="epic-title">RECOMPENSA GANHA</div>
       <div class="epic-number" id="epic-val">+0</div>
   </div>
 
@@ -234,8 +253,8 @@
       <h2 style="margin-bottom:5px;font-weight:900;font-size:28px;color:var(--text-main); letter-spacing: 2px;">CSV+</h2>
       <p style="opacity:0.7;margin-bottom:30px;font-size:12px;font-weight:bold;text-transform:uppercase;color:var(--text-muted);">Acesso Restrito</p>
       
-      <input id="u" class="inp" type="text" placeholder="Nome de Usuário (Ex: admin)" autocomplete="off">
-      <input id="s" class="inp" type="password" placeholder="Senha de Acesso">
+      <input id="u" class="inp" type="text" placeholder="Seu Usuário" autocomplete="off">
+      <input id="s" class="inp" type="password" placeholder="Sua Senha">
       
       <button class="btn" id="btn-login" onclick="acaoLogin()">CONECTAR</button>
       <div id="login-msg" style="color: var(--legendary-red); font-size: 12px; margin-top: 15px; font-weight: bold; min-height: 15px;"></div>
@@ -246,7 +265,7 @@
     <span class="material-icons-round" style="font-size: 28px;">admin_panel_settings</span>
   </div>
 
-  <div id="app-main" class="app-container">
+  <div id="app-main" class="app-container" style="display: none;">
     
     <div class="top-header">
       <div style="display:flex; align-items:center; gap:15px;" onclick="go('profile', document.getElementById('btn-nav-prof'))">
@@ -287,6 +306,7 @@
          </div>
          <button class="btn-sm" style="background:var(--gold); color:#000; padding:10px 15px;" onclick="abrirModalDesafio()"><span class="material-icons-round" style="font-size:16px;">add</span> NOVO</button>
       </div>
+      
       <div class="glass-card" style="margin-bottom: 20px; background:#07090D; padding:15px;">
         <div style="font-size:12px; font-weight:900; color:var(--gold); text-transform:uppercase; margin-bottom:10px; text-align:center;">🏆 Top Duplas da Arena</div>
         <div id="arena-top-duos" style="font-size:12px; color:var(--text-main); text-align:center;">Calculando...</div>
@@ -295,29 +315,14 @@
     </div>
 
     <div id="v-spin" class="view">
-      <div style="font-size:20px; font-weight:900; text-transform:uppercase;">Hub de Sorte</div>
-      <div style="font-size:12px; color:var(--text-muted); margin-bottom:20px;">Inventário de Prêmios</div>
-      
-      <div class="game-card" onclick="startRoletaGame()">
-        <div class="game-icon" style="color:var(--gold);"><span class="material-icons-round">data_usage</span></div>
-        <div style="flex:1;"><h3 style="font-size:16px;" id="name-roleta-ui">Roleta de XP</h3><span style="font-size:11px;color:var(--text-muted);font-weight:bold;text-transform:uppercase;">Giro Diário</span></div>
-        <span class="material-icons-round" style="color:var(--text-muted);">arrow_forward_ios</span>
-      </div>
-      <div class="game-card" onclick="startCaixaGame()">
-        <div class="game-icon" style="color:var(--epic-purple);"><span class="material-icons-round">all_inbox</span></div>
-        <div style="flex:1;"><h3 style="font-size:16px;" id="name-caixa-ui">Caixa Épica</h3><span style="font-size:11px;color:var(--text-muted);font-weight:bold;text-transform:uppercase;">Escolha 1 de 4</span></div>
-        <span class="material-icons-round" style="color:var(--text-muted);">arrow_forward_ios</span>
-      </div>
-      <div class="game-card" onclick="startRaspaGame()">
-        <div class="game-icon" style="color:var(--success-green);"><span class="material-icons-round">grid_view</span></div>
-        <div style="flex:1;"><h3 style="font-size:16px;" id="name-raspa-ui">Contrato</h3><span style="font-size:11px;color:var(--text-muted);font-weight:bold;text-transform:uppercase;">Raspadinha Real</span></div>
-        <span class="material-icons-round" style="color:var(--text-muted);">arrow_forward_ios</span>
-      </div>
+      <div style="font-size:20px; font-weight:900; text-transform:uppercase;">Hub de Sorte</div><div style="font-size:12px; color:var(--text-muted); margin-bottom:20px;">Inventário de Prêmios</div>
+      <div class="game-card" onclick="startRoletaGame()"><div class="game-icon" style="color:var(--gold);"><span class="material-icons-round">data_usage</span></div><div style="flex:1;"><h3 style="font-size:16px;" id="name-roleta-ui">Roleta de XP</h3><span style="font-size:11px;color:var(--text-muted);font-weight:bold;text-transform:uppercase;">Giro Diário</span></div><span class="material-icons-round" style="color:var(--text-muted);">arrow_forward_ios</span></div>
+      <div class="game-card" onclick="startCaixaGame()"><div class="game-icon" style="color:var(--epic-purple);"><span class="material-icons-round">all_inbox</span></div><div style="flex:1;"><h3 style="font-size:16px;" id="name-caixa-ui">Caixa Épica</h3><span style="font-size:11px;color:var(--text-muted);font-weight:bold;text-transform:uppercase;">Escolha 1 de 4</span></div><span class="material-icons-round" style="color:var(--text-muted);">arrow_forward_ios</span></div>
+      <div class="game-card" onclick="startRaspaGame()"><div class="game-icon" style="color:var(--success-green);"><span class="material-icons-round">grid_view</span></div><div style="flex:1;"><h3 style="font-size:16px;" id="name-raspa-ui">Contrato</h3><span style="font-size:11px;color:var(--text-muted);font-weight:bold;text-transform:uppercase;">Raspadinha Real</span></div><span class="material-icons-round" style="color:var(--text-muted);">arrow_forward_ios</span></div>
     </div>
 
     <div id="v-store" class="view">
-      <div style="font-size:20px; font-weight:900; text-transform:uppercase;">Shopping de Itens</div>
-      <div style="font-size:12px; color:var(--text-muted); margin-bottom:10px;">Skins exclusivas</div>
+      <div style="font-size:20px; font-weight:900; text-transform:uppercase;">Shopping de Itens</div><div style="font-size:12px; color:var(--text-muted); margin-bottom:10px;">Skins exclusivas</div>
       <div id="store-list" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;"></div>
     </div>
 
@@ -328,12 +333,11 @@
     </div>
 
     <div id="v-chat" class="view">
-      <div style="font-size:20px; font-weight:900; text-transform:uppercase;">Lobby</div>
-      <div style="font-size:12px; color:var(--text-muted); margin-bottom:15px;">Chat Global</div>
+      <div style="font-size:20px; font-weight:900; text-transform:uppercase;">Lobby</div><div style="font-size:12px; color:var(--text-muted); margin-bottom:15px;">Chat Global</div>
       <div style="display:flex; flex-direction:column; flex: 1;">
         <div id="chat-msgs" style="flex: 1; overflow-y: auto; padding-right: 5px; margin-bottom: 15px;"></div>
         <div style="display: flex; gap: 10px; background: var(--bg-panel); padding: 10px; border-radius: 16px; border: 1px solid var(--border-dark);">
-          <input id="c-txt" class="inp" style="margin:0; border:none; background:transparent; padding:10px;" placeholder="Mensagem...">
+          <input id="c-txt" class="inp" style="margin:0; border:none; background:transparent; padding:10px;" placeholder="Escreva aqui...">
           <button class="btn" style="width:50px; padding:0; border-radius:12px;" onclick="sendChat()"><span class="material-icons-round">send</span></button>
         </div>
       </div>
@@ -351,7 +355,7 @@
         <label style="font-size:11px; opacity:0.7; display:block; text-align:left; margin-bottom:5px; font-weight:bold; color:var(--text-main); text-transform: uppercase;">Tag de Jogador</label>
         <input id="pf-frase" class="inp" placeholder="Ex: MVP">
         <button class="btn" onclick="savePerf()" style="margin-bottom:15px;">ATUALIZAR DADOS</button>
-        <button class="btn" onclick="logOutUser()" style="background:transparent; color:var(--text-muted); border:1px solid var(--border-dark); box-shadow:none;">DESCONECTAR</button>
+        <button class="btn" onclick="logOutUser()" style="background:transparent; color:var(--text-muted); border:1px solid var(--border-dark); box-shadow:none;">DESCONECTAR DO APP</button>
       </div>
     </div>
 
@@ -371,9 +375,9 @@
 
   <div id="mod-music" class="adm-overlay" style="align-items:center;">
     <div class="login-box" style="width:90%; max-width:350px;">
-      <h2 style="color:var(--text-main); margin-bottom:20px; font-weight:900; text-transform: uppercase;">Ajustes de Áudio</h2>
+      <h2 style="color:var(--text-main); margin-bottom:20px; font-weight:900; text-transform: uppercase;">Rádio Interna</h2>
       <div id="music-list">Carregando faixas...</div>
-      <button class="btn" style="background:var(--border-dark); margin-top:10px; color: var(--text-main);" onclick="stopMusic()">MUDO</button>
+      <button class="btn" style="background:var(--border-dark); margin-top:10px; color: var(--text-main);" onclick="stopMusic()">MUDO (Desligar)</button>
       <button class="btn" style="background:transparent; border:1px solid var(--border-dark); color:var(--text-muted); margin-top:15px; box-shadow:none;" onclick="document.getElementById('mod-music').style.display='none'">FECHAR</button>
     </div>
   </div>
@@ -418,13 +422,12 @@
     <div id="q-box" style="flex:1;display:flex;flex-direction:column;justify-content:center;"></div>
   </div>
 
-  <div id="mod-adm" class="adm-overlay">
+  <div id="mod-adm" class="adm-overlay" style="align-items:flex-end;">
     <div class="adm-card">
       <div style="display:flex;justify-content:space-between;margin-bottom:20px;align-items:center">
          <h2 style="font-weight:900; color:var(--gold); text-transform:uppercase;">Admin Console</h2>
          <span class="material-icons-round" style="cursor:pointer; color:var(--text-muted);" onclick="document.getElementById('mod-adm').style.display='none'">close</span>
       </div>
-      
       <div class="adm-tabs">
         <div id="tb-u" class="adm-tab active" onclick="tab('u')">EQUIPE</div>
         <div id="tb-q" class="adm-tab" onclick="tab('q')">MISSÕES</div>
@@ -438,8 +441,10 @@
       
       <div id="adm-u" class="adm-view active">
         <div style="font-weight:bold; color:var(--gold); margin-bottom:15px; text-transform:uppercase;">Criar Novo Acesso</div>
-        <label class="adm-lbl">NOME DO COLABORADOR</label><input id="cad-nome" class="inp" placeholder="Ex: João Silva">
-        <label class="adm-lbl">USUÁRIO DE LOGIN (SIMPLES)</label><input id="cad-login" class="inp" type="text" placeholder="Ex: joao (Sem @email)">
+        <label class="adm-lbl">NOME DO COLABORADOR</label>
+        <input id="cad-nome" class="inp" placeholder="Ex: João Silva">
+        <label class="adm-lbl">USUÁRIO DE LOGIN (SIMPLES)</label>
+        <input id="cad-login" class="inp" type="text" placeholder="Ex: joao (Sem @email)">
         <div class="row-grid">
            <div><label class="adm-lbl">SENHA PADRÃO</label><input id="cad-senha" class="inp" value="Ludo@2026" placeholder="Senha"></div>
            <div><label class="adm-lbl">PERMISSÃO</label><select id="cad-nivel" class="inp"><option value="USER">USER</option><option value="ADMIN">ADMIN</option></select></div>
@@ -449,46 +454,6 @@
 
         <div style="font-weight:bold; color:var(--gold); margin-top:40px; margin-bottom:15px; text-transform:uppercase;">Gerenciar Equipe</div>
         <div id="adm-users-list">Carregando...</div>
-      </div>
-
-      <div id="adm-m" class="adm-view">
-        <div style="font-size:12px; opacity:0.8; margin-bottom:15px;">Adicione faixas de música de fundo.</div>
-        <label class="adm-lbl">NOME DA FAIXA</label>
-        <input id="mu-nome" class="inp" placeholder="Ex: Foco Total">
-        <label class="adm-lbl">LINK DO ÁUDIO (.mp3)</label>
-        <input id="mu-url" class="inp" placeholder="Cole o link .mp3 direto aqui">
-        <button class="btn" onclick="saveMusic()">ADICIONAR MÚSICA</button>
-        <div id="adm-mu-list" style="margin-top:20px;"></div>
-      </div>
-
-      <div id="adm-fx" class="adm-view">
-        <div style="font-size:12px; opacity:0.8; margin-bottom:15px;">Escolha o áudio padrão das interações (Anti-Bloqueios do Google).</div>
-        <label class="adm-lbl">ROLETA (Giro)</label>
-        <select id="fx-roleta" class="inp"><option value="https://actions.google.com/sounds/v1/tools/ratchet_wrench.ogg">Catraca Metálica</option><option value="https://actions.google.com/sounds/v1/water/water_drip.ogg">Gotas (Estilo Moedas)</option></select>
-        <label class="adm-lbl">FLASHCARDS (Virar)</label>
-        <select id="fx-card" class="inp"><option value="https://actions.google.com/sounds/v1/paper/paper_flap.ogg">Swoosh de Papel</option><option value="https://actions.google.com/sounds/v1/weapons/fast_swoosh.ogg">Swoosh Rápido</option></select>
-        <label class="adm-lbl">BALÕES (Estouro)</label>
-        <select id="fx-balao" class="inp"><option value="https://actions.google.com/sounds/v1/cartoon/pop.ogg">Estouro Pop</option><option value="https://actions.google.com/sounds/v1/water/bubbles_pop.ogg">Bolha D'água</option></select>
-        <label class="adm-lbl">RASPADINHA (Raspar)</label>
-        <select id="fx-raspa" class="inp"><option value="https://actions.google.com/sounds/v1/tools/sandpaper_rub.ogg">Fricção de Lixa (Moeda real)</option><option value="https://actions.google.com/sounds/v1/paper/crumple_paper_in_hands.ogg">Amassar Papel</option></select>
-        <button class="btn" onclick="saveSFX()">SALVAR SFX</button>
-      </div>
-
-      <div id="adm-ad" class="adm-view">
-        <div style="font-size:12px; opacity:0.8; margin-bottom:15px;">Popup gigante no primeiro login (Aceita G.Drive).</div>
-        <label class="adm-lbl">STATUS DO ANÚNCIO</label><select id="ad-ativo" class="inp"><option value="NAO">DESATIVADO (Oculto)</option><option value="SIM">ATIVADO (Mostrar)</option></select>
-        <label class="adm-lbl">TÍTULO DA CAIXA</label><input id="ad-tit" class="inp" placeholder="Ex: Aviso do RH">
-        <label class="adm-lbl">FORMATO</label><select id="ad-tipo" class="inp"><option value="TEXTO">Apenas Texto</option><option value="IMAGEM">Banner (Imagem URL / Drive)</option></select>
-        <label class="adm-lbl">CONTEÚDO</label><textarea id="ad-cont" class="inp" placeholder="Texto ou Link da Imagem" rows="4" style="height:auto;"></textarea>
-        <div style="display: flex; gap: 10px;">
-           <button class="btn" style="flex:2;" onclick="saveAd()">PUBLICAR</button>
-           <button class="btn" style="flex:1; background:var(--legendary-red); color:white; box-shadow:none;" onclick="limparAd()">EXCLUIR</button>
-        </div>
-      </div>
-
-      <div id="adm-d" class="adm-view">
-        <div style="font-size:12px; opacity:0.8; margin-bottom:15px;">Acompanhe os duelos da Arena e exclua os parados.</div>
-        <div id="adm-duelos-list">Carregando...</div>
       </div>
 
       <div id="adm-q" class="adm-view">
@@ -509,13 +474,18 @@
         <select id="q-duelo" class="inp"><option value="SIM">SIM (Aparece na Arena)</option><option value="NAO">NÃO (Só na aba Missões)</option></select>
 
         <div class="glass-card" style="margin-bottom:15px; background: #07090D;">
-           <label class="adm-lbl">OPÇÕES (A, B, C, D) - Aceita G.Drive nas Imagens</label>
+           <label class="adm-lbl">OPÇÕES (A, B, C, D) - Aceita G.Drive</label>
            <div class="row-grid"><input id="oa" class="inp" placeholder="Texto A"><input id="oai" class="inp" placeholder="Img A (URL)"></div><div class="row-grid"><input id="ob" class="inp" placeholder="Texto B"><input id="obi" class="inp" placeholder="Img B (URL)"></div><div class="row-grid"><input id="oc" class="inp" placeholder="Texto C"><input id="oci" class="inp" placeholder="Img C (URL)"></div><div class="row-grid"><input id="od" class="inp" placeholder="Texto D"><input id="odi" class="inp" placeholder="Img D (URL)"></div>
            <label class="adm-lbl" style="margin-top: 10px;">RESPOSTA CORRETA</label><select id="q-c-sel" class="inp" style="margin-bottom:0"><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option></select>
         </div>
         <button class="btn" onclick="saveQ()">SALVAR MISSÃO</button>
         <button class="btn" style="background:transparent; border:1px solid var(--border-dark); color:var(--text-muted); margin-top:10px; box-shadow:none;" onclick="clearQForm()">LIMPAR (NOVA)</button>
         <div id="adm-list" style="margin-top:20px; font-size:12px;"></div>
+      </div>
+
+      <div id="adm-d" class="adm-view">
+        <div style="font-size:12px; opacity:0.8; margin-bottom:15px;">Acompanhe os duelos da Arena e exclua os abandonados.</div>
+        <div id="adm-duelos-list">Carregando...</div>
       </div>
 
       <div id="adm-r" class="adm-view">
@@ -532,7 +502,28 @@
         
         <h3 style="color:var(--success-green); margin-bottom:5px; margin-top:20px; font-size:14px; text-transform: uppercase;">RASPADINHA</h3>
         <div class="row-grid"><div><label class="adm-lbl">Horas Recarga</label><input id="rp-tm" class="inp" type="number"></div><div><label class="adm-lbl">Vitória (XP)</label><input id="rp-p1" class="inp" type="number"></div></div>
-        <button class="btn" style="margin-top:20px" onclick="saveGames()">SALVAR REGRAS E NOMES</button>
+        <button class="btn" style="margin-top:20px" onclick="saveGames()">SALVAR REGRAS</button>
+      </div>
+
+      <div id="adm-ad" class="adm-view">
+        <div style="font-size:12px; opacity:0.8; margin-bottom:15px;">Popup gigante no primeiro login (Aceita G.Drive).</div>
+        <label class="adm-lbl">STATUS DO ANÚNCIO</label><select id="ad-ativo" class="inp"><option value="NAO">DESATIVADO (Oculto)</option><option value="SIM">ATIVADO (Mostrar)</option></select>
+        <label class="adm-lbl">TÍTULO</label><input id="ad-tit" class="inp" placeholder="Ex: Aviso do RH">
+        <label class="adm-lbl">FORMATO</label><select id="ad-tipo" class="inp"><option value="TEXTO">Apenas Texto</option><option value="IMAGEM">Banner (Imagem URL / Drive)</option></select>
+        <label class="adm-lbl">CONTEÚDO</label><textarea id="ad-cont" class="inp" placeholder="Texto ou Link da Imagem" rows="4" style="height:auto;"></textarea>
+        <div style="display: flex; gap: 10px;">
+           <button class="btn" style="flex:2;" onclick="saveAd()">PUBLICAR</button>
+           <button class="btn" style="flex:1; background:var(--legendary-red); color:white; box-shadow:none;" onclick="limparAd()">EXCLUIR</button>
+        </div>
+      </div>
+
+      <div id="adm-fx" class="adm-view">
+        <div style="font-size:12px; opacity:0.8; margin-bottom:15px;">Escolha o áudio seguro (API Google).</div>
+        <label class="adm-lbl">ROLETA (Giro)</label><select id="fx-roleta" class="inp"><option value="https://actions.google.com/sounds/v1/tools/ratchet_wrench.ogg">Catraca Metálica</option><option value="https://actions.google.com/sounds/v1/water/water_drip.ogg">Gotas (Estilo Moedas)</option></select>
+        <label class="adm-lbl">FLASHCARDS (Virar)</label><select id="fx-card" class="inp"><option value="https://actions.google.com/sounds/v1/paper/paper_flap.ogg">Swoosh de Papel</option><option value="https://actions.google.com/sounds/v1/weapons/fast_swoosh.ogg">Swoosh Rápido</option></select>
+        <label class="adm-lbl">BALÕES (Estouro)</label><select id="fx-balao" class="inp"><option value="https://actions.google.com/sounds/v1/cartoon/pop.ogg">Estouro Pop</option><option value="https://actions.google.com/sounds/v1/water/bubbles_pop.ogg">Bolha D'água</option></select>
+        <label class="adm-lbl">RASPADINHA (Raspar)</label><select id="fx-raspa" class="inp"><option value="https://actions.google.com/sounds/v1/tools/sandpaper_rub.ogg">Fricção de Lixa</option><option value="https://actions.google.com/sounds/v1/paper/crumple_paper_in_hands.ogg">Amassar Papel</option></select>
+        <button class="btn" onclick="saveSFX()">SALVAR SFX</button>
       </div>
 
       <div id="adm-l" class="adm-view">
@@ -542,6 +533,14 @@
         <button class="btn" onclick="saveLoja()">ENVIAR PARA LOJA</button>
         <div id="adm-loja-list" style="margin-top:20px;"></div>
       </div>
+
+      <div id="adm-m" class="adm-view">
+        <label class="adm-lbl">NOME DA FAIXA</label><input id="mu-nome" class="inp" placeholder="Ex: Foco Total">
+        <label class="adm-lbl">LINK DO ÁUDIO (.mp3)</label><input id="mu-url" class="inp" placeholder="Cole o link .mp3">
+        <button class="btn" onclick="saveMusic()">ADICIONAR MÚSICA</button>
+        <div id="adm-mu-list" style="margin-top:20px;"></div>
+      </div>
+
     </div>
   </div>
 
@@ -550,48 +549,75 @@
   <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
 
   <script>
-    // PARSER G.DRIVE (Converte link visualização para link direto de imagem)
-    function parseImg(url) { if(!url) return ''; let u = url.trim(); let match = u.match(/file\/d\/([a-zA-Z0-9_-]+)/) || u.match(/id=([a-zA-Z0-9_-]+)/); if (match) return `https://drive.google.com/uc?export=view&id=${match[1]}`; return u; }
+    // CACHE BUSTER (FORÇA O PWA A ATUALIZAR)
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.getRegistrations().then(function(registrations) {
+            for(let registration of registrations) { registration.update(); }
+        });
+    }
 
-    window.addEventListener('load', () => { setTimeout(() => { document.getElementById('splash').style.opacity = '0'; setTimeout(() => { document.getElementById('splash').style.display = 'none'; document.getElementById('t-login').style.display = 'flex'; }, 500); }, 2000); });
+    // PARSER GOOGLE DRIVE (CONVERTE PARA LINK DIRETO)
+    function parseImg(url) { 
+        if(!url) return ''; let u = url.trim(); 
+        let match = u.match(/file\/d\/([a-zA-Z0-9_-]+)/) || u.match(/id=([a-zA-Z0-9_-]+)/); 
+        if (match) return `https://drive.google.com/uc?export=view&id=${match[1]}`; return u; 
+    }
 
+    // CONTROLE DA TELA DE SPLASH E LOGIN (CORRIGIDO PARA NÃO PISCAR)
+    window.addEventListener('load', () => { 
+        setTimeout(() => { 
+            document.getElementById('splash').style.opacity = '0'; 
+            setTimeout(() => { 
+                document.getElementById('splash').style.display = 'none'; 
+                document.getElementById('t-login').style.display = 'flex'; 
+            }, 500); 
+        }, 2000); 
+    });
+
+    // CONFIGURAÇÕES DO FIREBASE
     const firebaseConfig = { apiKey: "AIzaSyBiHQQdfL4X88KEZUMvZS-WP0z2viR-ZHY", authDomain: "csvplus-62502.firebaseapp.com", projectId: "csvplus-62502", storageBucket: "csvplus-62502.firebasestorage.app", messagingSenderId: "879590605354", appId: "1:879590605354:web:368cd1fdc1f1e35ca77953" };
     firebase.initializeApp(firebaseConfig); 
     const auth = firebase.auth(); const db = firebase.firestore();
     
-    // ATIVAR MODO OFFLINE SEGURO
-    db.enablePersistence().catch(err => { console.log("Offline Info:", err.code); });
-    if ('serviceWorker' in navigator) { window.addEventListener('load', () => { navigator.serviceWorker.register('sw.js').catch(err => console.log(err)); }); }
+    // MODO OFFLINE SEGURO
+    db.enablePersistence().catch(err => { console.log("Offline Mode Info:", err.code); });
+    if ('serviceWorker' in navigator) { window.addEventListener('load', () => { navigator.serviceWorker.register('sw.js').catch(e => console.log(e)); }); }
 
+    // VARIÁVEIS GLOBAIS DO JOGO
     let U = null; window.TMR = null; window.LS = []; window.DESAFIO_ATUAL = null; window.PAPEL_ATUAL = null; window.TOTAL_XP_ACUMULADO = 0;
     window.GAME_CFG = { rl_tm: 12, rl_p: [0, 50, 0, 100, 0, 200, 0, 500], cx_tm: 12, cx_p: [0, 50, 200], cx_t: ["Azar!", "Bom!", "Jackpot!"], rp_tm: 8, rp_p: 100 };
     window.STORE_ITEMS = []; window.ANUNCIO_MOSTRADO = false;
 
-    // MOTOR DE ÁUDIO CORRIGIDO
-    let sfxWin = new Audio('https://actions.google.com/sounds/v1/cartoon/cartoon_success_fanfare.ogg');
-    let sfxLose = new Audio('https://actions.google.com/sounds/v1/cartoon/cartoon_boing.ogg');
-    let sfxMagic = new Audio('https://actions.google.com/sounds/v1/magic/muffled_magic_swoosh.ogg'); 
-    let sfxFailDuo = new Audio('https://actions.google.com/sounds/v1/cartoon/slide_whistle_to_drum_hit.ogg'); 
-    let sfxTick = new Audio('https://actions.google.com/sounds/v1/ui/button_click.ogg'); sfxTick.volume = 0.5;
+    // MOTOR DE ÁUDIO E EFEITOS (API GOOGLE ACTIONS)
+    let sfxWin = document.getElementById('sfx-win');
+    let sfxLose = document.getElementById('sfx-lose');
+    let sfxMagic = document.getElementById('sfx-magic'); 
+    let sfxFailDuo = document.getElementById('sfx-fail-duo'); 
+    let sfxTick = document.getElementById('sfx-tick');
     let bgMusic = document.getElementById('global-audio'); bgMusic.volume = 0.3;
     
-    let sfxRoleta = new Audio(); let sfxCard = new Audio(); let sfxBalao = new Audio(); let sfxRaspa = new Audio();
+    let sfxRoleta = document.getElementById('sfx-roleta'); 
+    let sfxCard = document.getElementById('sfx-card'); 
+    let sfxBalao = document.getElementById('sfx-balao'); 
+    let sfxRaspa = document.getElementById('sfx-raspa');
 
-    function tocarSom(snd) { if(!snd || !snd.src) return; snd.currentTime = 0; let p = snd.play(); if(p !== undefined) p.catch(e => console.log('Audio Autoplay Blocked')); }
+    // Função Segura para Tocar Áudio no Celular
+    function tocarSom(snd) { if(snd && snd.src) { snd.currentTime = 0; let p = snd.play(); if(p !== undefined) p.catch(e => console.log('Audio Blocked')); } }
+    
     function playMusic(url, el) { bgMusic.src = url; bgMusic.play().catch(e=>console.log(e)); document.querySelectorAll('#mod-music .opt-btn').forEach(b => {b.style.borderColor='var(--border-dark)'; b.style.color='var(--text-main)';}); el.style.borderColor='var(--gold)'; el.style.color='var(--gold)'; }
     function stopMusic() { bgMusic.pause(); document.querySelectorAll('#mod-music .opt-btn').forEach(b => {b.style.borderColor='var(--border-dark)'; b.style.color='var(--text-main)';}); }
+    
     function triggerVibration(type) { if (!("vibrate" in navigator)) return; if (type === 'win') window.navigator.vibrate([100, 50, 100]); else if (type === 'lose') window.navigator.vibrate([300]); else if (type === 'tick') window.navigator.vibrate([30]); }
     function getRankObj(xp) { if(xp < 500) return {c: 'rank-normal', n: 'Iniciante'}; if(xp < 2000) return {c: 'rank-prata', n: 'Prata'}; if(xp < 5000) return {c: 'rank-ouro', n: 'Ouro'}; return {c: 'rank-diamante', n: 'Diamante'}; }
 
-    // ANIMAÇÃO DE XP (CONTA BANCÁRIA)
+    // SISTEMA DE ANIMAÇÃO DO XP ÉPICO (TELA CONTA BANCÁRIA)
     function animXP(el, start, end, duration) {
         let startTime = null;
         function step(timestamp) {
             if (!startTime) startTime = timestamp;
             let progress = Math.min((timestamp - startTime) / duration, 1);
             el.innerText = Math.floor(progress * (end - start) + start);
-            if (progress < 1) { window.requestAnimationFrame(step); }
-            else { el.innerText = end; }
+            if (progress < 1) { window.requestAnimationFrame(step); } else { el.innerText = end; }
         }
         window.requestAnimationFrame(step);
     }
@@ -604,7 +630,7 @@
         setTimeout(() => { over.style.animation = 'fadeIn 0.5s reverse forwards'; setTimeout(() => { over.style.display = 'none'; over.style.animation = 'fadeIn 0.3s'; }, 400); }, 3000);
     }
 
-    // CARREGAMENTOS GERAIS DE DADOS
+    // CARREGAMENTOS GERAIS DO BANCO
     function loadGlobalConfigs() {
         db.collection('sistema').doc('minigames').get().then(doc => { 
             if(doc.exists) {
@@ -645,7 +671,7 @@
     }
     function fecharAnuncio() { document.getElementById('ad-modal').style.display = 'none'; }
 
-    // LOGIN SEGURO 
+    // LOGIN SEGURO DO USUÁRIO
     function acaoLogin(){
       let loginStr = document.getElementById('u').value.trim().toLowerCase().replace(/\s+/g, ''); 
       let senha = document.getElementById('s').value;
@@ -661,11 +687,16 @@
               U = doc.data(); U.id = cred.user.uid; 
               if(U.status === 'BLOQUEADO') { auth.signOut(); msg.innerText = "Conta inativa."; btn.innerText = "CONECTAR"; return; }
               if(!U.inventario) U.inventario = []; 
-              if(!U.fase) U.fase = 1; // Start Map Phase
+              if(!U.fase) U.fase = 1; // Inicia a Trilha
               
               loadGlobalConfigs(); loadStoreItems();
-              document.getElementById('t-login').style.display = 'none'; document.getElementById('app-main').style.display = 'flex'; 
-              updUI(); checkAds(); if(U.nivel && U.nivel.toUpperCase() === 'ADMIN') document.getElementById('fab-adm').style.display = 'flex'; 
+              
+              // Mágica Visual: Oculta o login e mostra o App
+              document.getElementById('t-login').style.display = 'none'; 
+              document.getElementById('app-main').style.display = 'flex'; 
+              
+              updUI(); checkAds(); 
+              if(U.nivel && U.nivel.toUpperCase() === 'ADMIN') document.getElementById('fab-adm').style.display = 'flex'; 
             } else { msg.innerText = "Perfil ausente."; btn.innerText = "CONECTAR"; }
           });
         }).catch(() => { msg.innerText = "Acesso negado. Tente novamente."; btn.innerText = "CONECTAR"; });
@@ -689,7 +720,7 @@
     function go(t, el){ document.querySelectorAll('.view').forEach(v => { v.classList.remove('active'); v.style.display='none'; }); let tg = document.getElementById('v-'+t); tg.style.display='flex'; setTimeout(() => tg.classList.add('active'), 10); document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active')); el.classList.add('active'); if(t === 'rank') loadRank(); if(t === 'store') renderStore(); if(t === 'chat') loadChat(); if(t === 'arena') loadArena(); if(t === 'mapa') loadMapa(); }
     function pop(t,m){ document.getElementById('uni-pop').style.display='flex'; document.getElementById('pop-t').innerText=t; document.getElementById('pop-m').innerText=m; }
 
-    // MAPA DE AVANÇO RPG
+    // MAPA RPG (TRILHA ZIG ZAG)
     function loadMapa() {
         let b = document.getElementById('map-render'); b.innerHTML = '<div style="text-align:center; color:var(--text-muted);">Mapeando jogadores...</div>';
         db.collection("usuarios").where("status","!=","BLOQUEADO").get().then((snap) => { 
@@ -700,9 +731,7 @@
             let h = '<div class="map-line"></div>';
             for(let i = maxFase; i >= 1; i--) {
                 let isMe = U.fase === i; let uHTML = '';
-                if(usersByFase[i]) {
-                    usersByFase[i].forEach(u => { let r = getRankObj(u.xp); let av = parseImg(u.avatar) ? `<img src="${parseImg(u.avatar)}">` : `<img src="https://api.dicebear.com/7.x/bottts/svg?seed=${u.nome}">`; uHTML += `<div class="u-av ${r.c}">${av}</div>`; });
-                }
+                if(usersByFase[i]) { usersByFase[i].forEach(u => { let r = getRankObj(u.xp); let av = parseImg(u.avatar) ? `<img src="${parseImg(u.avatar)}">` : `<img src="https://api.dicebear.com/7.x/bottts/svg?seed=${u.nome}">`; uHTML += `<div class="u-av ${r.c}">${av}</div>`; }); }
                 h += `<div class="map-node"><div class="node-content"><div class="node-title">Fase ${i}</div><div class="node-players">${uHTML}</div></div><div class="node-point ${isMe ? 'active' : ''}">${i}</div><div style="width:40%;"></div></div>`;
             }
             b.innerHTML = h;
@@ -718,7 +747,7 @@
     function sendChat(){ let i = document.getElementById('c-txt'); let t = i.value.trim(); if(!t) return; i.value = ''; db.collection('chat').add({ uid: U.id, nome: U.nome, av: U.avatar || '', xp: U.xp, msg: t, data: firebase.firestore.FieldValue.serverTimestamp() }); }
     function editarMsgChat(id, oldMsg) { let n = prompt("Corrigir mensagem:", oldMsg); if(n !== null && n.trim() !== "" && n !== oldMsg) { db.collection('chat').doc(id).update({ msg: n.trim(), editado: true }); } }
 
-    // ARENA DE DUELOS COOPERATIVOS E RANKING
+    // ARENA DE DUELOS (XP CO-OP)
     let escutaArena = null;
     function loadArena() {
         if(escutaArena) escutaArena(); let b = document.getElementById('arena-list'); b.innerHTML = '<div style="text-align:center; color:var(--text-muted);">Buscando Duelos...</div>';
@@ -764,7 +793,7 @@
     function usarAvatar(url) { U.avatar = url; db.collection("usuarios").doc(U.id).update({ avatar: url }).then(() => { updUI(); renderStore(); pop("Sucesso", "Skin atualizada."); }); }
     function loadMusicList() { db.collection('sistema').doc('musicas').get().then(doc => { if(doc.exists) { let ms = doc.data().lista || []; let h = ''; ms.forEach(m => { h += `<div class="opt-btn" style="background:#07090D;" onclick="playMusic('${m.url}', this)"><span class="material-icons-round" style="margin-right:10px;">play_arrow</span> ${m.nome}</div>`; }); if(h) document.getElementById('music-list').innerHTML = h; } }); }
 
-    // MINIGAMES
+    // MINIGAMES DE SORTE
     function checarCooldown(jogo, tempoHoras, callback) { db.collection("usuarios").doc(U.id).get().then((doc) => { let dados = doc.data(); let ultimo = dados['ultimo_' + jogo] || 0; let agora = new Date().getTime(); let cooldown = tempoHoras * 60 * 60 * 1000; if (U.nivel !== 'ADMIN' && (agora - ultimo) < cooldown) { let h = Math.floor(((ultimo + cooldown) - agora) / (1000*60*60)); let m = Math.floor((((ultimo + cooldown) - agora) % (1000*60*60)) / (1000*60)); pop("Aguarde", `Caixa travada. Volte em ${h}h e ${m}m.`); return; } callback(dados, agora); }); }
     function processarGanho(jogo, premio, dados, agora, elMsg) { let novoXP = (dados.xp || 0) + premio; let objUpdate = { xp: novoXP }; objUpdate['ultimo_' + jogo] = agora; db.collection("usuarios").doc(U.id).update(objUpdate).then(() => { triggerVibration(premio > 0 ? 'win' : 'lose'); U.xp = novoXP; if(premio > 0) { elMsg.innerText = `+${premio} XP`; elMsg.style.color = 'var(--gold)'; tocarSom(sfxWin); confetti({ particleCount: 100, spread: 70, colors:['#FFC312', '#0984E3'] }); updUI(premio); } else { elMsg.innerText = "AZAR"; elMsg.style.color = 'var(--legendary-red)'; tocarSom(sfxLose); updUI(); } setTimeout(()=>{ JOGANDO_MINI = false; }, 2000); }); }
 
@@ -824,12 +853,12 @@
     }
     function sairMinigame() { if(JOGANDO_MINI) return; document.getElementById('t-roleta').style.display='none'; document.getElementById('t-caixa').style.display='none'; document.getElementById('t-raspa').style.display='none'; document.getElementById('app-main').style.display='flex'; updUI(); }
 
-    // QUIZ LOGIC E TRILHA RPG
-    function play(nivel){ document.getElementById('app-main').style.display = 'none'; document.getElementById('t-play').style.display = 'flex'; document.getElementById('q-box').innerHTML = '<div style="text-align:center; color:var(--gold); font-weight:900; font-size:20px;">CARREGANDO...</div>'; db.collection('perguntas').where('nivel', '==', nivel).where('status', '==', 'ATIVA').where('duelo','==','NAO').get().then((snap) => { let perguntas = []; snap.forEach(doc => perguntas.push(doc.data())); if(perguntas.length === 0){ pop("Vazio", "Nenhuma missão cadastrada para Treinamento."); sairJogo(); return; } perguntas = perguntas.sort(() => 0.5 - Math.random()); window.DESAFIO_ATUAL = null; window.TOTAL_XP_ACUMULADO = 0; runQ(perguntas, 0, false); }); }
+    // QUIZ LOGIC (TRILHA MAPA E DUELOS)
+    function play(nivel){ document.getElementById('app-main').style.display = 'none'; document.getElementById('t-play').style.display = 'flex'; document.getElementById('q-box').innerHTML = '<div style="text-align:center; color:var(--gold); font-weight:900; font-size:20px;">CARREGANDO...</div>'; db.collection('perguntas').where('nivel', '==', nivel).where('status', '==', 'ATIVA').where('duelo','==','NAO').get().then((snap) => { let perguntas = []; snap.forEach(doc => perguntas.push(doc.data())); if(perguntas.length === 0){ pop("Vazio", "Nenhuma missão de treinamento cadastrada."); sairJogo(); return; } perguntas = perguntas.sort(() => 0.5 - Math.random()); window.DESAFIO_ATUAL = null; window.TOTAL_XP_ACUMULADO = 0; runQ(perguntas, 0, false); }); }
     
     function runQ(l, i, isDuelo){
       if(i >= l.length){ 
-          if(!isDuelo) {
+          if(!isDuelo) { // Se for missão normal, sobe de Fase no Mapa
               U.fase = (U.fase || 1) + 1;
               db.collection("usuarios").doc(U.id).update({ fase: U.fase }).then(() => { showEpicXP(window.TOTAL_XP_ACUMULADO); setTimeout(() => { pop("NÍVEL CONCLUÍDO!", `Você avançou para a Fase ${U.fase} do Mapa!`); sairJogo(); }, 3000); });
           } else { sairJogo(); }
@@ -879,7 +908,7 @@
     }
     function sairJogo(){ clearInterval(window.TMR); document.getElementById('t-play').style.display='none'; document.getElementById('app-main').style.display='flex'; document.getElementById('timer-box').classList.remove('danger-pulse'); updUI(); window.DESAFIO_ATUAL = null; }
 
-    // ADMIN TABS E LÓGICA DE CADASTRO 
+    // ADMIN PAINEL E FUNÇÕES
     function abrirAdm(){ document.getElementById('mod-adm').style.display='flex'; tab('u'); }
     function tab(v){ document.querySelectorAll('.adm-tab').forEach(e => e.classList.remove('active')); document.querySelectorAll('.adm-view').forEach(e => e.classList.remove('active')); document.getElementById('tb-'+v).classList.add('active'); document.getElementById('adm-'+v).classList.add('active'); if(v === 'u') loadUsersAdmin(); if(v === 'q') ldQ(); if(v === 'l') ldL(); if(v === 'ad') loadAdConfig(); if(v === 'd') loadAdminDuelos(); }
 
