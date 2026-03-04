@@ -1,0 +1,17 @@
+{
+  "name": "CSV+ Portal Gamificado",
+  "short_name": "CSV+",
+  "description": "Hub de missões, duelos e recompensas",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0B0E14",
+  "theme_color": "#FFC312",
+  "icons": [
+    {
+      "src": "logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
