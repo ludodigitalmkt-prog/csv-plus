@@ -156,8 +156,8 @@
     .store-btn.equipped { background: var(--border-dark); color: var(--text-muted); border-color: transparent; }
 
     .lvl-box { background: var(--bg-panel); border-left: 4px solid transparent; border-radius: 16px; padding: 20px; margin-bottom: 15px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; box-shadow: 0 8px 20px rgba(0,0,0,0.4); transition:0.3s;}
+    .lvl-box:active { transform: scale(0.97); }
     .lvl-box.facil { border-left-color: var(--rare-blue); } .lvl-box.medio { border-left-color: var(--epic-purple); } .lvl-box.dificil { border-left-color: var(--legendary-red); }
-    
     .game-card { background: var(--bg-panel); border: 1px solid var(--border-dark); border-radius: 16px; padding: 15px; margin-bottom: 15px; display: flex; align-items: center; gap: 15px; cursor: pointer; transition:0.3s; }
     .game-card:active { transform: scale(0.97); border-color: var(--gold); }
     .game-icon { width: 60px; height: 60px; border-radius: 12px; background: #07090D; border: 1px solid var(--border-dark); display: flex; align-items: center; justify-content: center; font-size: 30px; }
@@ -212,17 +212,27 @@
 <body>
 
   <script>
-    if ('caches' in window) { caches.keys().then((names) => { names.forEach(name => { caches.delete(name); }); }); }
-    if ('serviceWorker' in navigator) { navigator.serviceWorker.getRegistrations().then(function(registrations) { for(let registration of registrations) { registration.unregister(); } }); }
+    if ('caches' in window) {
+      caches.keys().then((names) => {
+        names.forEach(name => { caches.delete(name); });
+      });
+    }
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then(function(registrations) {
+        for(let registration of registrations) { registration.unregister(); }
+      });
+    }
   </script>
 
   <audio id="global-audio" loop></audio>
+
+  <div class="bg-anim"></div>
 
   <div id="splash" onclick="fecharSplashNaMarra()">
     <div class="logo-3d">CSV+</div>
     <div class="cyber-bar"><div class="cyber-fill"></div></div>
     <div class="splash-txt">INICIANDO SISTEMA...</div>
-    <div style="font-size: 10px; color: var(--text-muted); margin-top: 15px; font-weight: bold;">v6.0 - Destruidor de Cache Ativado</div>
+    <div style="font-size: 10px; color: var(--text-muted); margin-top: 15px; font-weight: bold;">v6.0 - Anti Cache Ativado</div>
   </div>
   
   <div id="ad-modal">
@@ -382,7 +392,7 @@
   <div id="mod-desafiar" class="adm-overlay" style="align-items:center;">
     <div class="login-box" style="width:90%; max-width:400px; padding:20px; max-height:80vh; display:flex; flex-direction:column;">
       <h2 style="color:var(--legendary-red); margin-bottom:10px; font-weight:900; text-transform: uppercase;">Escolha um Alvo</h2>
-      <p style="font-size:12px; color:var(--text-muted); margin-bottom:20px;">Vocês responderão a mesma pergunta. Se AMBOS acertarem, vitória da dupla!</p>
+      <p style="font-size:12px; color:var(--text-muted); margin-bottom:20px;">Vocês responderão a mesma pergunta. Acertem juntos para ganhar XP.</p>
       <div id="op-list" style="flex:1; overflow-y:auto; padding-right:5px;"></div>
       <button class="btn" style="background:transparent; border:1px solid var(--border-dark); color:var(--text-muted); margin-top:15px; box-shadow:none;" onclick="document.getElementById('mod-desafiar').style.display='none'">CANCELAR</button>
     </div>
@@ -493,10 +503,7 @@
             <div><label class="adm-lbl">XP ERRO</label><input id="q-l" class="inp" type="number"></div>
             <div><label class="adm-lbl">TEMPO (s)</label><input id="q-tm" class="inp" type="number"></div>
         </div>
-        
-        <label class="adm-lbl" style="color:var(--legendary-red);">USAR NOS DUELOS PVP?</label>
-        <select id="q-duelo" class="inp"><option value="SIM">SIM (Aparece na Arena)</option><option value="NAO">NÃO (Só na aba Missões)</option></select>
-
+        <label class="adm-lbl" style="color:var(--legendary-red);">USAR NOS DUELOS PVP?</label><select id="q-duelo" class="inp"><option value="SIM">SIM (Aparece na Arena)</option><option value="NAO">NÃO (Só na aba Missões)</option></select>
         <div class="glass-card" style="margin-bottom:15px; background: #07090D;">
            <label class="adm-lbl">OPÇÕES (A, B, C, D) - Aceita G.Drive nas Imagens</label>
            <div class="row-grid"><input id="oa" class="inp" placeholder="Texto A"><input id="oai" class="inp" placeholder="Img A (URL)"></div><div class="row-grid"><input id="ob" class="inp" placeholder="Texto B"><input id="obi" class="inp" placeholder="Img B (URL)"></div><div class="row-grid"><input id="oc" class="inp" placeholder="Texto C"><input id="oci" class="inp" placeholder="Img C (URL)"></div><div class="row-grid"><input id="od" class="inp" placeholder="Texto D"><input id="odi" class="inp" placeholder="Img D (URL)"></div>
@@ -521,7 +528,7 @@
         
         <h3 style="color:var(--success-green); margin-bottom:5px; margin-top:20px; font-size:14px; text-transform: uppercase;">RASPADINHA</h3>
         <div class="row-grid"><div><label class="adm-lbl">Horas Recarga</label><input id="rp-tm" class="inp" type="number"></div><div><label class="adm-lbl">Vitória (XP)</label><input id="rp-p1" class="inp" type="number"></div></div>
-        <button class="btn" style="margin-top:20px" onclick="saveGames()">SALVAR REGRAS E NOMES</button>
+        <button class="btn" style="margin-top:20px" onclick="saveGames()">SALVAR REGRAS</button>
       </div>
 
       <div id="adm-l" class="adm-view">
@@ -539,32 +546,38 @@
   <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
 
   <script>
-    // PARSER GOOGLE DRIVE
+    // 1. UTILITÁRIOS
     function parseImg(url) { if(!url) return ''; let u = url.trim(); let match = u.match(/file\/d\/([a-zA-Z0-9_-]+)/) || u.match(/id=([a-zA-Z0-9_-]+)/); if (match) return `https://drive.google.com/uc?export=view&id=${match[1]}`; return u; }
-
-    // CONTROLE DO SPLASH E LOGIN RÁPIDO
+    
     function fecharSplashNaMarra() {
         let spl = document.getElementById('splash');
         if(spl) { spl.style.opacity = '0'; setTimeout(() => { spl.style.display = 'none'; document.getElementById('t-login').style.display = 'flex'; }, 300); }
     }
 
+    // 2. INICIA FIREBASE E OFFLINE
     const firebaseConfig = { apiKey: "AIzaSyBiHQQdfL4X88KEZUMvZS-WP0z2viR-ZHY", authDomain: "csvplus-62502.firebaseapp.com", projectId: "csvplus-62502", storageBucket: "csvplus-62502.firebasestorage.app", messagingSenderId: "879590605354", appId: "1:879590605354:web:368cd1fdc1f1e35ca77953" };
     firebase.initializeApp(firebaseConfig); 
     const auth = firebase.auth(); const db = firebase.firestore();
     
+    db.enablePersistence().catch(err => { console.log("Offline Mode Info:", err.code); });
+
+    // 3. VARIÁVEIS GLOBAIS
     let U = null; window.TMR = null; window.LS = []; window.DESAFIO_ATUAL = null; window.PAPEL_ATUAL = null; window.TOTAL_XP_ACUMULADO = 0; window.ROL_CURRENT_ROTATION = 0;
     window.GAME_CFG = { rl_tm: 12, rl_p: [0, 50, 0, 100, 0, 200, 0, 500], cx_tm: 12, cx_p: [0, 50, 200], cx_t: ["Azar!", "Bom!", "Jackpot!"], rp_tm: 8, rp_p: 100 };
     window.STORE_ITEMS = []; window.ANUNCIO_MOSTRADO = false;
 
-    // MOTOR DE ÁUDIO INJETÁVEL (FURA BLOQUEIOS)
-    function tocarSom(url) { try { let snd = new Audio(url); snd.play().catch(e=>console.log('Audio Blocked')); } catch(e){} }
+    // 4. MOTOR DE ÁUDIO INJETÁVEL (FURA BLOQUEIOS)
+    function tocarSom(urlStr) { 
+        try { let snd = new Audio(urlStr); snd.play().catch(e => console.log('Audio Blocked')); } 
+        catch(e) { console.log("Erro na injeção de áudio"); }
+    }
     
     function playMusic(url, el) { let bgm = document.getElementById('global-audio'); bgm.src = url; bgm.play().catch(e=>console.log(e)); document.querySelectorAll('#mod-music .opt-btn').forEach(b => {b.style.borderColor='var(--border-dark)'; b.style.color='var(--text-main)';}); el.style.borderColor='var(--gold)'; el.style.color='var(--gold)'; }
     function stopMusic() { document.getElementById('global-audio').pause(); document.querySelectorAll('#mod-music .opt-btn').forEach(b => {b.style.borderColor='var(--border-dark)'; b.style.color='var(--text-main)';}); }
     function triggerVibration(type) { if (!("vibrate" in navigator)) return; if (type === 'win') window.navigator.vibrate([100, 50, 100]); else if (type === 'lose') window.navigator.vibrate([300]); else if (type === 'tick') window.navigator.vibrate([30]); }
     function getRankObj(xp) { if(xp < 500) return {c: 'rank-normal', n: 'Iniciante'}; if(xp < 2000) return {c: 'rank-prata', n: 'Prata'}; if(xp < 5000) return {c: 'rank-ouro', n: 'Ouro'}; return {c: 'rank-diamante', n: 'Diamante'}; }
 
-    // ANIMAÇÃO DE XP ÉPICO
+    // 5. XP ANIMATION (CONTA BANCÁRIA)
     function animXP(el, start, end, duration) {
         let startTime = null;
         function step(timestamp) {
@@ -579,19 +592,49 @@
     function showEpicXP(val) {
         let over = document.getElementById('epic-xp-overlay'); over.style.display = 'flex'; over.style.animation = 'fadeIn 0.3s';
         let num = document.getElementById('epic-val'); let tit = document.getElementById('epic-title');
-        if(val >= 0) { num.className = 'epic-number'; tit.innerText = 'RECOMPENSA DE MISSÃO'; animXP(num, 0, val, 1500); }
+        if(val >= 0) { num.className = 'epic-number'; tit.innerText = 'RECOMPENSA GANHA'; animXP(num, 0, val, 1500); }
         else { num.className = 'epic-number lose'; tit.innerText = 'XP PERDIDO'; animXP(num, 0, val, 1000); }
         setTimeout(() => { over.style.animation = 'fadeIn 0.5s reverse forwards'; setTimeout(() => { over.style.display = 'none'; }, 400); }, 3500);
     }
 
-    // VERIFICADOR DE SESSÃO OFICIAL (O CÉREBRO QUE RESOLVEU A PANE)
+    // 6. CARREGAMENTOS GERAIS
+    function loadGlobalConfigs() {
+        db.collection('sistema').doc('minigames').get().then(doc => { 
+            if(doc.exists) {
+                window.GAME_CFG = doc.data(); 
+                document.getElementById('name-roleta-ui').innerText = window.GAME_CFG.nome_roleta || 'Roleta de XP';
+                document.getElementById('name-caixa-ui').innerText = window.GAME_CFG.nome_caixa || 'Caixa Épica';
+                document.getElementById('name-raspa-ui').innerText = window.GAME_CFG.nome_raspa || 'Contrato';
+                document.getElementById('name-roleta-tela').innerText = window.GAME_CFG.nome_roleta || 'Roleta de XP';
+                document.getElementById('name-caixa-tela').innerText = window.GAME_CFG.nome_caixa || 'Caixa Épica';
+                document.getElementById('name-raspa-tela').innerText = window.GAME_CFG.nome_raspa || 'Contrato';
+                if(U && U.nivel==='ADMIN') { document.getElementById('nm-roleta').value = window.GAME_CFG.nome_roleta || 'Roleta de XP'; document.getElementById('nm-caixa').value = window.GAME_CFG.nome_caixa || 'Caixa Épica'; document.getElementById('nm-raspa').value = window.GAME_CFG.nome_raspa || 'Contrato'; }
+            } montarRoletaVisual(); 
+        });
+        loadMusicList();
+    }
+    
+    function checkAds() {
+        if(window.ANUNCIO_MOSTRADO) return;
+        db.collection('sistema').doc('anuncio').get().then(doc => {
+            if(doc.exists && doc.data().ativo === 'SIM') {
+                let d = doc.data(); document.getElementById('ad-title').innerText = d.titulo || 'AVISO'; let b = document.getElementById('ad-body');
+                if(d.tipo === 'IMAGEM') b.innerHTML = `<img src="${parseImg(d.conteudo)}" style="max-width:100%; max-height:60vh; object-fit:contain; border-radius:10px;">`;
+                else b.innerHTML = `<div style="font-size:14px; color:var(--text-main); white-space:pre-wrap;">${d.conteudo}</div>`;
+                document.getElementById('ad-modal').style.display = 'flex'; window.ANUNCIO_MOSTRADO = true;
+            }
+        });
+    }
+    function fecharAnuncio() { document.getElementById('ad-modal').style.display = 'none'; }
+
+    // 7. VERIFICADOR DE SESSÃO OFICIAL (CORRIGE A PANE DE TELA)
     auth.onAuthStateChanged(user => {
         if (user) {
             db.collection("usuarios").doc(user.uid).get().then((doc) => {
                 if (doc.exists) {
                     U = doc.data(); U.id = user.uid; 
                     if(U.status === 'BLOQUEADO') { auth.signOut(); showLoginScreen("Sua conta foi desativada."); return; }
-                    if(!U.inventario) U.inventario = []; if(!U.fase) U.fase = 1;
+                    if(!U.inventario) U.inventario = []; if(!U.fase) U.fase = 1; 
                     
                     loadGlobalConfigs(); loadStoreItems(); checkAds();
                     
@@ -599,7 +642,7 @@
                     document.getElementById('t-login').style.display = 'none';
                     document.getElementById('app-main').classList.add('ready'); 
                     updUI(); if(U.nivel && U.nivel.toUpperCase() === 'ADMIN') document.getElementById('fab-adm').style.display = 'flex'; 
-                } else { showLoginScreen("Perfil corrompido no banco."); }
+                } else { showLoginScreen("Perfil não encontrado no banco."); }
             }).catch((err) => { showLoginScreen("Erro de rede ao ler perfil: " + err.message); });
         } else { setTimeout(fecharSplashNaMarra, 1200); }
     });
@@ -634,7 +677,7 @@
     function go(t, el){ document.querySelectorAll('.view').forEach(v => { v.classList.remove('active'); v.style.display='none'; }); let tg = document.getElementById('v-'+t); tg.style.display='flex'; setTimeout(() => tg.classList.add('active'), 10); document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active')); el.classList.add('active'); if(t === 'rank') loadRank(); if(t === 'store') renderStore(); if(t === 'chat') loadChat(); if(t === 'arena') loadArena(); if(t === 'mapa') loadMapa(); }
     function pop(t,m){ document.getElementById('uni-pop').style.display='flex'; document.getElementById('pop-t').innerText=t; document.getElementById('pop-m').innerText=m; }
 
-    // MAPA DE AVANÇO (BIOMAS MÁGICOS)
+    // 8. MAPA DE AVANÇO (MUNDOS / RPG)
     function getBiome(fase) {
         if(fase <= 3) return { n: 'Bosque de Pedra', bg: 'linear-gradient(135deg, #00b894, #55efc4)', c: '#000' };
         if(fase <= 6) return { n: 'Ilhas Congeladas', bg: 'linear-gradient(135deg, #74b9ff, #81ecec)', c: '#000' };
@@ -654,7 +697,7 @@
             
             for(let bIdx = maxBiome; bIdx >= 1; bIdx--) {
                 let biome = getBiome(bIdx * 3);
-                h += `<div class="biome-section" style="background: ${biome.bg};">
+                h += `<div class="biome-section" style="background: ${biome.bg}; color: ${biome.c}; width: 100%; position:relative;">
                         <div class="biome-title" style="color: ${biome.c};">${biome.n}</div>
                         <div class="biome-path"></div>`;
                 
@@ -670,7 +713,10 @@
                         }); 
                     } 
                     h += `<div class="map-node">
-                            <div class="node-content"><div class="node-title">Fase ${i}</div><div class="node-players">${uHTML}</div></div>
+                            <div class="node-content" style="background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.2);">
+                                <div class="node-title" style="color:#fff;">Fase ${i}</div>
+                                <div class="node-players">${uHTML}</div>
+                            </div>
                             <div class="node-point ${isMe ? 'active' : ''}">${i}</div>
                             <div style="width:40%;"></div>
                           </div>`; 
@@ -686,11 +732,11 @@
     function pod(u, pos, c) { let r = getRankObj(u.xp); let safeAv = parseImg(u.avatar); let av = safeAv ? `<img src="${safeAv}">` : `<img src="https://api.dicebear.com/7.x/bottts/svg?seed=${u.nome}">`; c.innerHTML += `<div class="p-col p${pos}"><div class="u-av ${r.c} av-pod">${av}</div><div class="p-block" style="position:relative;">${u.xp}<div style="position:absolute; top:-35px; width:120px; background:var(--bg-panel); color:var(--text-main); font-size:9px; padding:5px; border-radius:10px; text-align:center; border:1px solid var(--border-dark); font-weight:bold; display: ${u.frase ? 'block' : 'none'}">${u.frase}</div></div><div style="font-size:11px;margin-top:8px;font-weight:800;text-transform:uppercase;color:var(--text-main);">${u.nome.split(' ')[0]}</div></div>`; }
 
     let escutaChat = null; 
-    function loadChat(){ if(escutaChat) escutaChat(); let b = document.getElementById('chat-msgs'); b.innerHTML = '<div style="text-align:center; padding:20px; color:var(--text-muted);">Conectando...</div>'; escutaChat = db.collection('chat').orderBy('data', 'asc').limit(50).onSnapshot((snap) => { b.innerHTML = ''; if(snap.empty) { b.innerHTML = '<div style="text-align:center; padding:20px; color:var(--text-muted);">Lobby vazio.</div>'; } snap.forEach((doc) => { let m = doc.data(); let me = m.uid === U.id ? 'me' : ''; let r = getRankObj(m.xp||0); let safeAv = parseImg(m.av); let av = safeAv ? `<img src="${safeAv}" onerror="this.style.display='none'">` : `<img src="https://api.dicebear.com/7.x/bottts/svg?seed=${m.nome}">`; let safeOld = m.msg.replace(/'/g, "\\'").replace(/"/g, '&quot;'); let editBtn = (m.uid === U.id) ? `<span class="material-icons-round" style="font-size:12px; margin-left:8px; cursor:pointer; opacity:0.5; vertical-align:middle;" onclick="editarMsgChat('${doc.id}', '${safeOld}')">edit</span>` : ''; let editMark = m.editado ? `<span style="font-size:9px; opacity:0.5; margin-left:5px; font-style:italic;">(edit)</span>` : ''; b.innerHTML += `<div class="c-msg ${me}"><div class="u-av ${r.c} av-chat">${av}</div><div class="c-bub"><span style="font-size:10px;color:var(--gold);display:block;margin-bottom:3px;font-weight:900;text-transform:uppercase;">${m.nome}</span>${m.msg} ${editMark} ${editBtn}</div></div>`; }); b.scrollTop = b.scrollHeight; }); }
+    function loadChat(){ if(escutaChat) escutaChat(); let b = document.getElementById('chat-msgs'); b.innerHTML = '<div style="text-align:center; padding:20px; color:var(--text-muted);">Conectando servidor...</div>'; escutaChat = db.collection('chat').orderBy('data', 'asc').limit(50).onSnapshot((snap) => { b.innerHTML = ''; if(snap.empty) { b.innerHTML = '<div style="text-align:center; padding:20px; color:var(--text-muted);">Lobby vazio.</div>'; } snap.forEach((doc) => { let m = doc.data(); let me = m.uid === U.id ? 'me' : ''; let r = getRankObj(m.xp||0); let safeAv = parseImg(m.av); let av = safeAv ? `<img src="${safeAv}" onerror="this.style.display='none'">` : `<img src="https://api.dicebear.com/7.x/bottts/svg?seed=${m.nome}">`; let safeOld = m.msg.replace(/'/g, "\\'").replace(/"/g, '&quot;'); let editBtn = (m.uid === U.id) ? `<span class="material-icons-round" style="font-size:12px; margin-left:8px; cursor:pointer; opacity:0.5; vertical-align:middle;" onclick="editarMsgChat('${doc.id}', '${safeOld}')">edit</span>` : ''; let editMark = m.editado ? `<span style="font-size:9px; opacity:0.5; margin-left:5px; font-style:italic;">(edit)</span>` : ''; b.innerHTML += `<div class="c-msg ${me}"><div class="u-av ${r.c} av-chat">${av}</div><div class="c-bub"><span style="font-size:10px;color:var(--gold);display:block;margin-bottom:3px;font-weight:900;text-transform:uppercase;">${m.nome}</span>${m.msg} ${editMark} ${editBtn}</div></div>`; }); b.scrollTop = b.scrollHeight; }); }
     function sendChat(){ let i = document.getElementById('c-txt'); let t = i.value.trim(); if(!t) return; i.value = ''; db.collection('chat').add({ uid: U.id, nome: U.nome, av: U.avatar || '', xp: U.xp, msg: t, data: firebase.firestore.FieldValue.serverTimestamp() }); }
     function editarMsgChat(id, oldMsg) { let n = prompt("Corrigir mensagem:", oldMsg); if(n !== null && n.trim() !== "" && n !== oldMsg) { db.collection('chat').doc(id).update({ msg: n.trim(), editado: true }); } }
 
-    // ARENA PVP
+    // ARENA DE DUELOS (CO-OP)
     let escutaArena = null;
     function loadArena() {
         if(escutaArena) escutaArena(); let b = document.getElementById('arena-list'); b.innerHTML = '<div style="text-align:center; color:var(--text-muted);">Buscando Duelos...</div>';
@@ -711,14 +757,13 @@
     function lancarDesafio(alvoId, alvoNome, alvoAv) { db.collection('perguntas').where('status','==','ATIVA').where('duelo','==','SIM').get().then(snap => { let qs = []; snap.forEach(doc => qs.push(doc.data())); if(qs.length === 0) { pop("Atenção", "O Admin não marcou nenhuma missão para Duelos!"); return; } let q = qs[Math.floor(Math.random() * qs.length)]; let desafio = { c_id: U.id, c_nome: U.nome, c_av: U.avatar||'', c_resp: false, c_acerto: false, a_id: alvoId, a_nome: alvoNome, a_av: alvoAv, a_resp: false, a_acerto: false, q_obj: q, q_win: q.xpGanho||10, q_lose: q.xpPerda||5, status: 'PENDENTE', data: firebase.firestore.FieldValue.serverTimestamp() }; db.collection('desafios').add(desafio).then(() => { document.getElementById('mod-desafiar').style.display='none'; pop("Lançado!", "Jogue a sua vez agora."); }); }); }
     function iniciarDuelo(id_desafio, papel) { db.collection('desafios').doc(id_desafio).get().then(doc => { if(doc.exists) { window.DESAFIO_ATUAL = doc.id; window.PAPEL_ATUAL = papel; let d = doc.data(); window.TOTAL_XP_ACUMULADO = 0; runQ([d.q_obj], 0, true); } }); }
 
-    // LOJA
     function loadStoreItems() { db.collection('sistema').doc('loja').get().then(doc => { if(doc.exists) window.STORE_ITEMS = doc.data().itens || []; }); }
     function renderStore() { let h = ''; let defaults = [ {n:'Robô (Grátis)', i:`https://api.dicebear.com/7.x/bottts/svg?seed=${U.id}`, p:0}, {n:'Humano (Grátis)', i:`https://api.dicebear.com/7.x/adventurer/svg?seed=${U.id}`, p:0} ]; let allItems = defaults.concat(window.STORE_ITEMS); allItems.forEach((it) => { let owned = U.inventario.includes(it.i) || it.p === 0; let isCurrent = U.avatar === it.i; let btnHTML = isCurrent ? `<button class="store-btn equipped">EM USO</button>` : (owned ? `<button class="store-btn owned" onclick="usarAvatar('${it.i}')">EQUIPAR</button>` : `<button class="store-btn" onclick="comprarAvatar('${it.i}', ${it.p})"><span class="material-icons-round" style="font-size:12px;vertical-align:middle">stars</span> ${it.p}</button>`); h += `<div class="store-item"><img src="${parseImg(it.i)}" class="store-img"><div class="store-price">${it.n}</div>${btnHTML}</div>`; }); document.getElementById('store-list').innerHTML = h; }
     function comprarAvatar(url, preco) { if(U.xp < preco) { pop("Negado", "XP Insuficiente!"); return; } U.xp -= preco; U.inventario.push(url); U.avatar = url; db.collection("usuarios").doc(U.id).update({ xp: U.xp, inventario: U.inventario, avatar: url }).then(() => { tocarSom('https://assets.mixkit.co/active_storage/sfx/2955/2955-preview.mp3'); confetti({ particleCount: 100, spread: 70 }); updUI(); renderStore(); pop("Sucesso", "Skin equipada."); }); }
     function usarAvatar(url) { U.avatar = url; db.collection("usuarios").doc(U.id).update({ avatar: url }).then(() => { updUI(); renderStore(); pop("Sucesso", "Skin atualizada."); }); }
     function loadMusicList() { db.collection('sistema').doc('musicas').get().then(doc => { if(doc.exists) { let ms = doc.data().lista || []; let h = ''; ms.forEach(m => { h += `<div class="opt-btn" style="background:#07090D;" onclick="playMusic('${m.url}', this)"><span class="material-icons-round" style="margin-right:10px;">play_arrow</span> ${m.nome}</div>`; }); if(h) document.getElementById('music-list').innerHTML = h; } }); }
 
-    // MINIGAMES DA SORTE
+    // JOGOS DE SORTE
     function checarCooldown(jogo, tempoHoras, callback) { db.collection("usuarios").doc(U.id).get().then((doc) => { let dados = doc.data(); let ultimo = dados['ultimo_' + jogo] || 0; let agora = new Date().getTime(); let cooldown = tempoHoras * 60 * 60 * 1000; if (U.nivel !== 'ADMIN' && (agora - ultimo) < cooldown) { let h = Math.floor(((ultimo + cooldown) - agora) / (1000*60*60)); let m = Math.floor((((ultimo + cooldown) - agora) % (1000*60*60)) / (1000*60)); pop("Aguarde", `Caixa travada. Volte em ${h}h e ${m}m.`); return; } callback(dados, agora); }); }
     function processarGanho(jogo, premio, dados, agora, elMsg) { let novoXP = (dados.xp || 0) + premio; let objUpdate = { xp: novoXP }; objUpdate['ultimo_' + jogo] = agora; db.collection("usuarios").doc(U.id).update(objUpdate).then(() => { triggerVibration(premio > 0 ? 'win' : 'lose'); U.xp = novoXP; if(premio > 0) { elMsg.innerText = `+${premio} XP`; elMsg.style.color = 'var(--gold)'; tocarSom('https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3'); confetti({ particleCount: 100, spread: 70, colors:['#FFC312', '#0984E3'] }); updUI(premio); } else { elMsg.innerText = "AZAR"; elMsg.style.color = 'var(--legendary-red)'; tocarSom('https://assets.mixkit.co/active_storage/sfx/2956/2956-preview.mp3'); updUI(); } setTimeout(()=>{ JOGANDO_MINI = false; }, 2000); }); }
 
@@ -737,7 +782,7 @@
                 window.ROL_CURRENT_ROTATION = window.ROL_CURRENT_ROTATION + 3600 + offset - (window.ROL_CURRENT_ROTATION % 360); 
                 let wheelEl = document.getElementById('wheel-el'); wheelEl.style.transition = 'transform 4s cubic-bezier(0.2, 0.9, 0.2, 1)'; wheelEl.style.transform = `rotate(${window.ROL_CURRENT_ROTATION}deg)`; 
                 setTimeout(() => processarGanho('roleta', premio, dados, agora, msgEl), 4000); 
-            } catch(e) { console.log("Roleta Erro:", e); JOGANDO_MINI = false; }
+            } catch(e) { console.log("Roleta Error:", e); JOGANDO_MINI = false; }
         }); 
     }
     
@@ -746,8 +791,17 @@
     
     function startRaspaGame() { 
         checarCooldown('raspa', window.GAME_CFG.rp_tm || 8, (dados, agora) => {
-            document.getElementById('app-main').style.display='none'; document.getElementById('t-raspa').style.display='flex'; document.getElementById('raspa-msg').innerText=''; let g = document.getElementById('raspa-grid'); g.innerHTML=''; window.RASPA_CLICKS=0; window.RASPA_RES=[]; window.RASPA_DADOS = dados; window.RASPA_AGORA = agora; JOGANDO_MINI = false;
-            for(let i=0; i<4; i++) { g.innerHTML += `<div style="position:relative; width:100%; height:100px; border-radius:12px; overflow:hidden; border:2px dashed var(--border-dark);"><div id="raspa-res-${i}" style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:35px; background:var(--bg-panel); color:var(--text-main); font-weight:900;"></div><canvas id="raspa-canvas-${i}" width="150" height="100" style="position:absolute; inset:0; width:100%; height:100%; touch-action:none; cursor:pointer;"></canvas></div>`; } setTimeout(() => { for(let i=0; i<4; i++) initScratchCanvas(i); }, 100);
+            document.getElementById('app-main').style.display='none'; document.getElementById('t-raspa').style.display='flex'; 
+            document.getElementById('raspa-msg').innerText=''; let g = document.getElementById('raspa-grid'); g.innerHTML=''; 
+            window.RASPA_CLICKS=0; window.RASPA_RES=[]; window.RASPA_DADOS = dados; window.RASPA_AGORA = agora; JOGANDO_MINI = false;
+            for(let i=0; i<4; i++) { 
+                g.innerHTML += `
+                <div style="position:relative; width:100%; height:100px; border-radius:12px; overflow:hidden; border:2px dashed var(--border-dark);">
+                   <div id="raspa-res-${i}" style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:35px; background:var(--bg-panel); color:var(--text-main); font-weight:900;"></div>
+                   <canvas id="raspa-canvas-${i}" width="150" height="100" style="position:absolute; inset:0; width:100%; height:100%; touch-action:none; cursor:pointer;"></canvas>
+                </div>`; 
+            }
+            setTimeout(() => { for(let i=0; i<4; i++) initScratchCanvas(i); }, 100);
         });
     }
 
@@ -760,23 +814,30 @@
         function getMousePos(evt) { let rect = canvas.getBoundingClientRect(); let clientX = evt.touches ? evt.touches[0].clientX : evt.clientX; let clientY = evt.touches ? evt.touches[0].clientY : evt.clientY; return { x: (clientX - rect.left) * (canvas.width / rect.width), y: (clientY - rect.top) * (canvas.height / rect.height) }; }
         function startDraw(e) { if(revealed || JOGANDO_MINI) return; isDrawing = true; scratch(e); }
         function stopDraw() { isDrawing = false; checkReveal(); }
-        function scratch(e) { if (!isDrawing || revealed || JOGANDO_MINI) return; e.preventDefault(); let pos = getMousePos(e); ctx.globalCompositeOperation = 'destination-out'; ctx.beginPath(); ctx.arc(pos.x, pos.y, 20, 0, Math.PI * 2); ctx.fill(); }
+        function scratch(e) {
+            if (!isDrawing || revealed || JOGANDO_MINI) return; e.preventDefault(); let pos = getMousePos(e);
+            ctx.globalCompositeOperation = 'destination-out'; ctx.beginPath(); ctx.arc(pos.x, pos.y, 20, 0, Math.PI * 2); ctx.fill();
+        }
         function checkReveal() {
-            if(revealed) return; let pixels = ctx.getImageData(0, 0, canvas.width, canvas.height).data; let trans = 0; for (let j = 3; j < pixels.length; j += 4) { if (pixels[j] < 10) trans++; }
+            if(revealed) return; let pixels = ctx.getImageData(0, 0, canvas.width, canvas.height).data; let trans = 0;
+            for (let j = 3; j < pixels.length; j += 4) { if (pixels[j] < 10) trans++; }
             if (trans / (pixels.length / 4) > 0.3) { 
-                revealed = true; canvas.style.transition = 'opacity 0.3s'; canvas.style.opacity = '0'; window.RASPA_RES.push(s); window.RASPA_CLICKS++;
+                revealed = true; canvas.style.transition = 'opacity 0.3s'; canvas.style.opacity = '0';
+                window.RASPA_RES.push(s); window.RASPA_CLICKS++;
                 if(window.RASPA_CLICKS === 4) {
-                    JOGANDO_MINI = true; let counts = {}; window.RASPA_RES.forEach(x => counts[x] = (counts[x]||0)+1); let max = Math.max(...Object.values(counts)); let winSimbol = Object.keys(counts).find(key => counts[key] === max); let premio = max >= 3 ? (window.GAME_CFG.rp_p || 100) : 0;
+                    JOGANDO_MINI = true;
+                    let counts = {}; window.RASPA_RES.forEach(x => counts[x] = (counts[x]||0)+1); let max = Math.max(...Object.values(counts)); let winSimbol = Object.keys(counts).find(key => counts[key] === max); let premio = max >= 3 ? (window.GAME_CFG.rp_p || 100) : 0;
                     if(premio > 0) { for(let k=0; k<4; k++) { let el = document.getElementById(`raspa-res-${k}`); if(el.innerText === winSimbol) { el.style.background = 'var(--success-green)'; el.style.color = '#000'; el.parentElement.style.animation = 'pulseDiamante 1s infinite alternate'; } } }
                     processarGanho('raspa', premio, window.RASPA_DADOS, window.RASPA_AGORA, document.getElementById('raspa-msg'));
                 } setTimeout(() => canvas.remove(), 300);
             }
         }
-        canvas.addEventListener('mousedown', startDraw); canvas.addEventListener('mousemove', scratch); canvas.addEventListener('mouseup', stopDraw); canvas.addEventListener('mouseleave', stopDraw); canvas.addEventListener('touchstart', startDraw, {passive: false}); canvas.addEventListener('touchmove', scratch, {passive: false}); canvas.addEventListener('touchend', stopDraw);
+        canvas.addEventListener('mousedown', startDraw); canvas.addEventListener('mousemove', scratch); canvas.addEventListener('mouseup', stopDraw); canvas.addEventListener('mouseleave', stopDraw);
+        canvas.addEventListener('touchstart', startDraw, {passive: false}); canvas.addEventListener('touchmove', scratch, {passive: false}); canvas.addEventListener('touchend', stopDraw);
     }
     function sairMinigame() { if(JOGANDO_MINI) return; document.getElementById('t-roleta').style.display='none'; document.getElementById('t-caixa').style.display='none'; document.getElementById('t-raspa').style.display='none'; document.getElementById('app-main').style.display='flex'; updUI(); }
 
-    // QUIZ LOGIC E TRILHA (RPG MAP)
+    // QUIZ LOGIC
     function play(nivel){ document.getElementById('app-main').style.display = 'none'; document.getElementById('t-play').style.display = 'flex'; document.getElementById('q-box').innerHTML = '<div style="text-align:center; color:var(--gold); font-weight:900; font-size:20px;">CARREGANDO...</div>'; db.collection('perguntas').where('nivel', '==', nivel).where('status', '==', 'ATIVA').where('duelo','==','NAO').get().then((snap) => { let perguntas = []; snap.forEach(doc => perguntas.push(doc.data())); if(perguntas.length === 0){ pop("Vazio", "Nenhuma missão de treinamento cadastrada."); sairJogo(); return; } perguntas = perguntas.sort(() => 0.5 - Math.random()); window.DESAFIO_ATUAL = null; window.TOTAL_XP_ACUMULADO = 0; runQ(perguntas, 0, false); }); }
     
     function runQ(l, i, isDuelo){
@@ -814,9 +875,9 @@
               db.collection("desafios").doc(window.DESAFIO_ATUAL).get().then(doc => { 
                   let dd = doc.data(); 
                   if(dd.c_resp && dd.a_resp) { 
-                      let msgDuelo = ""; let sfxLink = null; db.collection("desafios").doc(window.DESAFIO_ATUAL).update({ status: 'CONCLUIDO' });
-                      if(dd.c_acerto && dd.a_acerto) { msgDuelo = "A DUPLA VENCEU!"; sfxLink = 'https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3'; U.xp += dd.q_win; let pID = (window.PAPEL_ATUAL === 'c') ? dd.a_id : dd.c_id; db.collection("usuarios").doc(pID).get().then(pDoc => { if(pDoc.exists) db.collection("usuarios").doc(pID).update({ xp: pDoc.data().xp + dd.q_win }); }); } 
-                      else { msgDuelo = "A DUPLA FALHOU!"; sfxLink = 'https://assets.mixkit.co/active_storage/sfx/2956/2956-preview.mp3'; U.xp -= dd.q_lose; let pID = (window.PAPEL_ATUAL === 'c') ? dd.a_id : dd.c_id; db.collection("usuarios").doc(pID).get().then(pDoc => { if(pDoc.exists) db.collection("usuarios").doc(pID).update({ xp: pDoc.data().xp - dd.q_lose }); }); }
+                      let sfxLink = null; db.collection("desafios").doc(window.DESAFIO_ATUAL).update({ status: 'CONCLUIDO' });
+                      if(dd.c_acerto && dd.a_acerto) { sfxLink = 'https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3'; U.xp += dd.q_win; let pID = (window.PAPEL_ATUAL === 'c') ? dd.a_id : dd.c_id; db.collection("usuarios").doc(pID).get().then(pDoc => { if(pDoc.exists) db.collection("usuarios").doc(pID).update({ xp: pDoc.data().xp + dd.q_win }); }); } 
+                      else { sfxLink = 'https://assets.mixkit.co/active_storage/sfx/2956/2956-preview.mp3'; U.xp -= dd.q_lose; let pID = (window.PAPEL_ATUAL === 'c') ? dd.a_id : dd.c_id; db.collection("usuarios").doc(pID).get().then(pDoc => { if(pDoc.exists) db.collection("usuarios").doc(pID).update({ xp: pDoc.data().xp - dd.q_lose }); }); }
                       tocarSom(sfxLink); showEpicXP(dd.c_acerto && dd.a_acerto ? dd.q_win : -dd.q_lose);
                       db.collection("usuarios").doc(U.id).update({ xp: U.xp }).then(() => { updUI(dd.c_acerto && dd.a_acerto ? dd.q_win : 0); setTimeout(() => { sairJogo(); }, 3500); });
                   } else {
@@ -833,11 +894,15 @@
     }
     function sairJogo(){ clearInterval(window.TMR); document.getElementById('t-play').style.display='none'; document.getElementById('app-main').style.display='flex'; document.getElementById('timer-box').classList.remove('danger-pulse'); updUI(); window.DESAFIO_ATUAL = null; }
 
-    // PAINEL ADMIN
+    // ADMIN PAINEL
     function abrirAdm(){ document.getElementById('mod-adm').style.display='flex'; tab('u'); }
     function tab(v){ document.querySelectorAll('.adm-tab').forEach(e => e.classList.remove('active')); document.querySelectorAll('.adm-view').forEach(e => e.classList.remove('active')); document.getElementById('tb-'+v).classList.add('active'); document.getElementById('adm-'+v).classList.add('active'); if(v === 'u') loadUsersAdmin(); if(v === 'q') ldQ(); if(v === 'l') ldL(); if(v === 'ad') loadAdConfig(); if(v === 'd') loadAdminDuelos(); }
 
-    function cadastrarUsuarioPeloAdmin() { let nome = document.getElementById('cad-nome').value.trim(); let loginInput = document.getElementById('cad-login').value.trim().toLowerCase().replace(/\s+/g, ''); let senha = document.getElementById('cad-senha').value; let nivel = document.getElementById('cad-nivel').value; let msg = document.getElementById('cad-msg'); if(!nome || !loginInput || !senha) { msg.style.color = 'var(--legendary-red)'; msg.innerText = "Preencha tudo!"; return; } msg.style.color = 'var(--gold)'; msg.innerText = "Criando..."; let emailFantasma = loginInput + '@csv.app'; db.collection('usuarios').where('login', '==', loginInput).get().then(snap => { if(!snap.empty) { msg.style.color = 'var(--legendary-red)'; msg.innerText = "Erro: Este Login já existe."; return; } firebase.auth().createUserWithEmailAndPassword(emailFantasma, senha).then((cred) => { db.collection('usuarios').doc(cred.user.uid).set({ nome: nome, login: loginInput, email: emailFantasma, xp: 0, fase: 1, nivel: nivel, frase: "", avatar: "", inventario: [], status: 'ATIVO' }).then(() => { alert("Usuário criado com sucesso. O sistema recarregará."); location.reload(); }); }).catch(error => { msg.style.color = 'var(--legendary-red)'; msg.innerText = "Erro do Sistema."; }); }); }
+    function cadastrarUsuarioPeloAdmin() { 
+        let nome = document.getElementById('cad-nome').value.trim(); let loginInput = document.getElementById('cad-login').value.trim().toLowerCase().replace(/\s+/g, ''); let senha = document.getElementById('cad-senha').value; let nivel = document.getElementById('cad-nivel').value; let msg = document.getElementById('cad-msg'); 
+        if(!nome || !loginInput || !senha) { msg.style.color = 'var(--legendary-red)'; msg.innerText = "Preencha tudo!"; return; } msg.style.color = 'var(--gold)'; msg.innerText = "Criando..."; let emailFantasma = loginInput + '@csv.app'; 
+        firebase.auth().createUserWithEmailAndPassword(emailFantasma, senha).then((cred) => { db.collection('usuarios').doc(cred.user.uid).set({ nome: nome, login: loginInput, email: emailFantasma, xp: 0, fase: 1, nivel: nivel, frase: "", avatar: "", inventario: [], status: 'ATIVO' }).then(() => { alert("Usuário criado com sucesso. O sistema recarregará."); location.reload(); }); }).catch(error => { msg.style.color = 'var(--legendary-red)'; msg.innerText = "Erro: " + error.message; }); 
+    }
     function loadUsersAdmin() { let list = document.getElementById('adm-users-list'); list.innerHTML = "Buscando..."; db.collection("usuarios").get().then(snap => { let h = ''; snap.forEach(doc => { let u = doc.data(); let uid = doc.id; let bg = u.status === 'BLOQUEADO' ? 'rgba(214, 48, 49, 0.1)' : 'var(--bg-panel)'; let btnBlock = u.status === 'BLOQUEADO' ? `<button class="btn-sm" style="background:var(--success-green); color:#000;" onclick="toggleBlock('${uid}', 'ATIVO')">Desbloquear</button>` : `<button class="btn-sm" style="background:var(--legendary-red);" onclick="toggleBlock('${uid}', 'BLOQUEADO')">Bloquear</button>`; h += `<div class="user-card" style="background:${bg};"><div style="display:flex; justify-content:space-between; margin-bottom:10px;"><div><strong style="color:var(--gold);">${u.nome}</strong><br><span style="font-size:10px; color:var(--text-muted);">@${u.login || 'antigo'} | ${u.nivel}</span></div><div style="display:flex; gap:5px;"><input id="xp-${uid}" type="number" value="${u.xp}" style="width:60px; padding:5px; border-radius:5px; background:#07090D; color:white; border:1px solid var(--border-dark);"><button class="btn-sm" style="background:var(--rare-blue);" onclick="updateUserXP('${uid}')">Salvar</button></div></div><button class="btn-sm" style="background:var(--legendary-red); width:100%;" onclick="deletarUsuario('${uid}')"><span class="material-icons-round" style="font-size:12px; vertical-align:middle;">delete</span> Excluir Usuário</button></div>`; }); list.innerHTML = h; }); }
     function updateUserXP(uid) { let nxp = parseInt(document.getElementById(`xp-${uid}`).value) || 0; db.collection("usuarios").doc(uid).update({xp: nxp}).then(()=> pop("Salvo", "XP alterado!")); }
     function toggleBlock(uid, status) { db.collection("usuarios").doc(uid).update({status: status}).then(()=> loadUsersAdmin()); }
