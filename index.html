@@ -49,7 +49,7 @@
     /* ==========================================
        3. SISTEMA DE TELAS BLINDADAS
        ========================================== */
-    #splash { position: fixed; inset: 0; background: var(--bg-dark); z-index: 10000; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.4s ease; }
+    #splash { position: fixed; inset: 0; background: var(--bg-dark); z-index: 10000; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.4s ease; cursor: pointer; }
     .logo-3d { font-size: 70px; font-weight: 900; color: transparent; -webkit-text-stroke: 2px var(--gold); animation: float3D 3s infinite ease-in-out; text-shadow: 0 0 30px var(--gold-glow); letter-spacing: 5px; }
     @keyframes float3D { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
     .cyber-bar { width: 200px; height: 4px; background: var(--border-dark); margin-top: 40px; border-radius: 5px; overflow: hidden; }
@@ -71,7 +71,7 @@
     @keyframes fadeIn { from {opacity:0; transform:scale(0.8);} to {opacity:1; transform:scale(1);} }
 
     /* ==========================================
-       4. LAYOUT PRINCIPAL DO APLICATIVO
+       4. LAYOUT PRINCIPAL E NAVEGAÇÃO
        ========================================== */
     .app-container { width: 100%; height: 100%; position: relative; overflow: hidden; display: none !important; flex-direction: column; }
     .app-container.ready { display: flex !important; }
@@ -163,7 +163,7 @@
     .game-icon { width: 60px; height: 60px; border-radius: 12px; background: #07090D; border: 1px solid var(--border-dark); display: flex; align-items: center; justify-content: center; font-size: 30px; }
 
     /* ==========================================
-       8. TELAS DOS MINIGAMES
+       8. TELAS DE MINIGAMES
        ========================================== */
     .boxes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 280px; margin: 30px auto; perspective: 1000px; }
     .m-box { width: 120px; height: 120px; background: linear-gradient(135deg, #1E2535, #151A25); border: 2px solid var(--epic-purple); border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 50px; color: var(--epic-purple); cursor: pointer; transition: 0.4s; box-shadow: inset 0 0 20px rgba(108, 92, 231, 0.2), 0 10px 20px rgba(0,0,0,0.5); position: relative; animation: float3D 3s infinite ease-in-out;}
@@ -177,7 +177,7 @@
     .wheel-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 80px; height: 80px; background: #07090D; border-radius: 50%; border: 4px solid var(--gold); z-index: 5; display: flex; justify-content: center; align-items: center; box-shadow: 0 0 20px var(--gold-glow); cursor: pointer; font-weight: 900; color: var(--gold); font-size: 14px; }
 
     /* ==========================================
-       9. QUIZ IN-GAME E CHAT
+       9. QUIZ IN-GAME
        ========================================== */
     #t-play { position: fixed; inset:0; background: var(--bg-dark); z-index:300; display:none; flex-direction:column; padding: 20px; overflow-y:auto; background-image: radial-gradient(circle at top, #1E2535, #0B0E14); }
     .timer-badge { background: #07090D; border: 2px solid var(--gold); padding: 10px 20px; border-radius: 12px; font-weight: 900; font-size: 24px; color: var(--gold); box-shadow: 0 0 15px var(--gold-glow); transition: 0.3s; }
@@ -192,13 +192,13 @@
     .flashcard.flipped .front { transform: rotateY(180deg); } .flashcard.flipped .back { transform: rotateY(0deg); }
     .balloon { width: 110px; height: 110px; border-radius: 50%; background: var(--bg-panel); border: 2px solid var(--border-dark); display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--text-main); font-weight: 800; text-align: center; padding: 10px; cursor: pointer; box-shadow: 0 10px 20px rgba(0,0,0,0.5); transition: 0.2s;}
 
+    /* ==========================================
+       10. CHAT E ADMIN PAINEL
+       ========================================== */
     .c-msg { display: flex; gap: 10px; align-items: flex-end; max-width: 85%; margin-bottom: 15px;} .c-msg.me { align-self: flex-end; flex-direction: row-reverse; }
     .c-bub { background: var(--bg-panel); border: 1px solid var(--border-dark); padding: 12px 16px; border-radius: 16px 16px 16px 0; font-size: 14px; color: var(--text-main);}
     .c-msg.me .c-bub { background: var(--border-dark); border-radius: 16px 16px 0 16px; border-color: var(--text-muted); }
 
-    /* ==========================================
-       10. ADMIN PAINEL
-       ========================================== */
     .adm-overlay { z-index: 5000; align-items: flex-end; display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); justify-content: center;}
     .adm-card { width: 100%; height: 95%; border-radius: 24px 24px 0 0; display: flex; flex-direction: column; padding: 20px; background: var(--bg-dark); border-top: 2px solid var(--gold); }
     .adm-tabs { display: flex; gap: 10px; margin-bottom: 20px; overflow-x: auto; padding-bottom:10px; }
@@ -212,16 +212,8 @@
 <body>
 
   <script>
-    if ('caches' in window) {
-      caches.keys().then((names) => {
-        names.forEach(name => { caches.delete(name); });
-      });
-    }
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.getRegistrations().then(function(registrations) {
-        for(let registration of registrations) { registration.unregister(); }
-      });
-    }
+    if ('caches' in window) { caches.keys().then((names) => { names.forEach(name => { caches.delete(name); }); }); }
+    if ('serviceWorker' in navigator) { navigator.serviceWorker.getRegistrations().then(function(registrations) { for(let registration of registrations) { registration.unregister(); } }); }
   </script>
 
   <audio id="global-audio" loop></audio>
@@ -232,7 +224,7 @@
     <div class="logo-3d">CSV+</div>
     <div class="cyber-bar"><div class="cyber-fill"></div></div>
     <div class="splash-txt">INICIANDO SISTEMA...</div>
-    <div style="font-size: 10px; color: var(--text-muted); margin-top: 15px; font-weight: bold;">v6.0 - Anti Cache Ativado</div>
+    <div style="font-size: 10px; color: var(--text-muted); margin-top: 15px; font-weight: bold;">v6.0 - Tocar para Iniciar</div>
   </div>
   
   <div id="ad-modal">
@@ -286,8 +278,11 @@
       </div>
       <div style="display:flex; gap:10px; align-items: center;">
         <div class="xp-badge"><span class="material-icons-round" style="font-size: 16px;">stars</span><span id="h-xp">0</span></div>
-        <div class="icon-btn" style="background: transparent; border: none; width:30px; height:30px;" onclick="document.getElementById('mod-music').style.display='flex'">
+        <div class="icon-btn" style="background: transparent; border: none; width:30px; height:30px; cursor:pointer;" onclick="document.getElementById('mod-music').style.display='flex'">
           <span class="material-icons-round">headphones</span>
+        </div>
+        <div class="icon-btn" style="background: transparent; border: none; width:30px; height:30px; cursor:pointer; color: var(--legendary-red);" onclick="logOutUser()">
+          <span class="material-icons-round">logout</span>
         </div>
       </div>
     </div>
@@ -362,7 +357,6 @@
         <label style="font-size:11px; opacity:0.7; display:block; text-align:left; margin-bottom:5px; font-weight:bold; color:var(--text-main); text-transform: uppercase;">Tag de Jogador</label>
         <input id="pf-frase" class="inp" placeholder="Ex: MVP">
         <button class="btn" onclick="savePerf()" style="margin-bottom:15px;">ATUALIZAR DADOS</button>
-        <button class="btn" onclick="logOutUser()" style="background:transparent; color:var(--text-muted); border:1px solid var(--border-dark); box-shadow:none;">DESCONECTAR DO APP</button>
       </div>
     </div>
 
@@ -503,7 +497,10 @@
             <div><label class="adm-lbl">XP ERRO</label><input id="q-l" class="inp" type="number"></div>
             <div><label class="adm-lbl">TEMPO (s)</label><input id="q-tm" class="inp" type="number"></div>
         </div>
-        <label class="adm-lbl" style="color:var(--legendary-red);">USAR NOS DUELOS PVP?</label><select id="q-duelo" class="inp"><option value="SIM">SIM (Aparece na Arena)</option><option value="NAO">NÃO (Só na aba Missões)</option></select>
+        
+        <label class="adm-lbl" style="color:var(--legendary-red);">USAR NOS DUELOS PVP?</label>
+        <select id="q-duelo" class="inp"><option value="SIM">SIM (Aparece na Arena)</option><option value="NAO">NÃO (Só na aba Missões)</option></select>
+
         <div class="glass-card" style="margin-bottom:15px; background: #07090D;">
            <label class="adm-lbl">OPÇÕES (A, B, C, D) - Aceita G.Drive nas Imagens</label>
            <div class="row-grid"><input id="oa" class="inp" placeholder="Texto A"><input id="oai" class="inp" placeholder="Img A (URL)"></div><div class="row-grid"><input id="ob" class="inp" placeholder="Texto B"><input id="obi" class="inp" placeholder="Img B (URL)"></div><div class="row-grid"><input id="oc" class="inp" placeholder="Texto C"><input id="oci" class="inp" placeholder="Img C (URL)"></div><div class="row-grid"><input id="od" class="inp" placeholder="Texto D"><input id="odi" class="inp" placeholder="Img D (URL)"></div>
@@ -528,7 +525,7 @@
         
         <h3 style="color:var(--success-green); margin-bottom:5px; margin-top:20px; font-size:14px; text-transform: uppercase;">RASPADINHA</h3>
         <div class="row-grid"><div><label class="adm-lbl">Horas Recarga</label><input id="rp-tm" class="inp" type="number"></div><div><label class="adm-lbl">Vitória (XP)</label><input id="rp-p1" class="inp" type="number"></div></div>
-        <button class="btn" style="margin-top:20px" onclick="saveGames()">SALVAR REGRAS</button>
+        <button class="btn" style="margin-top:20px" onclick="saveGames()">SALVAR REGRAS E NOMES</button>
       </div>
 
       <div id="adm-l" class="adm-view">
@@ -554,11 +551,12 @@
         if(spl) { spl.style.opacity = '0'; setTimeout(() => { spl.style.display = 'none'; document.getElementById('t-login').style.display = 'flex'; }, 300); }
     }
 
-    // 2. INICIA FIREBASE E OFFLINE
+    // 2. INICIA FIREBASE
     const firebaseConfig = { apiKey: "AIzaSyBiHQQdfL4X88KEZUMvZS-WP0z2viR-ZHY", authDomain: "csvplus-62502.firebaseapp.com", projectId: "csvplus-62502", storageBucket: "csvplus-62502.firebasestorage.app", messagingSenderId: "879590605354", appId: "1:879590605354:web:368cd1fdc1f1e35ca77953" };
     firebase.initializeApp(firebaseConfig); 
     const auth = firebase.auth(); const db = firebase.firestore();
     
+    // OFFLINE MODO SEGURO
     db.enablePersistence().catch(err => { console.log("Offline Mode Info:", err.code); });
 
     // 3. VARIÁVEIS GLOBAIS
@@ -566,7 +564,7 @@
     window.GAME_CFG = { rl_tm: 12, rl_p: [0, 50, 0, 100, 0, 200, 0, 500], cx_tm: 12, cx_p: [0, 50, 200], cx_t: ["Azar!", "Bom!", "Jackpot!"], rp_tm: 8, rp_p: 100 };
     window.STORE_ITEMS = []; window.ANUNCIO_MOSTRADO = false;
 
-    // 4. MOTOR DE ÁUDIO INJETÁVEL (FURA BLOQUEIOS)
+    // 4. MOTOR DE ÁUDIO INJETÁVEL
     function tocarSom(urlStr) { 
         try { let snd = new Audio(urlStr); snd.play().catch(e => console.log('Audio Blocked')); } 
         catch(e) { console.log("Erro na injeção de áudio"); }
@@ -577,7 +575,7 @@
     function triggerVibration(type) { if (!("vibrate" in navigator)) return; if (type === 'win') window.navigator.vibrate([100, 50, 100]); else if (type === 'lose') window.navigator.vibrate([300]); else if (type === 'tick') window.navigator.vibrate([30]); }
     function getRankObj(xp) { if(xp < 500) return {c: 'rank-normal', n: 'Iniciante'}; if(xp < 2000) return {c: 'rank-prata', n: 'Prata'}; if(xp < 5000) return {c: 'rank-ouro', n: 'Ouro'}; return {c: 'rank-diamante', n: 'Diamante'}; }
 
-    // 5. XP ANIMATION (CONTA BANCÁRIA)
+    // 5. XP ANIMATION ÉPICO
     function animXP(el, start, end, duration) {
         let startTime = null;
         function step(timestamp) {
@@ -627,7 +625,7 @@
     }
     function fecharAnuncio() { document.getElementById('ad-modal').style.display = 'none'; }
 
-    // 7. VERIFICADOR DE SESSÃO OFICIAL (CORRIGE A PANE DE TELA)
+    // 7. VERIFICADOR DE SESSÃO OFICIAL
     auth.onAuthStateChanged(user => {
         if (user) {
             db.collection("usuarios").doc(user.uid).get().then((doc) => {
@@ -643,7 +641,7 @@
                     document.getElementById('app-main').classList.add('ready'); 
                     updUI(); if(U.nivel && U.nivel.toUpperCase() === 'ADMIN') document.getElementById('fab-adm').style.display = 'flex'; 
                 } else { showLoginScreen("Perfil não encontrado no banco."); }
-            }).catch((err) => { showLoginScreen("Erro de rede ao ler perfil: " + err.message); });
+            }).catch((err) => { showLoginScreen("Erro de rede ao ler perfil."); });
         } else { setTimeout(fecharSplashNaMarra, 1200); }
     });
 
@@ -677,7 +675,7 @@
     function go(t, el){ document.querySelectorAll('.view').forEach(v => { v.classList.remove('active'); v.style.display='none'; }); let tg = document.getElementById('v-'+t); tg.style.display='flex'; setTimeout(() => tg.classList.add('active'), 10); document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active')); el.classList.add('active'); if(t === 'rank') loadRank(); if(t === 'store') renderStore(); if(t === 'chat') loadChat(); if(t === 'arena') loadArena(); if(t === 'mapa') loadMapa(); }
     function pop(t,m){ document.getElementById('uni-pop').style.display='flex'; document.getElementById('pop-t').innerText=t; document.getElementById('pop-m').innerText=m; }
 
-    // 8. MAPA DE AVANÇO (MUNDOS / RPG)
+    // 8. MAPA DE AVANÇO (BIOMAS MÁGICOS)
     function getBiome(fase) {
         if(fase <= 3) return { n: 'Bosque de Pedra', bg: 'linear-gradient(135deg, #00b894, #55efc4)', c: '#000' };
         if(fase <= 6) return { n: 'Ilhas Congeladas', bg: 'linear-gradient(135deg, #74b9ff, #81ecec)', c: '#000' };
@@ -763,7 +761,7 @@
     function usarAvatar(url) { U.avatar = url; db.collection("usuarios").doc(U.id).update({ avatar: url }).then(() => { updUI(); renderStore(); pop("Sucesso", "Skin atualizada."); }); }
     function loadMusicList() { db.collection('sistema').doc('musicas').get().then(doc => { if(doc.exists) { let ms = doc.data().lista || []; let h = ''; ms.forEach(m => { h += `<div class="opt-btn" style="background:#07090D;" onclick="playMusic('${m.url}', this)"><span class="material-icons-round" style="margin-right:10px;">play_arrow</span> ${m.nome}</div>`; }); if(h) document.getElementById('music-list').innerHTML = h; } }); }
 
-    // JOGOS DE SORTE
+    // JOGOS DE SORTE BLINDADOS
     function checarCooldown(jogo, tempoHoras, callback) { db.collection("usuarios").doc(U.id).get().then((doc) => { let dados = doc.data(); let ultimo = dados['ultimo_' + jogo] || 0; let agora = new Date().getTime(); let cooldown = tempoHoras * 60 * 60 * 1000; if (U.nivel !== 'ADMIN' && (agora - ultimo) < cooldown) { let h = Math.floor(((ultimo + cooldown) - agora) / (1000*60*60)); let m = Math.floor((((ultimo + cooldown) - agora) % (1000*60*60)) / (1000*60)); pop("Aguarde", `Caixa travada. Volte em ${h}h e ${m}m.`); return; } callback(dados, agora); }); }
     function processarGanho(jogo, premio, dados, agora, elMsg) { let novoXP = (dados.xp || 0) + premio; let objUpdate = { xp: novoXP }; objUpdate['ultimo_' + jogo] = agora; db.collection("usuarios").doc(U.id).update(objUpdate).then(() => { triggerVibration(premio > 0 ? 'win' : 'lose'); U.xp = novoXP; if(premio > 0) { elMsg.innerText = `+${premio} XP`; elMsg.style.color = 'var(--gold)'; tocarSom('https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3'); confetti({ particleCount: 100, spread: 70, colors:['#FFC312', '#0984E3'] }); updUI(premio); } else { elMsg.innerText = "AZAR"; elMsg.style.color = 'var(--legendary-red)'; tocarSom('https://assets.mixkit.co/active_storage/sfx/2956/2956-preview.mp3'); updUI(); } setTimeout(()=>{ JOGANDO_MINI = false; }, 2000); }); }
 
@@ -837,7 +835,7 @@
     }
     function sairMinigame() { if(JOGANDO_MINI) return; document.getElementById('t-roleta').style.display='none'; document.getElementById('t-caixa').style.display='none'; document.getElementById('t-raspa').style.display='none'; document.getElementById('app-main').style.display='flex'; updUI(); }
 
-    // QUIZ LOGIC
+    // QUIZ LOGIC (MISSÃO E DUELOS)
     function play(nivel){ document.getElementById('app-main').style.display = 'none'; document.getElementById('t-play').style.display = 'flex'; document.getElementById('q-box').innerHTML = '<div style="text-align:center; color:var(--gold); font-weight:900; font-size:20px;">CARREGANDO...</div>'; db.collection('perguntas').where('nivel', '==', nivel).where('status', '==', 'ATIVA').where('duelo','==','NAO').get().then((snap) => { let perguntas = []; snap.forEach(doc => perguntas.push(doc.data())); if(perguntas.length === 0){ pop("Vazio", "Nenhuma missão de treinamento cadastrada."); sairJogo(); return; } perguntas = perguntas.sort(() => 0.5 - Math.random()); window.DESAFIO_ATUAL = null; window.TOTAL_XP_ACUMULADO = 0; runQ(perguntas, 0, false); }); }
     
     function runQ(l, i, isDuelo){
@@ -846,7 +844,7 @@
               U.fase = (U.fase || 1) + 1; 
               db.collection("usuarios").doc(U.id).update({ fase: U.fase }).then(() => { 
                   showEpicXP(window.TOTAL_XP_ACUMULADO); 
-                  setTimeout(() => { pop("NÍVEL CONCLUÍDO!", `Você saltou para a Fase ${U.fase} do Mapa!`); sairJogo(); go('mapa', document.querySelectorAll('.nav-btn')[1]); }, 3500); 
+                  setTimeout(() => { pop("NÍVEL CONCLUÍDO!", `Você avançou para a Fase ${U.fase} do Mapa!`); sairJogo(); go('mapa', document.querySelectorAll('.nav-btn')[1]); }, 3500); 
               }); 
           } else { sairJogo(); } 
           return; 
@@ -875,9 +873,9 @@
               db.collection("desafios").doc(window.DESAFIO_ATUAL).get().then(doc => { 
                   let dd = doc.data(); 
                   if(dd.c_resp && dd.a_resp) { 
-                      let sfxLink = null; db.collection("desafios").doc(window.DESAFIO_ATUAL).update({ status: 'CONCLUIDO' });
-                      if(dd.c_acerto && dd.a_acerto) { sfxLink = 'https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3'; U.xp += dd.q_win; let pID = (window.PAPEL_ATUAL === 'c') ? dd.a_id : dd.c_id; db.collection("usuarios").doc(pID).get().then(pDoc => { if(pDoc.exists) db.collection("usuarios").doc(pID).update({ xp: pDoc.data().xp + dd.q_win }); }); } 
-                      else { sfxLink = 'https://assets.mixkit.co/active_storage/sfx/2956/2956-preview.mp3'; U.xp -= dd.q_lose; let pID = (window.PAPEL_ATUAL === 'c') ? dd.a_id : dd.c_id; db.collection("usuarios").doc(pID).get().then(pDoc => { if(pDoc.exists) db.collection("usuarios").doc(pID).update({ xp: pDoc.data().xp - dd.q_lose }); }); }
+                      let msgDuelo = ""; let sfxLink = null; db.collection("desafios").doc(window.DESAFIO_ATUAL).update({ status: 'CONCLUIDO' });
+                      if(dd.c_acerto && dd.a_acerto) { msgDuelo = "A DUPLA VENCEU!"; sfxLink = 'https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3'; U.xp += dd.q_win; let pID = (window.PAPEL_ATUAL === 'c') ? dd.a_id : dd.c_id; db.collection("usuarios").doc(pID).get().then(pDoc => { if(pDoc.exists) db.collection("usuarios").doc(pID).update({ xp: pDoc.data().xp + dd.q_win }); }); } 
+                      else { msgDuelo = "A DUPLA FALHOU!"; sfxLink = 'https://assets.mixkit.co/active_storage/sfx/2956/2956-preview.mp3'; U.xp -= dd.q_lose; let pID = (window.PAPEL_ATUAL === 'c') ? dd.a_id : dd.c_id; db.collection("usuarios").doc(pID).get().then(pDoc => { if(pDoc.exists) db.collection("usuarios").doc(pID).update({ xp: pDoc.data().xp - dd.q_lose }); }); }
                       tocarSom(sfxLink); showEpicXP(dd.c_acerto && dd.a_acerto ? dd.q_win : -dd.q_lose);
                       db.collection("usuarios").doc(U.id).update({ xp: U.xp }).then(() => { updUI(dd.c_acerto && dd.a_acerto ? dd.q_win : 0); setTimeout(() => { sairJogo(); }, 3500); });
                   } else {
@@ -894,7 +892,7 @@
     }
     function sairJogo(){ clearInterval(window.TMR); document.getElementById('t-play').style.display='none'; document.getElementById('app-main').style.display='flex'; document.getElementById('timer-box').classList.remove('danger-pulse'); updUI(); window.DESAFIO_ATUAL = null; }
 
-    // ADMIN PAINEL
+    // PAINEL ADMIN
     function abrirAdm(){ document.getElementById('mod-adm').style.display='flex'; tab('u'); }
     function tab(v){ document.querySelectorAll('.adm-tab').forEach(e => e.classList.remove('active')); document.querySelectorAll('.adm-view').forEach(e => e.classList.remove('active')); document.getElementById('tb-'+v).classList.add('active'); document.getElementById('adm-'+v).classList.add('active'); if(v === 'u') loadUsersAdmin(); if(v === 'q') ldQ(); if(v === 'l') ldL(); if(v === 'ad') loadAdConfig(); if(v === 'd') loadAdminDuelos(); }
 
