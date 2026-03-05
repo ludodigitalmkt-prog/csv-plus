@@ -91,7 +91,7 @@
     .fab-admin { position: fixed; bottom: 90px; right: 20px; width: 55px; height: 55px; border-radius: 16px; background: var(--rare-blue); color: white; display: none; align-items: center; justify-content: center; box-shadow: 0 10px 20px rgba(9, 132, 227, 0.4); cursor: pointer; z-index: 100; transition: 0.3s; }
 
     /* ==========================================
-       5. AVATARES E RANKING PÓDIO
+       5. AVATARES, RANKS E PÓDIO
        ========================================== */
     .u-av { border-radius: 14px; background: #07090D; overflow: hidden; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 5px 15px rgba(0,0,0,0.3); color:white; font-weight:bold; border: 2px solid var(--border-dark); transition: 0.3s; }
     .u-av img, .u-av svg { width: 100% !important; height: 100% !important; max-width: 100% !important; max-height: 100% !important; object-fit: cover !important; border-radius: inherit; }
@@ -104,6 +104,7 @@
 
     .rank-prata { border-color: #bdc3c7; box-shadow: 0 0 10px #bdc3c7; } .rank-ouro { border-color: var(--gold); box-shadow: 0 0 15px var(--gold-glow); } .rank-diamante { border-color: #00cec9; box-shadow: 0 0 20px #00cec9; animation: pulseDiamante 1.5s infinite alternate; }
     @keyframes pulseDiamante { 0% { box-shadow: 0 0 10px #00cec9; } 100% { box-shadow: 0 0 25px #0ff; } }
+    
     .xp-badge { background: #07090D; border: 1px solid var(--gold); padding: 5px 12px; border-radius: 8px; color: var(--gold); font-weight: 900; font-size: 14px; display: flex; align-items: center; gap: 5px; box-shadow: inset 0 0 10px rgba(255, 195, 18, 0.1); font-variant-numeric: tabular-nums;}
     
     .podium-box { display: flex; justify-content: center; align-items: flex-end; height: 260px; padding-bottom: 20px; margin-top: 10px; }
@@ -155,8 +156,8 @@
     .store-btn.equipped { background: var(--border-dark); color: var(--text-muted); border-color: transparent; }
 
     .lvl-box { background: var(--bg-panel); border-left: 4px solid transparent; border-radius: 16px; padding: 20px; margin-bottom: 15px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; box-shadow: 0 8px 20px rgba(0,0,0,0.4); transition:0.3s;}
-    .lvl-box:active { transform: scale(0.97); }
     .lvl-box.facil { border-left-color: var(--rare-blue); } .lvl-box.medio { border-left-color: var(--epic-purple); } .lvl-box.dificil { border-left-color: var(--legendary-red); }
+    
     .game-card { background: var(--bg-panel); border: 1px solid var(--border-dark); border-radius: 16px; padding: 15px; margin-bottom: 15px; display: flex; align-items: center; gap: 15px; cursor: pointer; transition:0.3s; }
     .game-card:active { transform: scale(0.97); border-color: var(--gold); }
     .game-icon { width: 60px; height: 60px; border-radius: 12px; background: #07090D; border: 1px solid var(--border-dark); display: flex; align-items: center; justify-content: center; font-size: 30px; }
@@ -176,7 +177,7 @@
     .wheel-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 80px; height: 80px; background: #07090D; border-radius: 50%; border: 4px solid var(--gold); z-index: 5; display: flex; justify-content: center; align-items: center; box-shadow: 0 0 20px var(--gold-glow); cursor: pointer; font-weight: 900; color: var(--gold); font-size: 14px; }
 
     /* ==========================================
-       9. QUIZ IN-GAME
+       9. QUIZ IN-GAME E CHAT
        ========================================== */
     #t-play { position: fixed; inset:0; background: var(--bg-dark); z-index:300; display:none; flex-direction:column; padding: 20px; overflow-y:auto; background-image: radial-gradient(circle at top, #1E2535, #0B0E14); }
     .timer-badge { background: #07090D; border: 2px solid var(--gold); padding: 10px 20px; border-radius: 12px; font-weight: 900; font-size: 24px; color: var(--gold); box-shadow: 0 0 15px var(--gold-glow); transition: 0.3s; }
@@ -191,13 +192,13 @@
     .flashcard.flipped .front { transform: rotateY(180deg); } .flashcard.flipped .back { transform: rotateY(0deg); }
     .balloon { width: 110px; height: 110px; border-radius: 50%; background: var(--bg-panel); border: 2px solid var(--border-dark); display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--text-main); font-weight: 800; text-align: center; padding: 10px; cursor: pointer; box-shadow: 0 10px 20px rgba(0,0,0,0.5); transition: 0.2s;}
 
-    /* ==========================================
-       10. CHAT E ADMIN PAINEL
-       ========================================== */
     .c-msg { display: flex; gap: 10px; align-items: flex-end; max-width: 85%; margin-bottom: 15px;} .c-msg.me { align-self: flex-end; flex-direction: row-reverse; }
     .c-bub { background: var(--bg-panel); border: 1px solid var(--border-dark); padding: 12px 16px; border-radius: 16px 16px 16px 0; font-size: 14px; color: var(--text-main);}
     .c-msg.me .c-bub { background: var(--border-dark); border-radius: 16px 16px 0 16px; border-color: var(--text-muted); }
 
+    /* ==========================================
+       10. ADMIN PAINEL
+       ========================================== */
     .adm-overlay { z-index: 5000; align-items: flex-end; display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); justify-content: center;}
     .adm-card { width: 100%; height: 95%; border-radius: 24px 24px 0 0; display: flex; flex-direction: column; padding: 20px; background: var(--bg-dark); border-top: 2px solid var(--gold); }
     .adm-tabs { display: flex; gap: 10px; margin-bottom: 20px; overflow-x: auto; padding-bottom:10px; }
@@ -210,12 +211,18 @@
 </head>
 <body>
 
+  <script>
+    if ('caches' in window) { caches.keys().then((names) => { names.forEach(name => { caches.delete(name); }); }); }
+    if ('serviceWorker' in navigator) { navigator.serviceWorker.getRegistrations().then(function(registrations) { for(let registration of registrations) { registration.unregister(); } }); }
+  </script>
+
   <audio id="global-audio" loop></audio>
 
-  <div id="splash">
+  <div id="splash" onclick="fecharSplashNaMarra()">
     <div class="logo-3d">CSV+</div>
     <div class="cyber-bar"><div class="cyber-fill"></div></div>
     <div class="splash-txt">INICIANDO SISTEMA...</div>
+    <div style="font-size: 10px; color: var(--text-muted); margin-top: 15px; font-weight: bold;">v6.0 - Destruidor de Cache Ativado</div>
   </div>
   
   <div id="ad-modal">
@@ -375,7 +382,7 @@
   <div id="mod-desafiar" class="adm-overlay" style="align-items:center;">
     <div class="login-box" style="width:90%; max-width:400px; padding:20px; max-height:80vh; display:flex; flex-direction:column;">
       <h2 style="color:var(--legendary-red); margin-bottom:10px; font-weight:900; text-transform: uppercase;">Escolha um Alvo</h2>
-      <p style="font-size:12px; color:var(--text-muted); margin-bottom:20px;">Vocês responderão a mesma pergunta. Acertem juntos para ganhar XP.</p>
+      <p style="font-size:12px; color:var(--text-muted); margin-bottom:20px;">Vocês responderão a mesma pergunta. Se AMBOS acertarem, vitória da dupla!</p>
       <div id="op-list" style="flex:1; overflow-y:auto; padding-right:5px;"></div>
       <button class="btn" style="background:transparent; border:1px solid var(--border-dark); color:var(--text-muted); margin-top:15px; box-shadow:none;" onclick="document.getElementById('mod-desafiar').style.display='none'">CANCELAR</button>
     </div>
@@ -422,6 +429,7 @@
          <h2 style="font-weight:900; color:var(--gold); text-transform:uppercase;">Admin Console</h2>
          <span class="material-icons-round" style="cursor:pointer; color:var(--text-muted);" onclick="document.getElementById('mod-adm').style.display='none'">close</span>
       </div>
+      
       <div class="adm-tabs">
         <div id="tb-u" class="adm-tab active" onclick="tab('u')">EQUIPE</div>
         <div id="tb-q" class="adm-tab" onclick="tab('q')">MISSÕES</div>
@@ -447,6 +455,31 @@
         <div id="adm-users-list">Carregando...</div>
       </div>
 
+      <div id="adm-m" class="adm-view">
+        <div style="font-size:12px; opacity:0.8; margin-bottom:15px;">Adicione faixas de música de fundo.</div>
+        <label class="adm-lbl">NOME DA FAIXA</label><input id="mu-nome" class="inp" placeholder="Ex: Foco Total">
+        <label class="adm-lbl">LINK DO ÁUDIO (.mp3)</label><input id="mu-url" class="inp" placeholder="Cole o link .mp3 direto aqui">
+        <button class="btn" onclick="saveMusic()">ADICIONAR MÚSICA</button>
+        <div id="adm-mu-list" style="margin-top:20px;"></div>
+      </div>
+
+      <div id="adm-ad" class="adm-view">
+        <div style="font-size:12px; opacity:0.8; margin-bottom:15px;">Popup gigante no primeiro login (Aceita G.Drive).</div>
+        <label class="adm-lbl">STATUS DO ANÚNCIO</label><select id="ad-ativo" class="inp"><option value="NAO">DESATIVADO (Oculto)</option><option value="SIM">ATIVADO (Mostrar)</option></select>
+        <label class="adm-lbl">TÍTULO DA CAIXA</label><input id="ad-tit" class="inp" placeholder="Ex: Aviso do RH">
+        <label class="adm-lbl">FORMATO</label><select id="ad-tipo" class="inp"><option value="TEXTO">Apenas Texto</option><option value="IMAGEM">Banner (Imagem URL / Drive)</option></select>
+        <label class="adm-lbl">CONTEÚDO</label><textarea id="ad-cont" class="inp" placeholder="Texto ou Link da Imagem" rows="4" style="height:auto;"></textarea>
+        <div style="display: flex; gap: 10px;">
+           <button class="btn" style="flex:2;" onclick="saveAd()">PUBLICAR</button>
+           <button class="btn" style="flex:1; background:var(--legendary-red); color:white; box-shadow:none;" onclick="limparAd()">EXCLUIR</button>
+        </div>
+      </div>
+
+      <div id="adm-d" class="adm-view">
+        <div style="font-size:12px; opacity:0.8; margin-bottom:15px;">Acompanhe os duelos da Arena e exclua os abandonados.</div>
+        <div id="adm-duelos-list">Carregando...</div>
+      </div>
+
       <div id="adm-q" class="adm-view">
         <input type="hidden" id="q-id">
         <div class="row-grid">
@@ -465,18 +498,13 @@
         <select id="q-duelo" class="inp"><option value="SIM">SIM (Aparece na Arena)</option><option value="NAO">NÃO (Só na aba Missões)</option></select>
 
         <div class="glass-card" style="margin-bottom:15px; background: #07090D;">
-           <label class="adm-lbl">OPÇÕES (A, B, C, D) - Aceita G.Drive</label>
+           <label class="adm-lbl">OPÇÕES (A, B, C, D) - Aceita G.Drive nas Imagens</label>
            <div class="row-grid"><input id="oa" class="inp" placeholder="Texto A"><input id="oai" class="inp" placeholder="Img A (URL)"></div><div class="row-grid"><input id="ob" class="inp" placeholder="Texto B"><input id="obi" class="inp" placeholder="Img B (URL)"></div><div class="row-grid"><input id="oc" class="inp" placeholder="Texto C"><input id="oci" class="inp" placeholder="Img C (URL)"></div><div class="row-grid"><input id="od" class="inp" placeholder="Texto D"><input id="odi" class="inp" placeholder="Img D (URL)"></div>
            <label class="adm-lbl" style="margin-top: 10px;">RESPOSTA CORRETA</label><select id="q-c-sel" class="inp" style="margin-bottom:0"><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option></select>
         </div>
         <button class="btn" onclick="saveQ()">SALVAR MISSÃO</button>
         <button class="btn" style="background:transparent; border:1px solid var(--border-dark); color:var(--text-muted); margin-top:10px; box-shadow:none;" onclick="clearQForm()">LIMPAR (NOVA)</button>
         <div id="adm-list" style="margin-top:20px; font-size:12px;"></div>
-      </div>
-
-      <div id="adm-d" class="adm-view">
-        <div style="font-size:12px; opacity:0.8; margin-bottom:15px;">Acompanhe os duelos da Arena e exclua os abandonados.</div>
-        <div id="adm-duelos-list">Carregando...</div>
       </div>
 
       <div id="adm-r" class="adm-view">
@@ -489,19 +517,11 @@
         
         <h3 style="color:var(--epic-purple); margin-bottom:5px; margin-top:20px; font-size:14px; text-transform: uppercase;">BAÚ MISTERIOSO</h3>
         <div class="row-grid"><div><label class="adm-lbl">Horas</label><input id="cx-tm" class="inp" type="number"></div><div><label class="adm-lbl">P1 (XP)</label><input id="cx-p1" class="inp" type="number"></div><div><label class="adm-lbl">P2 (XP)</label><input id="cx-p2" class="inp" type="number"></div><div><label class="adm-lbl">P3 (XP)</label><input id="cx-p3" class="inp" type="number"></div></div>
-        <label class="adm-lbl">Frases de Revelação</label><input id="cx-t1" class="inp" placeholder="Frase 1"><input id="cx-t2" class="inp" placeholder="Frase 2"><input id="cx-t3" class="inp" placeholder="Frase 3">
+        <label class="adm-lbl">Frases de Revelação (P1, P2, P3)</label><input id="cx-t1" class="inp" placeholder="Frase 1"><input id="cx-t2" class="inp" placeholder="Frase 2"><input id="cx-t3" class="inp" placeholder="Frase 3">
         
         <h3 style="color:var(--success-green); margin-bottom:5px; margin-top:20px; font-size:14px; text-transform: uppercase;">RASPADINHA</h3>
         <div class="row-grid"><div><label class="adm-lbl">Horas Recarga</label><input id="rp-tm" class="inp" type="number"></div><div><label class="adm-lbl">Vitória (XP)</label><input id="rp-p1" class="inp" type="number"></div></div>
-        <button class="btn" style="margin-top:20px" onclick="saveGames()">SALVAR REGRAS</button>
-      </div>
-
-      <div id="adm-ad" class="adm-view">
-        <label class="adm-lbl">STATUS DO ANÚNCIO</label><select id="ad-ativo" class="inp"><option value="NAO">DESATIVADO (Oculto)</option><option value="SIM">ATIVADO (Mostrar)</option></select>
-        <label class="adm-lbl">TÍTULO</label><input id="ad-tit" class="inp" placeholder="Ex: Aviso do RH">
-        <label class="adm-lbl">FORMATO</label><select id="ad-tipo" class="inp"><option value="TEXTO">Apenas Texto</option><option value="IMAGEM">Banner (Imagem URL / Drive)</option></select>
-        <label class="adm-lbl">CONTEÚDO</label><textarea id="ad-cont" class="inp" placeholder="Texto ou Link da Imagem" rows="4" style="height:auto;"></textarea>
-        <div style="display: flex; gap: 10px;"><button class="btn" style="flex:2;" onclick="saveAd()">PUBLICAR</button><button class="btn" style="flex:1; background:var(--legendary-red); color:white; box-shadow:none;" onclick="limparAd()">EXCLUIR</button></div>
+        <button class="btn" style="margin-top:20px" onclick="saveGames()">SALVAR REGRAS E NOMES</button>
       </div>
 
       <div id="adm-l" class="adm-view">
@@ -511,13 +531,6 @@
         <button class="btn" onclick="saveLoja()">ENVIAR PARA LOJA</button>
         <div id="adm-loja-list" style="margin-top:20px;"></div>
       </div>
-
-      <div id="adm-m" class="adm-view">
-        <label class="adm-lbl">NOME DA FAIXA</label><input id="mu-nome" class="inp" placeholder="Ex: Foco Total">
-        <label class="adm-lbl">LINK DO ÁUDIO (.mp3)</label><input id="mu-url" class="inp" placeholder="Cole o link .mp3 direto aqui">
-        <button class="btn" onclick="saveMusic()">ADICIONAR MÚSICA</button>
-        <div id="adm-mu-list" style="margin-top:20px;"></div>
-      </div>
     </div>
   </div>
 
@@ -526,31 +539,32 @@
   <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
 
   <script>
-    // Converte links do Google Drive
+    // PARSER GOOGLE DRIVE
     function parseImg(url) { if(!url) return ''; let u = url.trim(); let match = u.match(/file\/d\/([a-zA-Z0-9_-]+)/) || u.match(/id=([a-zA-Z0-9_-]+)/); if (match) return `https://drive.google.com/uc?export=view&id=${match[1]}`; return u; }
+
+    // CONTROLE DO SPLASH E LOGIN RÁPIDO
+    function fecharSplashNaMarra() {
+        let spl = document.getElementById('splash');
+        if(spl) { spl.style.opacity = '0'; setTimeout(() => { spl.style.display = 'none'; document.getElementById('t-login').style.display = 'flex'; }, 300); }
+    }
 
     const firebaseConfig = { apiKey: "AIzaSyBiHQQdfL4X88KEZUMvZS-WP0z2viR-ZHY", authDomain: "csvplus-62502.firebaseapp.com", projectId: "csvplus-62502", storageBucket: "csvplus-62502.firebasestorage.app", messagingSenderId: "879590605354", appId: "1:879590605354:web:368cd1fdc1f1e35ca77953" };
     firebase.initializeApp(firebaseConfig); 
     const auth = firebase.auth(); const db = firebase.firestore();
     
-    db.enablePersistence().catch(err => { console.log("Offline Mode Info:", err.code); });
-    
     let U = null; window.TMR = null; window.LS = []; window.DESAFIO_ATUAL = null; window.PAPEL_ATUAL = null; window.TOTAL_XP_ACUMULADO = 0; window.ROL_CURRENT_ROTATION = 0;
     window.GAME_CFG = { rl_tm: 12, rl_p: [0, 50, 0, 100, 0, 200, 0, 500], cx_tm: 12, cx_p: [0, 50, 200], cx_t: ["Azar!", "Bom!", "Jackpot!"], rp_tm: 8, rp_p: 100 };
     window.STORE_ITEMS = []; window.ANUNCIO_MOSTRADO = false;
 
-    // INJEÇÃO DINÂMICA DE ÁUDIO (BURLA BLOQUEIOS DO NAVEGADOR)
-    function tocarSom(url) { 
-        try { let snd = new Audio(url); snd.play().catch(e => console.log('Áudio Bloqueado Pelo Celular')); } 
-        catch(e) { console.log("Erro na injeção de áudio", e); }
-    }
+    // MOTOR DE ÁUDIO INJETÁVEL (FURA BLOQUEIOS)
+    function tocarSom(url) { try { let snd = new Audio(url); snd.play().catch(e=>console.log('Audio Blocked')); } catch(e){} }
     
     function playMusic(url, el) { let bgm = document.getElementById('global-audio'); bgm.src = url; bgm.play().catch(e=>console.log(e)); document.querySelectorAll('#mod-music .opt-btn').forEach(b => {b.style.borderColor='var(--border-dark)'; b.style.color='var(--text-main)';}); el.style.borderColor='var(--gold)'; el.style.color='var(--gold)'; }
     function stopMusic() { document.getElementById('global-audio').pause(); document.querySelectorAll('#mod-music .opt-btn').forEach(b => {b.style.borderColor='var(--border-dark)'; b.style.color='var(--text-main)';}); }
     function triggerVibration(type) { if (!("vibrate" in navigator)) return; if (type === 'win') window.navigator.vibrate([100, 50, 100]); else if (type === 'lose') window.navigator.vibrate([300]); else if (type === 'tick') window.navigator.vibrate([30]); }
     function getRankObj(xp) { if(xp < 500) return {c: 'rank-normal', n: 'Iniciante'}; if(xp < 2000) return {c: 'rank-prata', n: 'Prata'}; if(xp < 5000) return {c: 'rank-ouro', n: 'Ouro'}; return {c: 'rank-diamante', n: 'Diamante'}; }
 
-    // ANIMAÇÃO DE XP (CONTA BANCÁRIA)
+    // ANIMAÇÃO DE XP ÉPICO
     function animXP(el, start, end, duration) {
         let startTime = null;
         function step(timestamp) {
@@ -565,27 +579,19 @@
     function showEpicXP(val) {
         let over = document.getElementById('epic-xp-overlay'); over.style.display = 'flex'; over.style.animation = 'fadeIn 0.3s';
         let num = document.getElementById('epic-val'); let tit = document.getElementById('epic-title');
-        if(val >= 0) { num.className = 'epic-number'; tit.innerText = 'RECOMPENSA GANHA'; animXP(num, 0, val, 1500); }
+        if(val >= 0) { num.className = 'epic-number'; tit.innerText = 'RECOMPENSA DE MISSÃO'; animXP(num, 0, val, 1500); }
         else { num.className = 'epic-number lose'; tit.innerText = 'XP PERDIDO'; animXP(num, 0, val, 1000); }
         setTimeout(() => { over.style.animation = 'fadeIn 0.5s reverse forwards'; setTimeout(() => { over.style.display = 'none'; }, 400); }, 3500);
     }
 
-    // ==========================================
-    // SISTEMA DE LOGIN E FLUXO DE TELA
-    // ==========================================
-    function fecharSplashNaMarra() {
-        let spl = document.getElementById('splash');
-        if(spl) { spl.style.opacity = '0'; setTimeout(() => { spl.style.display = 'none'; document.getElementById('t-login').style.display = 'flex'; }, 300); }
-    }
-
-    // FIREBASE AUTH VERIFIER (O CÉREBRO QUE RESOLVEU A PANE)
+    // VERIFICADOR DE SESSÃO OFICIAL (O CÉREBRO QUE RESOLVEU A PANE)
     auth.onAuthStateChanged(user => {
         if (user) {
             db.collection("usuarios").doc(user.uid).get().then((doc) => {
                 if (doc.exists) {
                     U = doc.data(); U.id = user.uid; 
-                    if(U.status === 'BLOQUEADO') { auth.signOut(); showLoginScreen("Conta inativa."); return; }
-                    if(!U.inventario) U.inventario = []; if(!U.fase) U.fase = 1; 
+                    if(U.status === 'BLOQUEADO') { auth.signOut(); showLoginScreen("Sua conta foi desativada."); return; }
+                    if(!U.inventario) U.inventario = []; if(!U.fase) U.fase = 1;
                     
                     loadGlobalConfigs(); loadStoreItems(); checkAds();
                     
@@ -593,16 +599,14 @@
                     document.getElementById('t-login').style.display = 'none';
                     document.getElementById('app-main').classList.add('ready'); 
                     updUI(); if(U.nivel && U.nivel.toUpperCase() === 'ADMIN') document.getElementById('fab-adm').style.display = 'flex'; 
-                } else { showLoginScreen("Perfil não encontrado no banco."); }
-            }).catch(() => showLoginScreen("Falha de conexão."));
-        } else {
-            setTimeout(fecharSplashNaMarra, 1500);
-        }
+                } else { showLoginScreen("Perfil corrompido no banco."); }
+            }).catch((err) => { showLoginScreen("Erro de rede ao ler perfil: " + err.message); });
+        } else { setTimeout(fecharSplashNaMarra, 1200); }
     });
 
     function showLoginScreen(msg = "") {
-        let spl = document.getElementById('splash'); let log = document.getElementById('t-login'); let app = document.getElementById('app-main');
-        if(spl) spl.style.display = 'none'; if(app) app.classList.remove('ready'); if(log) log.style.display = 'flex';
+        let spl = document.getElementById('splash'); let log = document.getElementById('t-login'); let app = document.getElementById('app-main'); let btn = document.getElementById('btn-login');
+        if(spl) spl.style.display = 'none'; if(app) app.classList.remove('ready'); if(log) log.style.display = 'flex'; if(btn) btn.innerText = "CONECTAR";
         if(msg) document.getElementById('login-msg').innerText = msg;
     }
 
@@ -610,7 +614,7 @@
       let loginStr = document.getElementById('u').value.trim().toLowerCase().replace(/\s+/g, ''); let senha = document.getElementById('s').value; let btn = document.getElementById('btn-login'); let msg = document.getElementById('login-msg');
       if(!loginStr || !senha) { msg.innerText = "Preencha tudo."; return; } btn.innerText = "VERIFICANDO...";
       let email = loginStr + '@csv.app';
-      auth.signInWithEmailAndPassword(email, senha).catch(() => { msg.innerText = "Usuário/Senha Incorretos."; btn.innerText = "CONECTAR"; });
+      auth.signInWithEmailAndPassword(email, senha).catch((e) => { msg.innerText = "Acesso Negado: Usuário ou senha incorretos."; btn.innerText = "CONECTAR"; });
     }
     
     function logOutUser() { auth.signOut().then(() => { location.reload(); }); }
@@ -630,17 +634,17 @@
     function go(t, el){ document.querySelectorAll('.view').forEach(v => { v.classList.remove('active'); v.style.display='none'; }); let tg = document.getElementById('v-'+t); tg.style.display='flex'; setTimeout(() => tg.classList.add('active'), 10); document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active')); el.classList.add('active'); if(t === 'rank') loadRank(); if(t === 'store') renderStore(); if(t === 'chat') loadChat(); if(t === 'arena') loadArena(); if(t === 'mapa') loadMapa(); }
     function pop(t,m){ document.getElementById('uni-pop').style.display='flex'; document.getElementById('pop-t').innerText=t; document.getElementById('pop-m').innerText=m; }
 
-    // MAPA RPG (BIOMAS E TRILHA)
+    // MAPA DE AVANÇO (BIOMAS MÁGICOS)
     function getBiome(fase) {
-        if(fase <= 3) return { n: 'Floresta do Início', bg: 'linear-gradient(135deg, #00b894, #55efc4)', c: '#000' };
-        if(fase <= 6) return { n: 'Vale de Gelo', bg: 'linear-gradient(135deg, #74b9ff, #81ecec)', c: '#000' };
-        if(fase <= 9) return { n: 'Deserto Árido', bg: 'linear-gradient(135deg, #fdcb6e, #ffeaa7)', c: '#000' };
+        if(fase <= 3) return { n: 'Bosque de Pedra', bg: 'linear-gradient(135deg, #00b894, #55efc4)', c: '#000' };
+        if(fase <= 6) return { n: 'Ilhas Congeladas', bg: 'linear-gradient(135deg, #74b9ff, #81ecec)', c: '#000' };
+        if(fase <= 9) return { n: 'Deserto dos Crânios', bg: 'linear-gradient(135deg, #fdcb6e, #ffeaa7)', c: '#000' };
         if(fase <= 12) return { n: 'Vulcão do Caos', bg: 'linear-gradient(135deg, #d63031, #ff7675)', c: '#fff' };
-        return { n: 'Galáxia Infinita', bg: 'linear-gradient(135deg, #6c5ce7, #a29bfe)', c: '#fff' };
+        return { n: 'Vazio Espacial', bg: 'linear-gradient(135deg, #6c5ce7, #a29bfe)', c: '#fff' };
     }
 
     function loadMapa() {
-        let b = document.getElementById('map-render'); b.innerHTML = '<div style="text-align:center; color:var(--text-muted);">Mapeando jogadores...</div>';
+        let b = document.getElementById('map-render'); b.innerHTML = '<div style="text-align:center; color:var(--text-muted);">Construindo mundos...</div>';
         db.collection("usuarios").where("status","!=","BLOQUEADO").get().then((snap) => { 
             let maxFase = 1; let usersByFase = {}; 
             snap.forEach(doc => { let u = doc.data(); let f = u.fase || 1; if(f > maxFase) maxFase = f; if(!usersByFase[f]) usersByFase[f] = []; usersByFase[f].push(u); }); 
@@ -650,7 +654,7 @@
             
             for(let bIdx = maxBiome; bIdx >= 1; bIdx--) {
                 let biome = getBiome(bIdx * 3);
-                h += `<div class="biome-section" style="background: ${biome.bg}; color: ${biome.c}; width: 100%; position:relative;">
+                h += `<div class="biome-section" style="background: ${biome.bg};">
                         <div class="biome-title" style="color: ${biome.c};">${biome.n}</div>
                         <div class="biome-path"></div>`;
                 
@@ -666,10 +670,7 @@
                         }); 
                     } 
                     h += `<div class="map-node">
-                            <div class="node-content" style="background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.2);">
-                                <div class="node-title" style="color:#fff;">Fase ${i}</div>
-                                <div class="node-players">${uHTML}</div>
-                            </div>
+                            <div class="node-content"><div class="node-title">Fase ${i}</div><div class="node-players">${uHTML}</div></div>
                             <div class="node-point ${isMe ? 'active' : ''}">${i}</div>
                             <div style="width:40%;"></div>
                           </div>`; 
@@ -689,7 +690,7 @@
     function sendChat(){ let i = document.getElementById('c-txt'); let t = i.value.trim(); if(!t) return; i.value = ''; db.collection('chat').add({ uid: U.id, nome: U.nome, av: U.avatar || '', xp: U.xp, msg: t, data: firebase.firestore.FieldValue.serverTimestamp() }); }
     function editarMsgChat(id, oldMsg) { let n = prompt("Corrigir mensagem:", oldMsg); if(n !== null && n.trim() !== "" && n !== oldMsg) { db.collection('chat').doc(id).update({ msg: n.trim(), editado: true }); } }
 
-    // ARENA PVP COOPERATIVA
+    // ARENA PVP
     let escutaArena = null;
     function loadArena() {
         if(escutaArena) escutaArena(); let b = document.getElementById('arena-list'); b.innerHTML = '<div style="text-align:center; color:var(--text-muted);">Buscando Duelos...</div>';
@@ -717,7 +718,7 @@
     function usarAvatar(url) { U.avatar = url; db.collection("usuarios").doc(U.id).update({ avatar: url }).then(() => { updUI(); renderStore(); pop("Sucesso", "Skin atualizada."); }); }
     function loadMusicList() { db.collection('sistema').doc('musicas').get().then(doc => { if(doc.exists) { let ms = doc.data().lista || []; let h = ''; ms.forEach(m => { h += `<div class="opt-btn" style="background:#07090D;" onclick="playMusic('${m.url}', this)"><span class="material-icons-round" style="margin-right:10px;">play_arrow</span> ${m.nome}</div>`; }); if(h) document.getElementById('music-list').innerHTML = h; } }); }
 
-    // JOGOS BLINDADOS
+    // MINIGAMES DA SORTE
     function checarCooldown(jogo, tempoHoras, callback) { db.collection("usuarios").doc(U.id).get().then((doc) => { let dados = doc.data(); let ultimo = dados['ultimo_' + jogo] || 0; let agora = new Date().getTime(); let cooldown = tempoHoras * 60 * 60 * 1000; if (U.nivel !== 'ADMIN' && (agora - ultimo) < cooldown) { let h = Math.floor(((ultimo + cooldown) - agora) / (1000*60*60)); let m = Math.floor((((ultimo + cooldown) - agora) % (1000*60*60)) / (1000*60)); pop("Aguarde", `Caixa travada. Volte em ${h}h e ${m}m.`); return; } callback(dados, agora); }); }
     function processarGanho(jogo, premio, dados, agora, elMsg) { let novoXP = (dados.xp || 0) + premio; let objUpdate = { xp: novoXP }; objUpdate['ultimo_' + jogo] = agora; db.collection("usuarios").doc(U.id).update(objUpdate).then(() => { triggerVibration(premio > 0 ? 'win' : 'lose'); U.xp = novoXP; if(premio > 0) { elMsg.innerText = `+${premio} XP`; elMsg.style.color = 'var(--gold)'; tocarSom('https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3'); confetti({ particleCount: 100, spread: 70, colors:['#FFC312', '#0984E3'] }); updUI(premio); } else { elMsg.innerText = "AZAR"; elMsg.style.color = 'var(--legendary-red)'; tocarSom('https://assets.mixkit.co/active_storage/sfx/2956/2956-preview.mp3'); updUI(); } setTimeout(()=>{ JOGANDO_MINI = false; }, 2000); }); }
 
@@ -736,7 +737,7 @@
                 window.ROL_CURRENT_ROTATION = window.ROL_CURRENT_ROTATION + 3600 + offset - (window.ROL_CURRENT_ROTATION % 360); 
                 let wheelEl = document.getElementById('wheel-el'); wheelEl.style.transition = 'transform 4s cubic-bezier(0.2, 0.9, 0.2, 1)'; wheelEl.style.transform = `rotate(${window.ROL_CURRENT_ROTATION}deg)`; 
                 setTimeout(() => processarGanho('roleta', premio, dados, agora, msgEl), 4000); 
-            } catch(e) { console.log("Roleta Error:", e); JOGANDO_MINI = false; }
+            } catch(e) { console.log("Roleta Erro:", e); JOGANDO_MINI = false; }
         }); 
     }
     
@@ -745,17 +746,8 @@
     
     function startRaspaGame() { 
         checarCooldown('raspa', window.GAME_CFG.rp_tm || 8, (dados, agora) => {
-            document.getElementById('app-main').style.display='none'; document.getElementById('t-raspa').style.display='flex'; 
-            document.getElementById('raspa-msg').innerText=''; let g = document.getElementById('raspa-grid'); g.innerHTML=''; 
-            window.RASPA_CLICKS=0; window.RASPA_RES=[]; window.RASPA_DADOS = dados; window.RASPA_AGORA = agora; JOGANDO_MINI = false;
-            for(let i=0; i<4; i++) { 
-                g.innerHTML += `
-                <div style="position:relative; width:100%; height:100px; border-radius:12px; overflow:hidden; border:2px dashed var(--border-dark);">
-                   <div id="raspa-res-${i}" style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:35px; background:var(--bg-panel); color:var(--text-main); font-weight:900;"></div>
-                   <canvas id="raspa-canvas-${i}" width="150" height="100" style="position:absolute; inset:0; width:100%; height:100%; touch-action:none; cursor:pointer;"></canvas>
-                </div>`; 
-            }
-            setTimeout(() => { for(let i=0; i<4; i++) initScratchCanvas(i); }, 100);
+            document.getElementById('app-main').style.display='none'; document.getElementById('t-raspa').style.display='flex'; document.getElementById('raspa-msg').innerText=''; let g = document.getElementById('raspa-grid'); g.innerHTML=''; window.RASPA_CLICKS=0; window.RASPA_RES=[]; window.RASPA_DADOS = dados; window.RASPA_AGORA = agora; JOGANDO_MINI = false;
+            for(let i=0; i<4; i++) { g.innerHTML += `<div style="position:relative; width:100%; height:100px; border-radius:12px; overflow:hidden; border:2px dashed var(--border-dark);"><div id="raspa-res-${i}" style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:35px; background:var(--bg-panel); color:var(--text-main); font-weight:900;"></div><canvas id="raspa-canvas-${i}" width="150" height="100" style="position:absolute; inset:0; width:100%; height:100%; touch-action:none; cursor:pointer;"></canvas></div>`; } setTimeout(() => { for(let i=0; i<4; i++) initScratchCanvas(i); }, 100);
         });
     }
 
@@ -768,30 +760,23 @@
         function getMousePos(evt) { let rect = canvas.getBoundingClientRect(); let clientX = evt.touches ? evt.touches[0].clientX : evt.clientX; let clientY = evt.touches ? evt.touches[0].clientY : evt.clientY; return { x: (clientX - rect.left) * (canvas.width / rect.width), y: (clientY - rect.top) * (canvas.height / rect.height) }; }
         function startDraw(e) { if(revealed || JOGANDO_MINI) return; isDrawing = true; scratch(e); }
         function stopDraw() { isDrawing = false; checkReveal(); }
-        function scratch(e) {
-            if (!isDrawing || revealed || JOGANDO_MINI) return; e.preventDefault(); let pos = getMousePos(e);
-            ctx.globalCompositeOperation = 'destination-out'; ctx.beginPath(); ctx.arc(pos.x, pos.y, 20, 0, Math.PI * 2); ctx.fill();
-        }
+        function scratch(e) { if (!isDrawing || revealed || JOGANDO_MINI) return; e.preventDefault(); let pos = getMousePos(e); ctx.globalCompositeOperation = 'destination-out'; ctx.beginPath(); ctx.arc(pos.x, pos.y, 20, 0, Math.PI * 2); ctx.fill(); }
         function checkReveal() {
-            if(revealed) return; let pixels = ctx.getImageData(0, 0, canvas.width, canvas.height).data; let trans = 0;
-            for (let j = 3; j < pixels.length; j += 4) { if (pixels[j] < 10) trans++; }
+            if(revealed) return; let pixels = ctx.getImageData(0, 0, canvas.width, canvas.height).data; let trans = 0; for (let j = 3; j < pixels.length; j += 4) { if (pixels[j] < 10) trans++; }
             if (trans / (pixels.length / 4) > 0.3) { 
-                revealed = true; canvas.style.transition = 'opacity 0.3s'; canvas.style.opacity = '0';
-                window.RASPA_RES.push(s); window.RASPA_CLICKS++;
+                revealed = true; canvas.style.transition = 'opacity 0.3s'; canvas.style.opacity = '0'; window.RASPA_RES.push(s); window.RASPA_CLICKS++;
                 if(window.RASPA_CLICKS === 4) {
-                    JOGANDO_MINI = true;
-                    let counts = {}; window.RASPA_RES.forEach(x => counts[x] = (counts[x]||0)+1); let max = Math.max(...Object.values(counts)); let winSimbol = Object.keys(counts).find(key => counts[key] === max); let premio = max >= 3 ? (window.GAME_CFG.rp_p || 100) : 0;
+                    JOGANDO_MINI = true; let counts = {}; window.RASPA_RES.forEach(x => counts[x] = (counts[x]||0)+1); let max = Math.max(...Object.values(counts)); let winSimbol = Object.keys(counts).find(key => counts[key] === max); let premio = max >= 3 ? (window.GAME_CFG.rp_p || 100) : 0;
                     if(premio > 0) { for(let k=0; k<4; k++) { let el = document.getElementById(`raspa-res-${k}`); if(el.innerText === winSimbol) { el.style.background = 'var(--success-green)'; el.style.color = '#000'; el.parentElement.style.animation = 'pulseDiamante 1s infinite alternate'; } } }
                     processarGanho('raspa', premio, window.RASPA_DADOS, window.RASPA_AGORA, document.getElementById('raspa-msg'));
                 } setTimeout(() => canvas.remove(), 300);
             }
         }
-        canvas.addEventListener('mousedown', startDraw); canvas.addEventListener('mousemove', scratch); canvas.addEventListener('mouseup', stopDraw); canvas.addEventListener('mouseleave', stopDraw);
-        canvas.addEventListener('touchstart', startDraw, {passive: false}); canvas.addEventListener('touchmove', scratch, {passive: false}); canvas.addEventListener('touchend', stopDraw);
+        canvas.addEventListener('mousedown', startDraw); canvas.addEventListener('mousemove', scratch); canvas.addEventListener('mouseup', stopDraw); canvas.addEventListener('mouseleave', stopDraw); canvas.addEventListener('touchstart', startDraw, {passive: false}); canvas.addEventListener('touchmove', scratch, {passive: false}); canvas.addEventListener('touchend', stopDraw);
     }
     function sairMinigame() { if(JOGANDO_MINI) return; document.getElementById('t-roleta').style.display='none'; document.getElementById('t-caixa').style.display='none'; document.getElementById('t-raspa').style.display='none'; document.getElementById('app-main').style.display='flex'; updUI(); }
 
-    // QUIZ LOGIC (MISSÃO E DUELOS)
+    // QUIZ LOGIC E TRILHA (RPG MAP)
     function play(nivel){ document.getElementById('app-main').style.display = 'none'; document.getElementById('t-play').style.display = 'flex'; document.getElementById('q-box').innerHTML = '<div style="text-align:center; color:var(--gold); font-weight:900; font-size:20px;">CARREGANDO...</div>'; db.collection('perguntas').where('nivel', '==', nivel).where('status', '==', 'ATIVA').where('duelo','==','NAO').get().then((snap) => { let perguntas = []; snap.forEach(doc => perguntas.push(doc.data())); if(perguntas.length === 0){ pop("Vazio", "Nenhuma missão de treinamento cadastrada."); sairJogo(); return; } perguntas = perguntas.sort(() => 0.5 - Math.random()); window.DESAFIO_ATUAL = null; window.TOTAL_XP_ACUMULADO = 0; runQ(perguntas, 0, false); }); }
     
     function runQ(l, i, isDuelo){
@@ -852,11 +837,7 @@
     function abrirAdm(){ document.getElementById('mod-adm').style.display='flex'; tab('u'); }
     function tab(v){ document.querySelectorAll('.adm-tab').forEach(e => e.classList.remove('active')); document.querySelectorAll('.adm-view').forEach(e => e.classList.remove('active')); document.getElementById('tb-'+v).classList.add('active'); document.getElementById('adm-'+v).classList.add('active'); if(v === 'u') loadUsersAdmin(); if(v === 'q') ldQ(); if(v === 'l') ldL(); if(v === 'ad') loadAdConfig(); if(v === 'd') loadAdminDuelos(); }
 
-    function cadastrarUsuarioPeloAdmin() { 
-        let nome = document.getElementById('cad-nome').value.trim(); let loginInput = document.getElementById('cad-login').value.trim().toLowerCase().replace(/\s+/g, ''); let senha = document.getElementById('cad-senha').value; let nivel = document.getElementById('cad-nivel').value; let msg = document.getElementById('cad-msg'); 
-        if(!nome || !loginInput || !senha) { msg.style.color = 'var(--legendary-red)'; msg.innerText = "Preencha tudo!"; return; } msg.style.color = 'var(--gold)'; msg.innerText = "Criando..."; let emailFantasma = loginInput + '@csv.app'; 
-        firebase.auth().createUserWithEmailAndPassword(emailFantasma, senha).then((cred) => { db.collection('usuarios').doc(cred.user.uid).set({ nome: nome, login: loginInput, email: emailFantasma, xp: 0, fase: 1, nivel: nivel, frase: "", avatar: "", inventario: [], status: 'ATIVO' }).then(() => { alert("Usuário criado com sucesso. O sistema recarregará."); location.reload(); }); }).catch(error => { msg.style.color = 'var(--legendary-red)'; msg.innerText = "Erro: " + error.message; }); 
-    }
+    function cadastrarUsuarioPeloAdmin() { let nome = document.getElementById('cad-nome').value.trim(); let loginInput = document.getElementById('cad-login').value.trim().toLowerCase().replace(/\s+/g, ''); let senha = document.getElementById('cad-senha').value; let nivel = document.getElementById('cad-nivel').value; let msg = document.getElementById('cad-msg'); if(!nome || !loginInput || !senha) { msg.style.color = 'var(--legendary-red)'; msg.innerText = "Preencha tudo!"; return; } msg.style.color = 'var(--gold)'; msg.innerText = "Criando..."; let emailFantasma = loginInput + '@csv.app'; db.collection('usuarios').where('login', '==', loginInput).get().then(snap => { if(!snap.empty) { msg.style.color = 'var(--legendary-red)'; msg.innerText = "Erro: Este Login já existe."; return; } firebase.auth().createUserWithEmailAndPassword(emailFantasma, senha).then((cred) => { db.collection('usuarios').doc(cred.user.uid).set({ nome: nome, login: loginInput, email: emailFantasma, xp: 0, fase: 1, nivel: nivel, frase: "", avatar: "", inventario: [], status: 'ATIVO' }).then(() => { alert("Usuário criado com sucesso. O sistema recarregará."); location.reload(); }); }).catch(error => { msg.style.color = 'var(--legendary-red)'; msg.innerText = "Erro do Sistema."; }); }); }
     function loadUsersAdmin() { let list = document.getElementById('adm-users-list'); list.innerHTML = "Buscando..."; db.collection("usuarios").get().then(snap => { let h = ''; snap.forEach(doc => { let u = doc.data(); let uid = doc.id; let bg = u.status === 'BLOQUEADO' ? 'rgba(214, 48, 49, 0.1)' : 'var(--bg-panel)'; let btnBlock = u.status === 'BLOQUEADO' ? `<button class="btn-sm" style="background:var(--success-green); color:#000;" onclick="toggleBlock('${uid}', 'ATIVO')">Desbloquear</button>` : `<button class="btn-sm" style="background:var(--legendary-red);" onclick="toggleBlock('${uid}', 'BLOQUEADO')">Bloquear</button>`; h += `<div class="user-card" style="background:${bg};"><div style="display:flex; justify-content:space-between; margin-bottom:10px;"><div><strong style="color:var(--gold);">${u.nome}</strong><br><span style="font-size:10px; color:var(--text-muted);">@${u.login || 'antigo'} | ${u.nivel}</span></div><div style="display:flex; gap:5px;"><input id="xp-${uid}" type="number" value="${u.xp}" style="width:60px; padding:5px; border-radius:5px; background:#07090D; color:white; border:1px solid var(--border-dark);"><button class="btn-sm" style="background:var(--rare-blue);" onclick="updateUserXP('${uid}')">Salvar</button></div></div><button class="btn-sm" style="background:var(--legendary-red); width:100%;" onclick="deletarUsuario('${uid}')"><span class="material-icons-round" style="font-size:12px; vertical-align:middle;">delete</span> Excluir Usuário</button></div>`; }); list.innerHTML = h; }); }
     function updateUserXP(uid) { let nxp = parseInt(document.getElementById(`xp-${uid}`).value) || 0; db.collection("usuarios").doc(uid).update({xp: nxp}).then(()=> pop("Salvo", "XP alterado!")); }
     function toggleBlock(uid, status) { db.collection("usuarios").doc(uid).update({status: status}).then(()=> loadUsersAdmin()); }
