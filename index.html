@@ -47,7 +47,7 @@
     .adm-lbl { font-size: 10px; color: var(--gold); font-weight: 900; margin-bottom: 4px; display: block; text-transform: uppercase; letter-spacing: 1px; }
 
     /* ==========================================
-       3. SISTEMA DE TELAS BLINDADAS
+       3. TELAS DE OVERLAY (SPLASH E LOGIN)
        ========================================== */
     #splash { position: fixed; inset: 0; background: var(--bg-dark); z-index: 10000; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.4s ease; cursor: pointer; }
     .logo-3d { font-size: 70px; font-weight: 900; color: transparent; -webkit-text-stroke: 2px var(--gold); animation: float3D 3s infinite ease-in-out; text-shadow: 0 0 30px var(--gold-glow); letter-spacing: 5px; }
@@ -71,7 +71,7 @@
     @keyframes fadeIn { from {opacity:0; transform:scale(0.8);} to {opacity:1; transform:scale(1);} }
 
     /* ==========================================
-       4. LAYOUT PRINCIPAL E NAVEGAÇÃO
+       4. LAYOUT PRINCIPAL DO APLICATIVO
        ========================================== */
     .app-container { width: 100%; height: 100%; position: relative; overflow: hidden; display: none !important; flex-direction: column; }
     .app-container.ready { display: flex !important; }
@@ -163,7 +163,7 @@
     .game-icon { width: 60px; height: 60px; border-radius: 12px; background: #07090D; border: 1px solid var(--border-dark); display: flex; align-items: center; justify-content: center; font-size: 30px; }
 
     /* ==========================================
-       8. TELAS DE MINIGAMES
+       8. TELAS DOS MINIGAMES
        ========================================== */
     .boxes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 280px; margin: 30px auto; perspective: 1000px; }
     .m-box { width: 120px; height: 120px; background: linear-gradient(135deg, #1E2535, #151A25); border: 2px solid var(--epic-purple); border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 50px; color: var(--epic-purple); cursor: pointer; transition: 0.4s; box-shadow: inset 0 0 20px rgba(108, 92, 231, 0.2), 0 10px 20px rgba(0,0,0,0.5); position: relative; animation: float3D 3s infinite ease-in-out;}
@@ -177,7 +177,7 @@
     .wheel-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 80px; height: 80px; background: #07090D; border-radius: 50%; border: 4px solid var(--gold); z-index: 5; display: flex; justify-content: center; align-items: center; box-shadow: 0 0 20px var(--gold-glow); cursor: pointer; font-weight: 900; color: var(--gold); font-size: 14px; }
 
     /* ==========================================
-       9. QUIZ IN-GAME
+       9. QUIZ IN-GAME E CHAT
        ========================================== */
     #t-play { position: fixed; inset:0; background: var(--bg-dark); z-index:300; display:none; flex-direction:column; padding: 20px; overflow-y:auto; background-image: radial-gradient(circle at top, #1E2535, #0B0E14); }
     .timer-badge { background: #07090D; border: 2px solid var(--gold); padding: 10px 20px; border-radius: 12px; font-weight: 900; font-size: 24px; color: var(--gold); box-shadow: 0 0 15px var(--gold-glow); transition: 0.3s; }
@@ -192,13 +192,13 @@
     .flashcard.flipped .front { transform: rotateY(180deg); } .flashcard.flipped .back { transform: rotateY(0deg); }
     .balloon { width: 110px; height: 110px; border-radius: 50%; background: var(--bg-panel); border: 2px solid var(--border-dark); display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--text-main); font-weight: 800; text-align: center; padding: 10px; cursor: pointer; box-shadow: 0 10px 20px rgba(0,0,0,0.5); transition: 0.2s;}
 
-    /* ==========================================
-       10. CHAT E ADMIN PAINEL
-       ========================================== */
     .c-msg { display: flex; gap: 10px; align-items: flex-end; max-width: 85%; margin-bottom: 15px;} .c-msg.me { align-self: flex-end; flex-direction: row-reverse; }
     .c-bub { background: var(--bg-panel); border: 1px solid var(--border-dark); padding: 12px 16px; border-radius: 16px 16px 16px 0; font-size: 14px; color: var(--text-main);}
     .c-msg.me .c-bub { background: var(--border-dark); border-radius: 16px 16px 0 16px; border-color: var(--text-muted); }
 
+    /* ==========================================
+       10. ADMIN PAINEL
+       ========================================== */
     .adm-overlay { z-index: 5000; align-items: flex-end; display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); justify-content: center;}
     .adm-card { width: 100%; height: 95%; border-radius: 24px 24px 0 0; display: flex; flex-direction: column; padding: 20px; background: var(--bg-dark); border-top: 2px solid var(--gold); }
     .adm-tabs { display: flex; gap: 10px; margin-bottom: 20px; overflow-x: auto; padding-bottom:10px; }
@@ -224,7 +224,7 @@
     <div class="logo-3d">CSV+</div>
     <div class="cyber-bar"><div class="cyber-fill"></div></div>
     <div class="splash-txt">INICIANDO SISTEMA...</div>
-    <div style="font-size: 10px; color: var(--text-muted); margin-top: 15px; font-weight: bold;">v6.0 - Tocar para Iniciar</div>
+    <div style="font-size: 10px; color: var(--text-muted); margin-top: 15px; font-weight: bold;">v6.0 - Anti Cache Ativado</div>
   </div>
   
   <div id="ad-modal">
@@ -447,7 +447,7 @@
       <div id="adm-u" class="adm-view active">
         <div style="font-weight:bold; color:var(--gold); margin-bottom:15px; text-transform:uppercase;">Criar Novo Acesso</div>
         <label class="adm-lbl">NOME DO COLABORADOR</label><input id="cad-nome" class="inp" placeholder="Ex: João Silva">
-        <label class="adm-lbl">USUÁRIO DE LOGIN (SIMPLES)</label><input id="cad-login" class="inp" type="text" placeholder="Ex: joao">
+        <label class="adm-lbl">USUÁRIO DE LOGIN (SIMPLES)</label><input id="cad-login" class="inp" type="text" placeholder="Ex: joao (Sem @email)">
         <div class="row-grid">
            <div><label class="adm-lbl">SENHA PADRÃO</label><input id="cad-senha" class="inp" value="Ludo@2026" placeholder="Senha"></div>
            <div><label class="adm-lbl">PERMISSÃO</label><select id="cad-nivel" class="inp"><option value="USER">USER</option><option value="ADMIN">ADMIN</option></select></div>
@@ -525,7 +525,7 @@
         
         <h3 style="color:var(--success-green); margin-bottom:5px; margin-top:20px; font-size:14px; text-transform: uppercase;">RASPADINHA</h3>
         <div class="row-grid"><div><label class="adm-lbl">Horas Recarga</label><input id="rp-tm" class="inp" type="number"></div><div><label class="adm-lbl">Vitória (XP)</label><input id="rp-p1" class="inp" type="number"></div></div>
-        <button class="btn" style="margin-top:20px" onclick="saveGames()">SALVAR REGRAS E NOMES</button>
+        <button class="btn" style="margin-top:20px" onclick="saveGames()">SALVAR REGRAS</button>
       </div>
 
       <div id="adm-l" class="adm-view">
@@ -551,12 +551,15 @@
         if(spl) { spl.style.opacity = '0'; setTimeout(() => { spl.style.display = 'none'; document.getElementById('t-login').style.display = 'flex'; }, 300); }
     }
 
-    // 2. INICIA FIREBASE
+    // 2. INICIA FIREBASE COM O MODO SECUNDÁRIO (CLONE INVISÍVEL)
     const firebaseConfig = { apiKey: "AIzaSyBiHQQdfL4X88KEZUMvZS-WP0z2viR-ZHY", authDomain: "csvplus-62502.firebaseapp.com", projectId: "csvplus-62502", storageBucket: "csvplus-62502.firebasestorage.app", messagingSenderId: "879590605354", appId: "1:879590605354:web:368cd1fdc1f1e35ca77953" };
     firebase.initializeApp(firebaseConfig); 
+    
+    // ESSE É O CLONE QUE CRIA USUÁRIO SEM DERRUBAR O ADMIN
+    const secondaryApp = firebase.initializeApp(firebaseConfig, "Secondary"); 
+    
     const auth = firebase.auth(); const db = firebase.firestore();
     
-    // OFFLINE MODO SEGURO
     db.enablePersistence().catch(err => { console.log("Offline Mode Info:", err.code); });
 
     // 3. VARIÁVEIS GLOBAIS
@@ -575,7 +578,7 @@
     function triggerVibration(type) { if (!("vibrate" in navigator)) return; if (type === 'win') window.navigator.vibrate([100, 50, 100]); else if (type === 'lose') window.navigator.vibrate([300]); else if (type === 'tick') window.navigator.vibrate([30]); }
     function getRankObj(xp) { if(xp < 500) return {c: 'rank-normal', n: 'Iniciante'}; if(xp < 2000) return {c: 'rank-prata', n: 'Prata'}; if(xp < 5000) return {c: 'rank-ouro', n: 'Ouro'}; return {c: 'rank-diamante', n: 'Diamante'}; }
 
-    // 5. XP ANIMATION ÉPICO
+    // 5. XP ANIMATION (CONTA BANCÁRIA)
     function animXP(el, start, end, duration) {
         let startTime = null;
         function step(timestamp) {
@@ -675,13 +678,13 @@
     function go(t, el){ document.querySelectorAll('.view').forEach(v => { v.classList.remove('active'); v.style.display='none'; }); let tg = document.getElementById('v-'+t); tg.style.display='flex'; setTimeout(() => tg.classList.add('active'), 10); document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active')); el.classList.add('active'); if(t === 'rank') loadRank(); if(t === 'store') renderStore(); if(t === 'chat') loadChat(); if(t === 'arena') loadArena(); if(t === 'mapa') loadMapa(); }
     function pop(t,m){ document.getElementById('uni-pop').style.display='flex'; document.getElementById('pop-t').innerText=t; document.getElementById('pop-m').innerText=m; }
 
-    // 8. MAPA DE AVANÇO (BIOMAS MÁGICOS)
+    // 8. MAPA DE AVANÇO (MUNDOS / RPG)
     function getBiome(fase) {
-        if(fase <= 3) return { n: 'Bosque de Pedra', bg: 'linear-gradient(135deg, #00b894, #55efc4)', c: '#000' };
-        if(fase <= 6) return { n: 'Ilhas Congeladas', bg: 'linear-gradient(135deg, #74b9ff, #81ecec)', c: '#000' };
-        if(fase <= 9) return { n: 'Deserto dos Crânios', bg: 'linear-gradient(135deg, #fdcb6e, #ffeaa7)', c: '#000' };
+        if(fase <= 3) return { n: 'Floresta do Início', bg: 'linear-gradient(135deg, #00b894, #55efc4)', c: '#000' };
+        if(fase <= 6) return { n: 'Vale de Gelo', bg: 'linear-gradient(135deg, #74b9ff, #81ecec)', c: '#000' };
+        if(fase <= 9) return { n: 'Deserto Árido', bg: 'linear-gradient(135deg, #fdcb6e, #ffeaa7)', c: '#000' };
         if(fase <= 12) return { n: 'Vulcão do Caos', bg: 'linear-gradient(135deg, #d63031, #ff7675)', c: '#fff' };
-        return { n: 'Vazio Espacial', bg: 'linear-gradient(135deg, #6c5ce7, #a29bfe)', c: '#fff' };
+        return { n: 'Galáxia Infinita', bg: 'linear-gradient(135deg, #6c5ce7, #a29bfe)', c: '#fff' };
     }
 
     function loadMapa() {
@@ -730,7 +733,7 @@
     function pod(u, pos, c) { let r = getRankObj(u.xp); let safeAv = parseImg(u.avatar); let av = safeAv ? `<img src="${safeAv}">` : `<img src="https://api.dicebear.com/7.x/bottts/svg?seed=${u.nome}">`; c.innerHTML += `<div class="p-col p${pos}"><div class="u-av ${r.c} av-pod">${av}</div><div class="p-block" style="position:relative;">${u.xp}<div style="position:absolute; top:-35px; width:120px; background:var(--bg-panel); color:var(--text-main); font-size:9px; padding:5px; border-radius:10px; text-align:center; border:1px solid var(--border-dark); font-weight:bold; display: ${u.frase ? 'block' : 'none'}">${u.frase}</div></div><div style="font-size:11px;margin-top:8px;font-weight:800;text-transform:uppercase;color:var(--text-main);">${u.nome.split(' ')[0]}</div></div>`; }
 
     let escutaChat = null; 
-    function loadChat(){ if(escutaChat) escutaChat(); let b = document.getElementById('chat-msgs'); b.innerHTML = '<div style="text-align:center; padding:20px; color:var(--text-muted);">Conectando servidor...</div>'; escutaChat = db.collection('chat').orderBy('data', 'asc').limit(50).onSnapshot((snap) => { b.innerHTML = ''; if(snap.empty) { b.innerHTML = '<div style="text-align:center; padding:20px; color:var(--text-muted);">Lobby vazio.</div>'; } snap.forEach((doc) => { let m = doc.data(); let me = m.uid === U.id ? 'me' : ''; let r = getRankObj(m.xp||0); let safeAv = parseImg(m.av); let av = safeAv ? `<img src="${safeAv}" onerror="this.style.display='none'">` : `<img src="https://api.dicebear.com/7.x/bottts/svg?seed=${m.nome}">`; let safeOld = m.msg.replace(/'/g, "\\'").replace(/"/g, '&quot;'); let editBtn = (m.uid === U.id) ? `<span class="material-icons-round" style="font-size:12px; margin-left:8px; cursor:pointer; opacity:0.5; vertical-align:middle;" onclick="editarMsgChat('${doc.id}', '${safeOld}')">edit</span>` : ''; let editMark = m.editado ? `<span style="font-size:9px; opacity:0.5; margin-left:5px; font-style:italic;">(edit)</span>` : ''; b.innerHTML += `<div class="c-msg ${me}"><div class="u-av ${r.c} av-chat">${av}</div><div class="c-bub"><span style="font-size:10px;color:var(--gold);display:block;margin-bottom:3px;font-weight:900;text-transform:uppercase;">${m.nome}</span>${m.msg} ${editMark} ${editBtn}</div></div>`; }); b.scrollTop = b.scrollHeight; }); }
+    function loadChat(){ if(escutaChat) escutaChat(); let b = document.getElementById('chat-msgs'); b.innerHTML = '<div style="text-align:center; padding:20px; color:var(--text-muted);">Conectando...</div>'; escutaChat = db.collection('chat').orderBy('data', 'asc').limit(50).onSnapshot((snap) => { b.innerHTML = ''; if(snap.empty) { b.innerHTML = '<div style="text-align:center; padding:20px; color:var(--text-muted);">Lobby vazio.</div>'; } snap.forEach((doc) => { let m = doc.data(); let me = m.uid === U.id ? 'me' : ''; let r = getRankObj(m.xp||0); let safeAv = parseImg(m.av); let av = safeAv ? `<img src="${safeAv}" onerror="this.style.display='none'">` : `<img src="https://api.dicebear.com/7.x/bottts/svg?seed=${m.nome}">`; let safeOld = m.msg.replace(/'/g, "\\'").replace(/"/g, '&quot;'); let editBtn = (m.uid === U.id) ? `<span class="material-icons-round" style="font-size:12px; margin-left:8px; cursor:pointer; opacity:0.5; vertical-align:middle;" onclick="editarMsgChat('${doc.id}', '${safeOld}')">edit</span>` : ''; let editMark = m.editado ? `<span style="font-size:9px; opacity:0.5; margin-left:5px; font-style:italic;">(edit)</span>` : ''; b.innerHTML += `<div class="c-msg ${me}"><div class="u-av ${r.c} av-chat">${av}</div><div class="c-bub"><span style="font-size:10px;color:var(--gold);display:block;margin-bottom:3px;font-weight:900;text-transform:uppercase;">${m.nome}</span>${m.msg} ${editMark} ${editBtn}</div></div>`; }); b.scrollTop = b.scrollHeight; }); }
     function sendChat(){ let i = document.getElementById('c-txt'); let t = i.value.trim(); if(!t) return; i.value = ''; db.collection('chat').add({ uid: U.id, nome: U.nome, av: U.avatar || '', xp: U.xp, msg: t, data: firebase.firestore.FieldValue.serverTimestamp() }); }
     function editarMsgChat(id, oldMsg) { let n = prompt("Corrigir mensagem:", oldMsg); if(n !== null && n.trim() !== "" && n !== oldMsg) { db.collection('chat').doc(id).update({ msg: n.trim(), editado: true }); } }
 
@@ -761,7 +764,7 @@
     function usarAvatar(url) { U.avatar = url; db.collection("usuarios").doc(U.id).update({ avatar: url }).then(() => { updUI(); renderStore(); pop("Sucesso", "Skin atualizada."); }); }
     function loadMusicList() { db.collection('sistema').doc('musicas').get().then(doc => { if(doc.exists) { let ms = doc.data().lista || []; let h = ''; ms.forEach(m => { h += `<div class="opt-btn" style="background:#07090D;" onclick="playMusic('${m.url}', this)"><span class="material-icons-round" style="margin-right:10px;">play_arrow</span> ${m.nome}</div>`; }); if(h) document.getElementById('music-list').innerHTML = h; } }); }
 
-    // JOGOS DE SORTE BLINDADOS
+    // JOGOS DE SORTE
     function checarCooldown(jogo, tempoHoras, callback) { db.collection("usuarios").doc(U.id).get().then((doc) => { let dados = doc.data(); let ultimo = dados['ultimo_' + jogo] || 0; let agora = new Date().getTime(); let cooldown = tempoHoras * 60 * 60 * 1000; if (U.nivel !== 'ADMIN' && (agora - ultimo) < cooldown) { let h = Math.floor(((ultimo + cooldown) - agora) / (1000*60*60)); let m = Math.floor((((ultimo + cooldown) - agora) % (1000*60*60)) / (1000*60)); pop("Aguarde", `Caixa travada. Volte em ${h}h e ${m}m.`); return; } callback(dados, agora); }); }
     function processarGanho(jogo, premio, dados, agora, elMsg) { let novoXP = (dados.xp || 0) + premio; let objUpdate = { xp: novoXP }; objUpdate['ultimo_' + jogo] = agora; db.collection("usuarios").doc(U.id).update(objUpdate).then(() => { triggerVibration(premio > 0 ? 'win' : 'lose'); U.xp = novoXP; if(premio > 0) { elMsg.innerText = `+${premio} XP`; elMsg.style.color = 'var(--gold)'; tocarSom('https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3'); confetti({ particleCount: 100, spread: 70, colors:['#FFC312', '#0984E3'] }); updUI(premio); } else { elMsg.innerText = "AZAR"; elMsg.style.color = 'var(--legendary-red)'; tocarSom('https://assets.mixkit.co/active_storage/sfx/2956/2956-preview.mp3'); updUI(); } setTimeout(()=>{ JOGANDO_MINI = false; }, 2000); }); }
 
@@ -892,15 +895,26 @@
     }
     function sairJogo(){ clearInterval(window.TMR); document.getElementById('t-play').style.display='none'; document.getElementById('app-main').style.display='flex'; document.getElementById('timer-box').classList.remove('danger-pulse'); updUI(); window.DESAFIO_ATUAL = null; }
 
-    // PAINEL ADMIN
+    // PAINEL ADMIN 
     function abrirAdm(){ document.getElementById('mod-adm').style.display='flex'; tab('u'); }
     function tab(v){ document.querySelectorAll('.adm-tab').forEach(e => e.classList.remove('active')); document.querySelectorAll('.adm-view').forEach(e => e.classList.remove('active')); document.getElementById('tb-'+v).classList.add('active'); document.getElementById('adm-'+v).classList.add('active'); if(v === 'u') loadUsersAdmin(); if(v === 'q') ldQ(); if(v === 'l') ldL(); if(v === 'ad') loadAdConfig(); if(v === 'd') loadAdminDuelos(); }
 
     function cadastrarUsuarioPeloAdmin() { 
         let nome = document.getElementById('cad-nome').value.trim(); let loginInput = document.getElementById('cad-login').value.trim().toLowerCase().replace(/\s+/g, ''); let senha = document.getElementById('cad-senha').value; let nivel = document.getElementById('cad-nivel').value; let msg = document.getElementById('cad-msg'); 
-        if(!nome || !loginInput || !senha) { msg.style.color = 'var(--legendary-red)'; msg.innerText = "Preencha tudo!"; return; } msg.style.color = 'var(--gold)'; msg.innerText = "Criando..."; let emailFantasma = loginInput + '@csv.app'; 
-        firebase.auth().createUserWithEmailAndPassword(emailFantasma, senha).then((cred) => { db.collection('usuarios').doc(cred.user.uid).set({ nome: nome, login: loginInput, email: emailFantasma, xp: 0, fase: 1, nivel: nivel, frase: "", avatar: "", inventario: [], status: 'ATIVO' }).then(() => { alert("Usuário criado com sucesso. O sistema recarregará."); location.reload(); }); }).catch(error => { msg.style.color = 'var(--legendary-red)'; msg.innerText = "Erro: " + error.message; }); 
+        if(!nome || !loginInput || !senha) { msg.style.color = 'var(--legendary-red)'; msg.innerText = "Preencha tudo!"; return; } msg.style.color = 'var(--gold)'; msg.innerText = "Criando..."; 
+        let emailFantasma = loginInput + '@csv.app'; 
+        
+        // Usa o App Secundário para não deslogar o Admin
+        secondaryApp.auth().createUserWithEmailAndPassword(emailFantasma, senha).then((cred) => { 
+            db.collection('usuarios').doc(cred.user.uid).set({ nome: nome, login: loginInput, email: emailFantasma, xp: 0, fase: 1, nivel: nivel, frase: "", avatar: "", inventario: [], status: 'ATIVO' }).then(() => { 
+                secondaryApp.auth().signOut();
+                document.getElementById('cad-nome').value = ''; document.getElementById('cad-login').value = '';
+                msg.style.color = 'var(--success-green)'; msg.innerText = "Usuário criado com sucesso!"; 
+                loadUsersAdmin(); 
+            }); 
+        }).catch(error => { msg.style.color = 'var(--legendary-red)'; msg.innerText = "Erro: " + error.message; }); 
     }
+
     function loadUsersAdmin() { let list = document.getElementById('adm-users-list'); list.innerHTML = "Buscando..."; db.collection("usuarios").get().then(snap => { let h = ''; snap.forEach(doc => { let u = doc.data(); let uid = doc.id; let bg = u.status === 'BLOQUEADO' ? 'rgba(214, 48, 49, 0.1)' : 'var(--bg-panel)'; let btnBlock = u.status === 'BLOQUEADO' ? `<button class="btn-sm" style="background:var(--success-green); color:#000;" onclick="toggleBlock('${uid}', 'ATIVO')">Desbloquear</button>` : `<button class="btn-sm" style="background:var(--legendary-red);" onclick="toggleBlock('${uid}', 'BLOQUEADO')">Bloquear</button>`; h += `<div class="user-card" style="background:${bg};"><div style="display:flex; justify-content:space-between; margin-bottom:10px;"><div><strong style="color:var(--gold);">${u.nome}</strong><br><span style="font-size:10px; color:var(--text-muted);">@${u.login || 'antigo'} | ${u.nivel}</span></div><div style="display:flex; gap:5px;"><input id="xp-${uid}" type="number" value="${u.xp}" style="width:60px; padding:5px; border-radius:5px; background:#07090D; color:white; border:1px solid var(--border-dark);"><button class="btn-sm" style="background:var(--rare-blue);" onclick="updateUserXP('${uid}')">Salvar</button></div></div><button class="btn-sm" style="background:var(--legendary-red); width:100%;" onclick="deletarUsuario('${uid}')"><span class="material-icons-round" style="font-size:12px; vertical-align:middle;">delete</span> Excluir Usuário</button></div>`; }); list.innerHTML = h; }); }
     function updateUserXP(uid) { let nxp = parseInt(document.getElementById(`xp-${uid}`).value) || 0; db.collection("usuarios").doc(uid).update({xp: nxp}).then(()=> pop("Salvo", "XP alterado!")); }
     function toggleBlock(uid, status) { db.collection("usuarios").doc(uid).update({status: status}).then(()=> loadUsersAdmin()); }
