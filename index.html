@@ -77,18 +77,28 @@
     .app-container.ready { display: flex !important; }
 
     .top-header { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; background: var(--bg-panel); border-bottom: 1px solid var(--border-dark); z-index: 10; box-shadow: 0 4px 10px rgba(0,0,0,0.3);}
-    .view { flex: 1; display: none; flex-direction: column; overflow-x: hidden; overflow-y: auto; padding: 20px; padding-bottom: 100px; }
+    .view { flex: 1; display: none; flex-direction: column; overflow-x: hidden; overflow-y: auto; padding: 20px; padding-bottom: 30px; /* Reduzido o padding bottom sem a barra */ }
     .view.active { display: flex; animation: fadeUp 0.4s ease; }
     @keyframes fadeUp { from {opacity:0; transform:translateY(20px);} to {opacity:1; transform:translateY(0);} }
 
-    .nav-bar-wrapper { position: absolute; bottom: 0; left: 0; width: 100%; background: var(--bg-panel); border-top: 1px solid var(--border-dark); z-index: 40; padding-bottom: env(safe-area-inset-bottom); overflow-x: auto;}
-    .nav-bar { display: inline-flex; justify-content: space-between; align-items: center; height: 70px; min-width: 100%; padding: 0 15px; gap: 20px;}
-    .nav-bar-wrapper::-webkit-scrollbar { display: none; }
-    .nav-btn { display: flex; flex-direction: column; align-items: center; color: var(--text-muted); font-size: 10px; font-weight: 800; cursor: pointer; transition: 0.3s; text-transform: uppercase; }
-    .nav-btn.active { color: var(--gold); transform: translateY(-3px); }
-    .nav-btn span { font-size: 26px; margin-bottom: 4px; transition: 0.3s; }
+    .fab-admin { position: fixed; bottom: 20px; right: 20px; width: 55px; height: 55px; border-radius: 16px; background: var(--rare-blue); color: white; display: none; align-items: center; justify-content: center; box-shadow: 0 10px 20px rgba(9, 132, 227, 0.4); cursor: pointer; z-index: 100; transition: 0.3s; }
 
-    .fab-admin { position: fixed; bottom: 90px; right: 20px; width: 55px; height: 55px; border-radius: 16px; background: var(--rare-blue); color: white; display: none; align-items: center; justify-content: center; box-shadow: 0 10px 20px rgba(9, 132, 227, 0.4); cursor: pointer; z-index: 100; transition: 0.3s; }
+    /* ==========================================
+       MENU LATERAL (NOVIDADE)
+       ========================================== */
+    .btn-menu { background: transparent; border: none; color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 10px; background: #07090D; border: 1px solid var(--border-dark); }
+    .menu-lateral { position: fixed; top: 0; left: -100%; width: 80%; max-width: 300px; height: 100vh; background-color: var(--bg-panel); border-right: 1px solid var(--border-dark); z-index: 2000; transition: left 0.3s cubic-bezier(0.4, 0.0, 0.2, 1); padding: 20px; overflow-y: auto; box-shadow: 5px 0 15px rgba(0,0,0,0.5); display: flex; flex-direction: column;}
+    .menu-lateral.aberto { left: 0; }
+    .fundo-escuro { position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 1999; display: none; backdrop-filter: blur(3px);}
+    .fundo-escuro.ativo { display: block; animation: fadeIn 0.3s; }
+    .cabecalho-menu { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; border-bottom: 1px solid var(--border-dark); padding-bottom: 15px;}
+    .cabecalho-menu h2 { color: var(--gold); font-weight: 900; margin: 0; text-transform: uppercase;}
+    .btn-fechar-menu { background: transparent; border: none; color: var(--text-muted); cursor: pointer; display: flex; }
+    .lista-cards-menu { display: flex; flex-direction: column; gap: 12px; flex: 1;}
+    .card-menu { background-color: #07090D; padding: 15px; border-radius: 12px; border: 1px solid var(--border-dark); color: var(--text-main); font-weight: bold; display: flex; align-items: center; gap: 15px; cursor: pointer; transition: 0.2s; text-transform: uppercase; font-size: 13px;}
+    .card-menu:active { transform: scale(0.97); border-color: var(--gold); }
+    .card-menu .material-icons-round { font-size: 20px; }
+    .card-menu.destaque { background: linear-gradient(to right, #F8EFBA, #FFC312); color: #000; border: none; font-weight: 900; margin-top: auto;}
 
     /* ==========================================
        5. AVATARES, RANKS E PÓDIO
@@ -184,18 +194,16 @@
     .danger-pulse { animation: pulseRed 0.8s infinite; border-color: var(--legendary-red) !important; color: var(--legendary-red) !important; text-shadow: 0 0 10px var(--legendary-red); }
     @keyframes pulseRed { 0% { box-shadow: 0 0 10px var(--legendary-red); background: rgba(214, 48, 49, 0.1); transform: scale(1); } 100% { box-shadow: 0 0 30px var(--legendary-red); background: rgba(214, 48, 49, 0.4); transform: scale(1.1); } }
     
-    /* MODIFICAÇÃO: Responsividade e flex nos botões do Quiz */
     .opt-btn { background: var(--bg-panel); padding: 15px; border-radius: 16px; margin-bottom: 12px; border: 2px solid var(--border-dark); font-weight: bold; cursor: pointer; transition: 0.2s; box-shadow: 0 5px 15px rgba(0,0,0,0.3); color: var(--text-main); display: flex; flex-direction: column; align-items: flex-start; word-break: break-word; font-size: 14px; line-height: 1.4; height: auto;}
     
     .flashcard { position: relative; aspect-ratio: 1; perspective: 1000px; cursor: pointer; }
-    /* MODIFICAÇÃO: Texto das cartas se adaptam ao tamanho e tem scroll se for muito longo */
     .flashcard .front, .flashcard .back { width: 100%; height: 100%; position: absolute; top: 0; left: 0; backface-visibility: hidden; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: clamp(10px, 4vw, 16px); word-break: break-word; font-weight: 800; padding: 10px; text-align: center; transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1); overflow-y: auto; }
     .flashcard .front { background: var(--bg-panel); border: 2px solid var(--border-dark); color: var(--text-main); }
     .flashcard .back { transform: rotateY(180deg); color: #000; }
     .flashcard.flipped .front { transform: rotateY(180deg); } .flashcard.flipped .back { transform: rotateY(0deg); }
     
-    /* MODIFICAÇÃO: Balões responsivos para textos maiores */
-    .balloon { width: 110px; height: 110px; border-radius: 50%; background: var(--bg-panel); border: 2px solid var(--border-dark); display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--text-main); font-weight: 800; text-align: center; padding: 10px; cursor: pointer; box-shadow: 0 10px 20px rgba(0,0,0,0.5); transition: 0.2s; font-size: clamp(10px, 3.5vw, 14px); word-break: break-word;}
+    /* MODIFICAÇÃO: Balões agora são retângulos arredondados, cabem todo o texto */
+    .balloon { width: 45%; min-height: 90px; height: auto; border-radius: 20px; background: var(--bg-panel); border: 2px solid var(--border-dark); display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--text-main); font-weight: 800; text-align: center; padding: 15px; cursor: pointer; box-shadow: 0 10px 20px rgba(0,0,0,0.5); transition: 0.2s; font-size: clamp(11px, 3.5vw, 14px); word-break: break-word;}
 
     .c-msg { display: flex; gap: 10px; align-items: flex-end; max-width: 85%; margin-bottom: 15px;} .c-msg.me { align-self: flex-end; flex-direction: row-reverse; }
     .c-bub { background: var(--bg-panel); border: 1px solid var(--border-dark); padding: 12px 16px; border-radius: 16px 16px 16px 0; font-size: 14px; color: var(--text-main);}
@@ -229,7 +237,7 @@
     <div class="logo-3d">CSV+</div>
     <div class="cyber-bar"><div class="cyber-fill"></div></div>
     <div class="splash-txt">INICIANDO SISTEMA...</div>
-    <div style="font-size: 10px; color: var(--text-muted); margin-top: 15px; font-weight: bold;">v6.0 - Anti Cache Ativado</div>
+    <div style="font-size: 10px; color: var(--text-muted); margin-top: 15px; font-weight: bold;">v6.1 - Menu Otimizado</div>
   </div>
   
   <div id="ad-modal">
@@ -274,7 +282,7 @@
   <div id="app-main" class="app-container">
     
     <div class="top-header">
-      <div style="display:flex; align-items:center; gap:15px;" onclick="go('profile', document.getElementById('btn-nav-prof'))">
+      <div style="display:flex; align-items:center; gap:15px;" onclick="navMenu('profile')">
         <div class="u-av rank-normal av-top" id="h-av"></div>
         <div>
           <h3 id="h-nome" style="font-size:14px; margin:0; font-weight: 800; text-transform: uppercase;">...</h3>
@@ -283,12 +291,9 @@
       </div>
       <div style="display:flex; gap:10px; align-items: center;">
         <div class="xp-badge"><span class="material-icons-round" style="font-size: 16px;">stars</span><span id="h-xp">0</span></div>
-        <div class="icon-btn" style="background: transparent; border: none; width:30px; height:30px; cursor:pointer;" onclick="document.getElementById('mod-music').style.display='flex'">
-          <span class="material-icons-round">headphones</span>
-        </div>
-        <div class="icon-btn" style="background: transparent; border: none; width:30px; height:30px; cursor:pointer; color: var(--legendary-red);" onclick="logOutUser()">
-          <span class="material-icons-round">logout</span>
-        </div>
+        <button class="btn-menu" onclick="abrirMenu()">
+          <span class="material-icons-round">menu</span>
+        </button>
       </div>
     </div>
     
@@ -364,22 +369,36 @@
         <button class="btn" onclick="savePerf()" style="margin-bottom:15px;">ATUALIZAR DADOS</button>
       </div>
     </div>
-
-    <div class="nav-bar-wrapper">
-      <div class="nav-bar" id="nav-bar">
-        <div class="nav-btn active" onclick="go('home',this)"><span class="material-icons-round">sports_esports</span>Missões</div>
-        <div class="nav-btn" onclick="go('mapa',this)"><span class="material-icons-round" style="color:var(--rare-blue);">map</span>Mapa</div>
-        <div class="nav-btn" onclick="go('arena',this)"><span class="material-icons-round" style="color:var(--legendary-red); text-shadow:0 0 10px rgba(214,48,49,0.5);">flash_on</span>Duelos</div>
-        <div class="nav-btn" onclick="go('spin',this)"><span class="material-icons-round">cases</span>Sorte</div>
-        <div class="nav-btn" onclick="go('store',this)"><span class="material-icons-round">shopping_cart</span>Loja</div>
-        <div class="nav-btn" onclick="go('rank',this)"><span class="material-icons-round">leaderboard</span>Rank</div>
-        <div class="nav-btn" onclick="go('chat',this)"><span class="material-icons-round">forum</span>Chat</div>
-        <div class="nav-btn" id="btn-nav-prof" style="display:none;" onclick="go('profile',this)">Perfil</div>
-      </div>
-    </div>
   </div>
 
-  <div id="mod-music" class="adm-overlay" style="align-items:center;">
+  <div id="fundo-menu" class="fundo-escuro" onclick="fecharMenu()"></div>
+  <div id="menu-lateral" class="menu-lateral">
+      <div class="cabecalho-menu">
+          <h2>Menu</h2>
+          <button class="btn-fechar-menu" onclick="fecharMenu()"><span class="material-icons-round" style="font-size: 28px;">close</span></button>
+      </div>
+      <div class="lista-cards-menu">
+          <div class="card-menu" onclick="navMenu('home')"><span class="material-icons-round" style="color:var(--text-main);">sports_esports</span> Missões</div>
+          <div class="card-menu" onclick="navMenu('mapa')"><span class="material-icons-round" style="color:var(--rare-blue);">map</span> Trilha de Avanço</div>
+          <div class="card-menu" onclick="navMenu('arena')"><span class="material-icons-round" style="color:var(--legendary-red);">flash_on</span> Arena PVP</div>
+          <div class="card-menu" onclick="navMenu('spin')"><span class="material-icons-round" style="color:var(--success-green);">cases</span> Hub de Sorte</div>
+          <div class="card-menu" onclick="navMenu('store')"><span class="material-icons-round" style="color:var(--gold);">shopping_cart</span> Shopping</div>
+          <div class="card-menu" onclick="navMenu('rank')"><span class="material-icons-round" style="color:var(--epic-purple);">leaderboard</span> Ranking Global</div>
+          <div class="card-menu" onclick="navMenu('chat')"><span class="material-icons-round" style="color:var(--text-muted);">forum</span> Chat do Lobby</div>
+          <div class="card-menu" onclick="navMenu('profile')"><span class="material-icons-round" style="color:var(--text-main);">person</span> Meu Perfil</div>
+          
+          <div style="margin-top: 15px; border-top: 1px solid var(--border-dark); padding-top: 15px; display: flex; flex-direction: column; gap: 12px;">
+              <div class="card-menu destaque" onclick="abrirMusica()">
+                  <span class="material-icons-round">headphones</span> Ouvir Rádio
+              </div>
+              <div class="card-menu" style="border-color: rgba(214, 48, 49, 0.4); color: var(--legendary-red);" onclick="logOutUser()">
+                  <span class="material-icons-round" style="color: var(--legendary-red);">logout</span> Sair da Conta
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <div id="mod-music" class="adm-overlay" style="align-items:center; z-index: 3000;">
     <div class="login-box" style="width:90%; max-width:350px;">
       <h2 style="color:var(--text-main); margin-bottom:20px; font-weight:900; text-transform: uppercase;">Rádio Interna</h2>
       <div id="music-list">Carregando faixas...</div>
@@ -424,7 +443,7 @@
     <div id="raspa-msg" style="text-align:center; margin-top:20px; font-weight:900; color:var(--gold); font-size:24px; text-transform: uppercase;"></div>
   </div>
 
-  <div id="t-play" style="position:fixed;inset:0;background:var(--bg-dark);z-index:1000;display:none;flex-direction:column;padding:20px; background-image: radial-gradient(circle at top, #1E2535, #0B0E14);">
+  <div id="t-play" style="position:fixed;inset:0;background:var(--bg-dark);z-index:1000;display:none;flex-direction:column;padding:20px; overflow-y:auto; background-image: radial-gradient(circle at top, #1E2535, #0B0E14);">
     <div style="display:flex;justify-content:space-between;align-items:center; margin-bottom:30px;">
       <div style="background:#07090D; width:40px; height:40px; border-radius:10px; display:flex; align-items:center; justify-content:center; cursor:pointer; border:1px solid var(--border-dark);" onclick="sairJogo()"><span class="material-icons-round">close</span></div>
       <div class="timer-badge" id="timer-box"><span id="timer">30</span>s</div>
@@ -548,7 +567,7 @@
   <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
 
   <script>
-    // 1. UTILITÁRIOS
+    // 1. UTILITÁRIOS E MODIFICAÇÕES DE NAVEGAÇÃO
     function parseImg(url) { if(!url) return ''; let u = url.trim(); let match = u.match(/file\/d\/([a-zA-Z0-9_-]+)/) || u.match(/id=([a-zA-Z0-9_-]+)/); if (match) return `https://drive.google.com/uc?export=view&id=${match[1]}`; return u; }
     
     function fecharSplashNaMarra() {
@@ -556,11 +575,37 @@
         if(spl) { spl.style.opacity = '0'; setTimeout(() => { spl.style.display = 'none'; document.getElementById('t-login').style.display = 'flex'; }, 300); }
     }
 
+    // MODIFICAÇÕES DO MENU LATERAL
+    function abrirMenu() {
+        document.getElementById('menu-lateral').classList.add('aberto');
+        document.getElementById('fundo-menu').classList.add('ativo');
+    }
+    function fecharMenu() {
+        document.getElementById('menu-lateral').classList.remove('aberto');
+        document.getElementById('fundo-menu').classList.remove('ativo');
+    }
+    function navMenu(t) {
+        fecharMenu();
+        document.querySelectorAll('.view').forEach(v => { v.classList.remove('active'); v.style.display='none'; }); 
+        let tg = document.getElementById('v-'+t); 
+        tg.style.display='flex'; 
+        setTimeout(() => tg.classList.add('active'), 10); 
+        
+        if(t === 'rank') loadRank(); 
+        if(t === 'store') renderStore(); 
+        if(t === 'chat') loadChat(); 
+        if(t === 'arena') loadArena(); 
+        if(t === 'mapa') loadMapa();
+    }
+    function abrirMusica() {
+        fecharMenu();
+        document.getElementById('mod-music').style.display='flex';
+    }
+
     // 2. INICIA FIREBASE COM O MODO SECUNDÁRIO (CLONE INVISÍVEL)
     const firebaseConfig = { apiKey: "AIzaSyBiHQQdfL4X88KEZUMvZS-WP0z2viR-ZHY", authDomain: "csvplus-62502.firebaseapp.com", projectId: "csvplus-62502", storageBucket: "csvplus-62502.firebasestorage.app", messagingSenderId: "879590605354", appId: "1:879590605354:web:368cd1fdc1f1e35ca77953" };
     firebase.initializeApp(firebaseConfig); 
     
-    // ESSE É O CLONE QUE CRIA USUÁRIO SEM DERRUBAR O ADMIN
     const secondaryApp = firebase.initializeApp(firebaseConfig, "Secondary"); 
     
     const auth = firebase.auth(); const db = firebase.firestore();
@@ -641,7 +686,6 @@
                     U = doc.data(); U.id = user.uid; 
                     if(U.status === 'BLOQUEADO') { auth.signOut(); showLoginScreen("Sua conta foi desativada."); return; }
                     if(!U.inventario) U.inventario = []; if(!U.fase) U.fase = 1; 
-                    // MODIFICAÇÃO: Inicia array de questões respondidas
                     if(!U.respondidas) U.respondidas = [];
                     
                     loadGlobalConfigs(); loadStoreItems(); checkAds();
@@ -682,7 +726,6 @@
     }
 
     function savePerf(){ let novaFrase = document.getElementById('pf-frase').value; let novoAvatar = document.getElementById('pf-av').value.trim(); if(novoAvatar && !U.inventario.includes(novoAvatar) && !novoAvatar.includes('dicebear') && !novoAvatar.includes('drive.google.com')) { pop("Atenção", "Compre na Loja ou use G.Drive!"); return; } db.collection('usuarios').doc(U.id).update({ frase: novaFrase, avatar: novoAvatar }).then(() => { U.frase = novaFrase; U.avatar = novoAvatar; updUI(); pop("Sucesso!", "Perfil atualizado!"); }); }
-    function go(t, el){ document.querySelectorAll('.view').forEach(v => { v.classList.remove('active'); v.style.display='none'; }); let tg = document.getElementById('v-'+t); tg.style.display='flex'; setTimeout(() => tg.classList.add('active'), 10); document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active')); el.classList.add('active'); if(t === 'rank') loadRank(); if(t === 'store') renderStore(); if(t === 'chat') loadChat(); if(t === 'arena') loadArena(); if(t === 'mapa') loadMapa(); }
     function pop(t,m){ document.getElementById('uni-pop').style.display='flex'; document.getElementById('pop-t').innerText=t; document.getElementById('pop-m').innerText=m; }
 
     // 8. MAPA DE AVANÇO (MUNDOS / RPG)
@@ -845,14 +888,13 @@
     }
     function sairMinigame() { if(JOGANDO_MINI) return; document.getElementById('t-roleta').style.display='none'; document.getElementById('t-caixa').style.display='none'; document.getElementById('t-raspa').style.display='none'; document.getElementById('app-main').style.display='flex'; updUI(); }
 
-    // QUIZ LOGIC (MISSÃO E DUELOS) - MODIFICAÇÃO: FILTRO DE PERGUNTAS INÉDITAS
+    // QUIZ LOGIC
     function play(nivel){ 
         document.getElementById('app-main').style.display = 'none'; document.getElementById('t-play').style.display = 'flex'; document.getElementById('q-box').innerHTML = '<div style="text-align:center; color:var(--gold); font-weight:900; font-size:20px;">CARREGANDO...</div>'; 
         db.collection('perguntas').where('nivel', '==', nivel).where('status', '==', 'ATIVA').where('duelo','==','NAO').get().then((snap) => { 
             let perguntas = []; 
             snap.forEach(doc => {
                 let q = doc.data();
-                // Verifica se a pergunta não está na lista de respondidas
                 if (!U.respondidas.includes(q.id)) {
                     perguntas.push(q);
                 }
@@ -868,14 +910,13 @@
         }); 
     }
     
-    // MODIFICAÇÃO: NOVA ESTRUTURA HTML DAS RESPOSTAS PARA RESPONSIVIDADE
     function runQ(l, i, isDuelo){
       if(i >= l.length){ 
           if(!isDuelo) { 
               U.fase = (U.fase || 1) + 1; 
               db.collection("usuarios").doc(U.id).update({ fase: U.fase, respondidas: U.respondidas }).then(() => { 
                   showEpicXP(window.TOTAL_XP_ACUMULADO); 
-                  setTimeout(() => { pop("NÍVEL CONCLUÍDO!", `Você avançou para a Fase ${U.fase} do Mapa!`); sairJogo(); go('mapa', document.querySelectorAll('.nav-btn')[1]); }, 3500); 
+                  setTimeout(() => { pop("NÍVEL CONCLUÍDO!", `Você avançou para a Fase ${U.fase} do Mapa!`); sairJogo(); navMenu('mapa'); }, 3500); 
               }); 
           } else { sairJogo(); } 
           return; 
@@ -923,11 +964,9 @@
       clearInterval(window.TMR); window.TMR = setInterval(() => { t--; document.getElementById('timer').innerText = t; if(t <= 10 && t > 0) { tbox.classList.add('danger-pulse'); tocarSom('https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3'); triggerVibration('tick'); } if(t <= 0) chk(false, null, i, isDuelo); }, 1000);
     }
 
-    // MODIFICAÇÃO: REGISTRA A PERGUNTA COMO RESPONDIDA
     function chk(win, el, i, isDuelo){ 
       clearInterval(window.TMR); let q = window.LS[i]; let xp = win ? (q.xpGanho || 10) : -(q.xpPerda || 5); triggerVibration(win ? 'win' : 'lose'); document.getElementById('timer-box').classList.remove('danger-pulse'); 
       
-      // Adiciona na lista de respondidas se for inédita
       if (!U.respondidas.includes(q.id)) { U.respondidas.push(q.id); }
 
       if(win && el && q.tipo!=='FLASHCARD') { el.style.background = 'var(--success-green)'; el.style.color = '#000'; } else if(!win && el && q.tipo!=='FLASHCARD') { el.style.background = 'var(--legendary-red)'; el.style.color = '#fff'; }
@@ -968,7 +1007,6 @@
         if(!nome || !loginInput || !senha) { msg.style.color = 'var(--legendary-red)'; msg.innerText = "Preencha tudo!"; return; } msg.style.color = 'var(--gold)'; msg.innerText = "Criando..."; 
         let emailFantasma = loginInput + '@csv.app'; 
         
-        // Usa o App Secundário para não deslogar o Admin
         secondaryApp.auth().createUserWithEmailAndPassword(emailFantasma, senha).then((cred) => { 
             db.collection('usuarios').doc(cred.user.uid).set({ nome: nome, login: loginInput, email: emailFantasma, xp: 0, fase: 1, nivel: nivel, frase: "", avatar: "", inventario: [], respondidas: [], status: 'ATIVO' }).then(() => { 
                 secondaryApp.auth().signOut();
