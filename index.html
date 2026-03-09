@@ -77,15 +77,13 @@
     .app-container.ready { display: flex !important; }
 
     .top-header { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; background: var(--bg-panel); border-bottom: 1px solid var(--border-dark); z-index: 10; box-shadow: 0 4px 10px rgba(0,0,0,0.3);}
-    .view { flex: 1; display: none; flex-direction: column; overflow-x: hidden; overflow-y: auto; padding: 20px; padding-bottom: 30px; /* Reduzido o padding bottom sem a barra */ }
+    .view { flex: 1; display: none; flex-direction: column; overflow-x: hidden; overflow-y: auto; padding: 20px; padding-bottom: 30px; }
     .view.active { display: flex; animation: fadeUp 0.4s ease; }
     @keyframes fadeUp { from {opacity:0; transform:translateY(20px);} to {opacity:1; transform:translateY(0);} }
 
     .fab-admin { position: fixed; bottom: 20px; right: 20px; width: 55px; height: 55px; border-radius: 16px; background: var(--rare-blue); color: white; display: none; align-items: center; justify-content: center; box-shadow: 0 10px 20px rgba(9, 132, 227, 0.4); cursor: pointer; z-index: 100; transition: 0.3s; }
 
-    /* ==========================================
-       MENU LATERAL (NOVIDADE)
-       ========================================== */
+    /* MENU LATERAL */
     .btn-menu { background: transparent; border: none; color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 10px; background: #07090D; border: 1px solid var(--border-dark); }
     .menu-lateral { position: fixed; top: 0; left: -100%; width: 80%; max-width: 300px; height: 100vh; background-color: var(--bg-panel); border-right: 1px solid var(--border-dark); z-index: 2000; transition: left 0.3s cubic-bezier(0.4, 0.0, 0.2, 1); padding: 20px; overflow-y: auto; box-shadow: 5px 0 15px rgba(0,0,0,0.5); display: flex; flex-direction: column;}
     .menu-lateral.aberto { left: 0; }
@@ -173,7 +171,7 @@
     .game-icon { width: 60px; height: 60px; border-radius: 12px; background: #07090D; border: 1px solid var(--border-dark); display: flex; align-items: center; justify-content: center; font-size: 30px; }
 
     /* ==========================================
-       8. TELAS DOS MINIGAMES
+       8. TELAS DOS MINIGAMES E NOVO CAÇA-NÍQUEL
        ========================================== */
     .boxes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 280px; margin: 30px auto; perspective: 1000px; }
     .m-box { width: 120px; height: 120px; background: linear-gradient(135deg, #1E2535, #151A25); border: 2px solid var(--epic-purple); border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 50px; color: var(--epic-purple); cursor: pointer; transition: 0.4s; box-shadow: inset 0 0 20px rgba(108, 92, 231, 0.2), 0 10px 20px rgba(0,0,0,0.5); position: relative; animation: float3D 3s infinite ease-in-out;}
@@ -185,6 +183,12 @@
     .wheel-text { position: absolute; width: 100%; height: 100%; text-align: center; padding-top: 20px; font-weight: 900; font-size: 16px; color: var(--gold); text-shadow: 0 2px 5px #000; box-sizing: border-box; transform-origin: center; pointer-events: none; z-index: 2; }
     .wheel-marker { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 15px solid transparent; border-right: 15px solid transparent; border-top: 30px solid var(--gold); z-index: 10; filter: drop-shadow(0 4px 5px rgba(0,0,0,0.8)); }
     .wheel-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 80px; height: 80px; background: #07090D; border-radius: 50%; border: 4px solid var(--gold); z-index: 5; display: flex; justify-content: center; align-items: center; box-shadow: 0 0 20px var(--gold-glow); cursor: pointer; font-weight: 900; color: var(--gold); font-size: 14px; }
+
+    /* CSS DO CAÇA NÍQUEL */
+    .slot-machine { display: flex; justify-content: center; gap: 15px; margin: 40px auto; background: var(--bg-panel); padding: 20px; border-radius: 20px; border: 4px solid var(--border-dark); box-shadow: 0 10px 30px rgba(0,0,0,0.8); width: max-content;}
+    .slot-reel { width: 80px; height: 100px; background: #07090D; border-radius: 12px; border: 2px solid #333; display: flex; align-items: center; justify-content: center; font-size: 50px; overflow: hidden; position: relative; box-shadow: inset 0 10px 20px rgba(0,0,0,0.8);}
+    .slot-reel span { position: absolute; transition: top 0.1s linear; }
+    .slot-winner { animation: pulseDiamante 1s infinite alternate; border-color: var(--gold); background: rgba(255, 195, 18, 0.2);}
 
     /* ==========================================
        9. QUIZ IN-GAME E CHAT
@@ -202,7 +206,6 @@
     .flashcard .back { transform: rotateY(180deg); color: #000; }
     .flashcard.flipped .front { transform: rotateY(180deg); } .flashcard.flipped .back { transform: rotateY(0deg); }
     
-    /* MODIFICAÇÃO: Balões agora são retângulos arredondados, cabem todo o texto */
     .balloon { width: 45%; min-height: 90px; height: auto; border-radius: 20px; background: var(--bg-panel); border: 2px solid var(--border-dark); display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--text-main); font-weight: 800; text-align: center; padding: 15px; cursor: pointer; box-shadow: 0 10px 20px rgba(0,0,0,0.5); transition: 0.2s; font-size: clamp(11px, 3.5vw, 14px); word-break: break-word;}
 
     .c-msg { display: flex; gap: 10px; align-items: flex-end; max-width: 85%; margin-bottom: 15px;} .c-msg.me { align-self: flex-end; flex-direction: row-reverse; }
@@ -237,7 +240,7 @@
     <div class="logo-3d">CSV+</div>
     <div class="cyber-bar"><div class="cyber-fill"></div></div>
     <div class="splash-txt">INICIANDO SISTEMA...</div>
-    <div style="font-size: 10px; color: var(--text-muted); margin-top: 15px; font-weight: bold;">v6.1 - Menu Otimizado</div>
+    <div style="font-size: 10px; color: var(--text-muted); margin-top: 15px; font-weight: bold;">v6.2 - Slots & Correções</div>
   </div>
   
   <div id="ad-modal">
@@ -331,6 +334,7 @@
       <div class="game-card" onclick="startRoletaGame()"><div class="game-icon" style="color:var(--gold);"><span class="material-icons-round">data_usage</span></div><div style="flex:1;"><h3 style="font-size:16px;" id="name-roleta-ui">Roleta de XP</h3><span style="font-size:11px;color:var(--text-muted);font-weight:bold;text-transform:uppercase;">Giro Diário</span></div><span class="material-icons-round" style="color:var(--text-muted);">arrow_forward_ios</span></div>
       <div class="game-card" onclick="startCaixaGame()"><div class="game-icon" style="color:var(--epic-purple);"><span class="material-icons-round">all_inbox</span></div><div style="flex:1;"><h3 style="font-size:16px;" id="name-caixa-ui">Caixa Épica</h3><span style="font-size:11px;color:var(--text-muted);font-weight:bold;text-transform:uppercase;">Escolha 1 de 4</span></div><span class="material-icons-round" style="color:var(--text-muted);">arrow_forward_ios</span></div>
       <div class="game-card" onclick="startRaspaGame()"><div class="game-icon" style="color:var(--success-green);"><span class="material-icons-round">grid_view</span></div><div style="flex:1;"><h3 style="font-size:16px;" id="name-raspa-ui">Contrato</h3><span style="font-size:11px;color:var(--text-muted);font-weight:bold;text-transform:uppercase;">Raspadinha Real</span></div><span class="material-icons-round" style="color:var(--text-muted);">arrow_forward_ios</span></div>
+      <div class="game-card" onclick="startSlotsGame()"><div class="game-icon" style="color:#fdcb6e;"><span class="material-icons-round">casino</span></div><div style="flex:1;"><h3 style="font-size:16px;" id="name-slots-ui">Caça-Níquel</h3><span style="font-size:11px;color:var(--text-muted);font-weight:bold;text-transform:uppercase;">Tente a Sorte</span></div><span class="material-icons-round" style="color:var(--text-muted);">arrow_forward_ios</span></div>
     </div>
 
     <div id="v-store" class="view">
@@ -443,7 +447,21 @@
     <div id="raspa-msg" style="text-align:center; margin-top:20px; font-weight:900; color:var(--gold); font-size:24px; text-transform: uppercase;"></div>
   </div>
 
-  <div id="t-play" style="position:fixed;inset:0;background:var(--bg-dark);z-index:1000;display:none;flex-direction:column;padding:20px; overflow-y:auto; background-image: radial-gradient(circle at top, #1E2535, #0B0E14);">
+  <div id="t-slots" style="position:fixed;inset:0;background:var(--bg-dark);z-index:1000;display:none;flex-direction:column;padding:20px; background-image: radial-gradient(circle at center, #151A25, #0B0E14);">
+    <div style="background:#07090D; width:40px; height:40px; border-radius:10px; display:flex; align-items:center; justify-content:center; cursor:pointer; border:1px solid var(--border-dark);" onclick="sairMinigame()"><span class="material-icons-round">close</span></div>
+    <div style="text-align:center; font-size:24px; font-weight:900; margin-top:10px; text-transform:uppercase;" id="name-slots-tela">Caça-Níquel</div>
+    
+    <div class="slot-machine">
+        <div class="slot-reel" id="reel-1"><span id="r1-val">🍒</span></div>
+        <div class="slot-reel" id="reel-2"><span id="r2-val">💎</span></div>
+        <div class="slot-reel" id="reel-3"><span id="r3-val">🔔</span></div>
+    </div>
+    
+    <button class="btn" style="max-width:200px; margin: 0 auto;" onclick="girarSlotsReal()">ALAVANCA</button>
+    <div id="slots-msg" style="text-align:center; font-weight:900; color:var(--text-main); font-size:18px; margin-top:20px; text-transform:uppercase;"></div>
+  </div>
+
+  <div id="t-play" style="position:fixed;inset:0;background:var(--bg-dark);z-index:300;display:none;flex-direction:column;padding:20px; overflow-y:auto; background-image: radial-gradient(circle at top, #1E2535, #0B0E14);">
     <div style="display:flex;justify-content:space-between;align-items:center; margin-bottom:30px;">
       <div style="background:#07090D; width:40px; height:40px; border-radius:10px; display:flex; align-items:center; justify-content:center; cursor:pointer; border:1px solid var(--border-dark);" onclick="sairJogo()"><span class="material-icons-round">close</span></div>
       <div class="timer-badge" id="timer-box"><span id="timer">30</span>s</div>
@@ -537,7 +555,7 @@
 
       <div id="adm-r" class="adm-view">
         <h3 style="color:var(--gold); margin-bottom:5px; font-size:14px; text-transform: uppercase;">Nomes dos Jogos</h3>
-        <div class="row-grid"><div><label class="adm-lbl">Jogo 1</label><input id="nm-roleta" class="inp" value="Roleta de XP"></div><div><label class="adm-lbl">Jogo 2</label><input id="nm-caixa" class="inp" value="Caixa Épica"></div><div><label class="adm-lbl">Jogo 3</label><input id="nm-raspa" class="inp" value="Contrato"></div></div>
+        <div class="row-grid"><div><label class="adm-lbl">Jogo 1</label><input id="nm-roleta" class="inp" value="Roleta de XP"></div><div><label class="adm-lbl">Jogo 2</label><input id="nm-caixa" class="inp" value="Caixa Épica"></div><div><label class="adm-lbl">Jogo 3</label><input id="nm-raspa" class="inp" value="Contrato"></div><div><label class="adm-lbl">Jogo 4</label><input id="nm-slots" class="inp" value="Caça-Níquel"></div></div>
         
         <h3 style="color:var(--gold); margin-bottom:5px; margin-top:10px; font-size:14px; text-transform: uppercase;">ROLETA</h3>
         <label class="adm-lbl">Horas Recarga</label><input id="rl-tm" class="inp" type="number" placeholder="Ex: 12">
@@ -549,6 +567,10 @@
         
         <h3 style="color:var(--success-green); margin-bottom:5px; margin-top:20px; font-size:14px; text-transform: uppercase;">RASPADINHA</h3>
         <div class="row-grid"><div><label class="adm-lbl">Horas Recarga</label><input id="rp-tm" class="inp" type="number"></div><div><label class="adm-lbl">Vitória (XP)</label><input id="rp-p1" class="inp" type="number"></div></div>
+
+        <h3 style="color:#fdcb6e; margin-bottom:5px; margin-top:20px; font-size:14px; text-transform: uppercase;">CAÇA-NÍQUEL</h3>
+        <div class="row-grid"><div><label class="adm-lbl">Horas</label><input id="sl-tm" class="inp" type="number"></div><div><label class="adm-lbl">Jackpot (3 iguais)</label><input id="sl-p1" class="inp" type="number"></div><div><label class="adm-lbl">2 iguais</label><input id="sl-p2" class="inp" type="number"></div></div>
+
         <button class="btn" style="margin-top:20px" onclick="saveGames()">SALVAR REGRAS</button>
       </div>
 
@@ -576,45 +598,25 @@
     }
 
     // MODIFICAÇÕES DO MENU LATERAL
-    function abrirMenu() {
-        document.getElementById('menu-lateral').classList.add('aberto');
-        document.getElementById('fundo-menu').classList.add('ativo');
-    }
-    function fecharMenu() {
-        document.getElementById('menu-lateral').classList.remove('aberto');
-        document.getElementById('fundo-menu').classList.remove('ativo');
-    }
+    function abrirMenu() { document.getElementById('menu-lateral').classList.add('aberto'); document.getElementById('fundo-menu').classList.add('ativo'); }
+    function fecharMenu() { document.getElementById('menu-lateral').classList.remove('aberto'); document.getElementById('fundo-menu').classList.remove('ativo'); }
     function navMenu(t) {
-        fecharMenu();
-        document.querySelectorAll('.view').forEach(v => { v.classList.remove('active'); v.style.display='none'; }); 
-        let tg = document.getElementById('v-'+t); 
-        tg.style.display='flex'; 
-        setTimeout(() => tg.classList.add('active'), 10); 
-        
-        if(t === 'rank') loadRank(); 
-        if(t === 'store') renderStore(); 
-        if(t === 'chat') loadChat(); 
-        if(t === 'arena') loadArena(); 
-        if(t === 'mapa') loadMapa();
+        fecharMenu(); document.querySelectorAll('.view').forEach(v => { v.classList.remove('active'); v.style.display='none'; }); 
+        let tg = document.getElementById('v-'+t); tg.style.display='flex'; setTimeout(() => tg.classList.add('active'), 10); 
+        if(t === 'rank') loadRank(); if(t === 'store') renderStore(); if(t === 'chat') loadChat(); if(t === 'arena') loadArena(); if(t === 'mapa') loadMapa();
     }
-    function abrirMusica() {
-        fecharMenu();
-        document.getElementById('mod-music').style.display='flex';
-    }
+    function abrirMusica() { fecharMenu(); document.getElementById('mod-music').style.display='flex'; }
 
     // 2. INICIA FIREBASE COM O MODO SECUNDÁRIO (CLONE INVISÍVEL)
     const firebaseConfig = { apiKey: "AIzaSyBiHQQdfL4X88KEZUMvZS-WP0z2viR-ZHY", authDomain: "csvplus-62502.firebaseapp.com", projectId: "csvplus-62502", storageBucket: "csvplus-62502.firebasestorage.app", messagingSenderId: "879590605354", appId: "1:879590605354:web:368cd1fdc1f1e35ca77953" };
     firebase.initializeApp(firebaseConfig); 
-    
     const secondaryApp = firebase.initializeApp(firebaseConfig, "Secondary"); 
-    
     const auth = firebase.auth(); const db = firebase.firestore();
-    
     db.enablePersistence().catch(err => { console.log("Offline Mode Info:", err.code); });
 
     // 3. VARIÁVEIS GLOBAIS
-    let U = null; window.TMR = null; window.LS = []; window.DESAFIO_ATUAL = null; window.PAPEL_ATUAL = null; window.TOTAL_XP_ACUMULADO = 0; window.ROL_CURRENT_ROTATION = 0;
-    window.GAME_CFG = { rl_tm: 12, rl_p: [0, 50, 0, 100, 0, 200, 0, 500], cx_tm: 12, cx_p: [0, 50, 200], cx_t: ["Azar!", "Bom!", "Jackpot!"], rp_tm: 8, rp_p: 100 };
+    let U = null; window.TMR = null; window.LS = []; window.DESAFIO_ATUAL = null; window.PAPEL_ATUAL = null; window.TOTAL_XP_ACUMULADO = 0; window.ROL_CURRENT_ROTATION = 0; window.JOGANDO_MINI = false;
+    window.GAME_CFG = { rl_tm: 12, rl_p: [0, 50, 0, 100, 0, 200, 0, 500], cx_tm: 12, cx_p: [0, 50, 200], cx_t: ["Azar!", "Bom!", "Jackpot!"], rp_tm: 8, rp_p: 100, sl_tm: 8, sl_p1: 500, sl_p2: 100 };
     window.STORE_ITEMS = []; window.ANUNCIO_MOSTRADO = false;
 
     // 4. MOTOR DE ÁUDIO INJETÁVEL
@@ -622,7 +624,6 @@
         try { let snd = new Audio(urlStr); snd.play().catch(e => console.log('Audio Blocked')); } 
         catch(e) { console.log("Erro na injeção de áudio"); }
     }
-    
     function playMusic(url, el) { let bgm = document.getElementById('global-audio'); bgm.src = url; bgm.play().catch(e=>console.log(e)); document.querySelectorAll('#mod-music .opt-btn').forEach(b => {b.style.borderColor='var(--border-dark)'; b.style.color='var(--text-main)';}); el.style.borderColor='var(--gold)'; el.style.color='var(--gold)'; }
     function stopMusic() { document.getElementById('global-audio').pause(); document.querySelectorAll('#mod-music .opt-btn').forEach(b => {b.style.borderColor='var(--border-dark)'; b.style.color='var(--text-main)';}); }
     function triggerVibration(type) { if (!("vibrate" in navigator)) return; if (type === 'win') window.navigator.vibrate([100, 50, 100]); else if (type === 'lose') window.navigator.vibrate([300]); else if (type === 'tick') window.navigator.vibrate([30]); }
@@ -652,14 +653,27 @@
     function loadGlobalConfigs() {
         db.collection('sistema').doc('minigames').get().then(doc => { 
             if(doc.exists) {
-                window.GAME_CFG = doc.data(); 
+                window.GAME_CFG = Object.assign(window.GAME_CFG, doc.data()); 
                 document.getElementById('name-roleta-ui').innerText = window.GAME_CFG.nome_roleta || 'Roleta de XP';
                 document.getElementById('name-caixa-ui').innerText = window.GAME_CFG.nome_caixa || 'Caixa Épica';
                 document.getElementById('name-raspa-ui').innerText = window.GAME_CFG.nome_raspa || 'Contrato';
+                document.getElementById('name-slots-ui').innerText = window.GAME_CFG.nome_slots || 'Caça-Níquel';
+                
                 document.getElementById('name-roleta-tela').innerText = window.GAME_CFG.nome_roleta || 'Roleta de XP';
                 document.getElementById('name-caixa-tela').innerText = window.GAME_CFG.nome_caixa || 'Caixa Épica';
                 document.getElementById('name-raspa-tela').innerText = window.GAME_CFG.nome_raspa || 'Contrato';
-                if(U && U.nivel==='ADMIN') { document.getElementById('nm-roleta').value = window.GAME_CFG.nome_roleta || 'Roleta de XP'; document.getElementById('nm-caixa').value = window.GAME_CFG.nome_caixa || 'Caixa Épica'; document.getElementById('nm-raspa').value = window.GAME_CFG.nome_raspa || 'Contrato'; }
+                document.getElementById('name-slots-tela').innerText = window.GAME_CFG.nome_slots || 'Caça-Níquel';
+
+                if(U && U.nivel==='ADMIN') { 
+                    document.getElementById('nm-roleta').value = window.GAME_CFG.nome_roleta || 'Roleta de XP'; 
+                    document.getElementById('nm-caixa').value = window.GAME_CFG.nome_caixa || 'Caixa Épica'; 
+                    document.getElementById('nm-raspa').value = window.GAME_CFG.nome_raspa || 'Contrato'; 
+                    document.getElementById('nm-slots').value = window.GAME_CFG.nome_slots || 'Caça-Níquel'; 
+                    
+                    document.getElementById('sl-tm').value = window.GAME_CFG.sl_tm || 8;
+                    document.getElementById('sl-p1').value = window.GAME_CFG.sl_p1 || 500;
+                    document.getElementById('sl-p2').value = window.GAME_CFG.sl_p2 || 100;
+                }
             } montarRoletaVisual(); 
         });
         loadMusicList();
@@ -814,17 +828,63 @@
     function usarAvatar(url) { U.avatar = url; db.collection("usuarios").doc(U.id).update({ avatar: url }).then(() => { updUI(); renderStore(); pop("Sucesso", "Skin atualizada."); }); }
     function loadMusicList() { db.collection('sistema').doc('musicas').get().then(doc => { if(doc.exists) { let ms = doc.data().lista || []; let h = ''; ms.forEach(m => { h += `<div class="opt-btn" style="background:#07090D; align-items:center; flex-direction:row;" onclick="playMusic('${m.url}', this)"><span class="material-icons-round" style="margin-right:10px;">play_arrow</span> ${m.nome}</div>`; }); if(h) document.getElementById('music-list').innerHTML = h; } }); }
 
-    // JOGOS DE SORTE
-    function checarCooldown(jogo, tempoHoras, callback) { db.collection("usuarios").doc(U.id).get().then((doc) => { let dados = doc.data(); let ultimo = dados['ultimo_' + jogo] || 0; let agora = new Date().getTime(); let cooldown = tempoHoras * 60 * 60 * 1000; if (U.nivel !== 'ADMIN' && (agora - ultimo) < cooldown) { let h = Math.floor(((ultimo + cooldown) - agora) / (1000*60*60)); let m = Math.floor((((ultimo + cooldown) - agora) % (1000*60*60)) / (1000*60)); pop("Aguarde", `Travado. Volte em ${h}h e ${m}m.`); return; } callback(dados, agora); }); }
-    function processarGanho(jogo, premio, dados, agora, elMsg) { let novoXP = (dados.xp || 0) + premio; let objUpdate = { xp: novoXP }; objUpdate['ultimo_' + jogo] = agora; db.collection("usuarios").doc(U.id).update(objUpdate).then(() => { triggerVibration(premio > 0 ? 'win' : 'lose'); U.xp = novoXP; if(premio > 0) { elMsg.innerText = `+${premio} XP`; elMsg.style.color = 'var(--gold)'; tocarSom('https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3'); confetti({ particleCount: 100, spread: 70, colors:['#FFC312', '#0984E3'] }); updUI(premio); } else { elMsg.innerText = "AZAR"; elMsg.style.color = 'var(--legendary-red)'; tocarSom('https://assets.mixkit.co/active_storage/sfx/2956/2956-preview.mp3'); updUI(); } setTimeout(()=>{ JOGANDO_MINI = false; }, 2000); }); }
+    // JOGOS DE SORTE - AGORA COM TRAVA CORRETA
+    function checarCooldown(jogo, tempoHoras, callback) { 
+        db.collection("usuarios").doc(U.id).get().then((doc) => { 
+            let dados = doc.data(); 
+            let ultimo = dados['ultimo_' + jogo] || 0; 
+            let agora = new Date().getTime(); 
+            let cooldown = tempoHoras * 60 * 60 * 1000; 
+            
+            // Removi a regra do admin: agora bloqueia todo mundo pra você poder testar a trava
+            if ((agora - ultimo) < cooldown) { 
+                let h = Math.floor(((ultimo + cooldown) - agora) / (1000*60*60)); 
+                let m = Math.floor((((ultimo + cooldown) - agora) % (1000*60*60)) / (1000*60)); 
+                pop("Aguarde", `Travado. Volte em ${h}h e ${m}m.`); 
+                window.JOGANDO_MINI = false; // Destrava o clique
+                window.CAIXA_ABERTA = false;
+                return; 
+            } 
+            callback(dados, agora); 
+        }); 
+    }
+
+    function processarGanho(jogo, premio, dados, agora, elMsg) { 
+        let novoXP = (dados.xp || 0) + premio; 
+        let objUpdate = { xp: novoXP }; 
+        objUpdate['ultimo_' + jogo] = agora; 
+        
+        db.collection("usuarios").doc(U.id).update(objUpdate).then(() => { 
+            triggerVibration(premio > 0 ? 'win' : 'lose'); 
+            U.xp = novoXP; 
+            
+            if(premio > 0) { 
+                elMsg.innerText = `+${premio} XP`; 
+                elMsg.style.color = 'var(--gold)'; 
+                tocarSom('https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3'); 
+                confetti({ particleCount: 100, spread: 70, colors:['#FFC312', '#0984E3'] }); 
+                updUI(premio); 
+                // CHAMA O EFEITO DE XP SUBINDO
+                showEpicXP(premio);
+            } else { 
+                elMsg.innerText = "AZAR"; 
+                elMsg.style.color = 'var(--legendary-red)'; 
+                tocarSom('https://assets.mixkit.co/active_storage/sfx/2956/2956-preview.mp3'); 
+                updUI(); 
+            } 
+            setTimeout(()=>{ window.JOGANDO_MINI = false; }, 2000); 
+        }); 
+    }
 
     function montarRoletaVisual() { try { let w = document.getElementById('wheel-el'); if(!w) return; w.innerHTML = ''; let fatias = (window.GAME_CFG && Array.isArray(window.GAME_CFG.rl_p) && window.GAME_CFG.rl_p.length === 8) ? window.GAME_CFG.rl_p : [0, 50, 0, 100, 0, 200, 0, 500]; for(let i=0; i<8; i++) { let val = fatias[i]; let txt = (val == 0 || val === '0') ? 'AZAR' : val; let div = document.createElement('div'); div.className = 'wheel-text'; div.style.transform = `rotate(${i * 45 + 22.5}deg)`; div.innerText = txt; w.appendChild(div); } } catch(e) { console.log(e); } }
-    function startRoletaGame() { document.getElementById('app-main').style.display='none'; document.getElementById('t-roleta').style.display='flex'; document.getElementById('roleta-msg').innerText="TOQUE PARA GIRAR"; document.getElementById('roleta-msg').style.color="var(--text-main)"; JOGANDO_MINI=false; }
+    function startRoletaGame() { document.getElementById('app-main').style.display='none'; document.getElementById('t-roleta').style.display='flex'; document.getElementById('roleta-msg').innerText="TOQUE NO CENTRO"; document.getElementById('roleta-msg').style.color="var(--text-main)"; window.JOGANDO_MINI=false; }
+    
     function girarRoletaReal() { 
-        if(JOGANDO_MINI) return; 
+        if(window.JOGANDO_MINI) return; 
+        window.JOGANDO_MINI = true; // Trava imediata pra não dar som duplo
         checarCooldown('roleta', window.GAME_CFG.rl_tm || 12, (dados, agora) => { 
             try {
-                JOGANDO_MINI = true; tocarSom('https://assets.mixkit.co/active_storage/sfx/2003/2003-preview.mp3'); 
+                tocarSom('https://assets.mixkit.co/active_storage/sfx/2003/2003-preview.mp3'); 
                 let msgEl = document.getElementById('roleta-msg'); msgEl.innerText = "GIRANDO..."; 
                 let fatias = (window.GAME_CFG && Array.isArray(window.GAME_CFG.rl_p) && window.GAME_CFG.rl_p.length === 8) ? window.GAME_CFG.rl_p : [0, 50, 0, 100, 0, 200, 0, 500]; 
                 let idx = Math.floor(Math.random() * 8); 
@@ -833,18 +893,35 @@
                 window.ROL_CURRENT_ROTATION = window.ROL_CURRENT_ROTATION + 3600 + offset - (window.ROL_CURRENT_ROTATION % 360); 
                 let wheelEl = document.getElementById('wheel-el'); wheelEl.style.transition = 'transform 4s cubic-bezier(0.2, 0.9, 0.2, 1)'; wheelEl.style.transform = `rotate(${window.ROL_CURRENT_ROTATION}deg)`; 
                 setTimeout(() => processarGanho('roleta', premio, dados, agora, msgEl), 4000); 
-            } catch(e) { console.log("Roleta Error:", e); JOGANDO_MINI = false; }
+            } catch(e) { console.log("Roleta Error:", e); window.JOGANDO_MINI = false; }
         }); 
     }
     
-    function startCaixaGame() { document.getElementById('app-main').style.display='none'; document.getElementById('t-caixa').style.display='flex'; document.getElementById('caixa-msg').innerText=''; document.getElementById('caixa-sub').innerText=''; let grid = document.getElementById('box-grid'); grid.innerHTML=''; for(let i=0; i<4; i++) { grid.innerHTML += `<div class="m-box" onclick="abrirCaixa(this)"><span class="material-icons-round">help_outline</span></div>`; } JOGANDO_MINI=false; CAIXA_ABERTA=false; }
-    function abrirCaixa(el) { if(JOGANDO_MINI || CAIXA_ABERTA) return; checarCooldown('caixa', window.GAME_CFG.cx_tm || 12, (dados, agora) => { JOGANDO_MINI = true; CAIXA_ABERTA = true; document.querySelectorAll('.m-box').forEach(b => { if(b !== el) b.classList.add('disabled'); }); el.style.transform = 'scale(1.1) rotate(5deg)'; setTimeout(() => { tocarSom('https://assets.mixkit.co/active_storage/sfx/2955/2955-preview.mp3'); el.classList.add('opened'); let pArr = window.GAME_CFG.cx_p || [0, 50, 200]; let tArr = window.GAME_CFG.cx_t || ["Azar", "Bom!", "Jackpot!"]; let idx = Math.floor(Math.random() * pArr.length); let premio = parseInt(pArr[idx]); el.innerHTML = `<span class="material-icons-round" style="font-size:40px;">${premio > 0 ? 'diamond' : 'close'}</span>`; document.getElementById('caixa-sub').innerText = tArr[idx] || ''; processarGanho('caixa', premio, dados, agora, document.getElementById('caixa-msg')); }, 800); }); }
+    function startCaixaGame() { document.getElementById('app-main').style.display='none'; document.getElementById('t-caixa').style.display='flex'; document.getElementById('caixa-msg').innerText=''; document.getElementById('caixa-sub').innerText=''; let grid = document.getElementById('box-grid'); grid.innerHTML=''; for(let i=0; i<4; i++) { grid.innerHTML += `<div class="m-box" onclick="abrirCaixa(this)"><span class="material-icons-round">help_outline</span></div>`; } window.JOGANDO_MINI=false; window.CAIXA_ABERTA=false; }
+    
+    function abrirCaixa(el) { 
+        if(window.JOGANDO_MINI || window.CAIXA_ABERTA) return; 
+        window.JOGANDO_MINI = true;
+        checarCooldown('caixa', window.GAME_CFG.cx_tm || 12, (dados, agora) => { 
+            window.CAIXA_ABERTA = true; 
+            document.querySelectorAll('.m-box').forEach(b => { if(b !== el) b.classList.add('disabled'); }); el.style.transform = 'scale(1.1) rotate(5deg)'; 
+            setTimeout(() => { 
+                tocarSom('https://assets.mixkit.co/active_storage/sfx/2955/2955-preview.mp3'); el.classList.add('opened'); 
+                let pArr = window.GAME_CFG.cx_p || [0, 50, 200]; let tArr = window.GAME_CFG.cx_t || ["Azar", "Bom!", "Jackpot!"]; 
+                let idx = Math.floor(Math.random() * pArr.length); let premio = parseInt(pArr[idx]); el.innerHTML = `<span class="material-icons-round" style="font-size:40px;">${premio > 0 ? 'diamond' : 'close'}</span>`; 
+                document.getElementById('caixa-sub').innerText = tArr[idx] || ''; 
+                processarGanho('caixa', premio, dados, agora, document.getElementById('caixa-msg')); 
+            }, 800); 
+        }); 
+    }
     
     function startRaspaGame() { 
+        if(window.JOGANDO_MINI) return;
+        window.JOGANDO_MINI = true;
         checarCooldown('raspa', window.GAME_CFG.rp_tm || 8, (dados, agora) => {
             document.getElementById('app-main').style.display='none'; document.getElementById('t-raspa').style.display='flex'; 
             document.getElementById('raspa-msg').innerText=''; let g = document.getElementById('raspa-grid'); g.innerHTML=''; 
-            window.RASPA_CLICKS=0; window.RASPA_RES=[]; window.RASPA_DADOS = dados; window.RASPA_AGORA = agora; JOGANDO_MINI = false;
+            window.RASPA_CLICKS=0; window.RASPA_RES=[]; window.RASPA_DADOS = dados; window.RASPA_AGORA = agora; window.JOGANDO_MINI = false;
             for(let i=0; i<4; i++) { 
                 g.innerHTML += `
                 <div style="position:relative; width:100%; height:100px; border-radius:12px; overflow:hidden; border:2px dashed var(--border-dark);">
@@ -863,10 +940,10 @@
         let isDrawing = false; let revealed = false;
 
         function getMousePos(evt) { let rect = canvas.getBoundingClientRect(); let clientX = evt.touches ? evt.touches[0].clientX : evt.clientX; let clientY = evt.touches ? evt.touches[0].clientY : evt.clientY; return { x: (clientX - rect.left) * (canvas.width / rect.width), y: (clientY - rect.top) * (canvas.height / rect.height) }; }
-        function startDraw(e) { if(revealed || JOGANDO_MINI) return; isDrawing = true; scratch(e); }
+        function startDraw(e) { if(revealed || window.JOGANDO_MINI) return; isDrawing = true; scratch(e); }
         function stopDraw() { isDrawing = false; checkReveal(); }
         function scratch(e) {
-            if (!isDrawing || revealed || JOGANDO_MINI) return; e.preventDefault(); let pos = getMousePos(e);
+            if (!isDrawing || revealed || window.JOGANDO_MINI) return; e.preventDefault(); let pos = getMousePos(e);
             ctx.globalCompositeOperation = 'destination-out'; ctx.beginPath(); ctx.arc(pos.x, pos.y, 20, 0, Math.PI * 2); ctx.fill();
         }
         function checkReveal() {
@@ -876,7 +953,7 @@
                 revealed = true; canvas.style.transition = 'opacity 0.3s'; canvas.style.opacity = '0';
                 window.RASPA_RES.push(s); window.RASPA_CLICKS++;
                 if(window.RASPA_CLICKS === 4) {
-                    JOGANDO_MINI = true;
+                    window.JOGANDO_MINI = true;
                     let counts = {}; window.RASPA_RES.forEach(x => counts[x] = (counts[x]||0)+1); let max = Math.max(...Object.values(counts)); let winSimbol = Object.keys(counts).find(key => counts[key] === max); let premio = max >= 3 ? (window.GAME_CFG.rp_p || 100) : 0;
                     if(premio > 0) { for(let k=0; k<4; k++) { let el = document.getElementById(`raspa-res-${k}`); if(el.innerText === winSimbol) { el.style.background = 'var(--success-green)'; el.style.color = '#000'; el.parentElement.style.animation = 'pulseDiamante 1s infinite alternate'; } } }
                     processarGanho('raspa', premio, window.RASPA_DADOS, window.RASPA_AGORA, document.getElementById('raspa-msg'));
@@ -886,7 +963,80 @@
         canvas.addEventListener('mousedown', startDraw); canvas.addEventListener('mousemove', scratch); canvas.addEventListener('mouseup', stopDraw); canvas.addEventListener('mouseleave', stopDraw);
         canvas.addEventListener('touchstart', startDraw, {passive: false}); canvas.addEventListener('touchmove', scratch, {passive: false}); canvas.addEventListener('touchend', stopDraw);
     }
-    function sairMinigame() { if(JOGANDO_MINI) return; document.getElementById('t-roleta').style.display='none'; document.getElementById('t-caixa').style.display='none'; document.getElementById('t-raspa').style.display='none'; document.getElementById('app-main').style.display='flex'; updUI(); }
+
+    // LÓGICA DO NOVO JOGO CAÇA-NÍQUEL
+    function startSlotsGame() { 
+        document.getElementById('app-main').style.display='none'; 
+        document.getElementById('t-slots').style.display='flex'; 
+        document.getElementById('slots-msg').innerText=''; 
+        document.getElementById('r1-val').innerText = '❓';
+        document.getElementById('r2-val').innerText = '❓';
+        document.getElementById('r3-val').innerText = '❓';
+        document.getElementById('reel-1').classList.remove('slot-winner');
+        document.getElementById('reel-2').classList.remove('slot-winner');
+        document.getElementById('reel-3').classList.remove('slot-winner');
+        window.JOGANDO_MINI=false; 
+    }
+
+    function girarSlotsReal() {
+        if(window.JOGANDO_MINI) return;
+        window.JOGANDO_MINI = true;
+        checarCooldown('slots', window.GAME_CFG.sl_tm || 8, (dados, agora) => {
+            let emojis = ['🍒', '💎', '🔔', '🍀', '👑'];
+            let r1 = document.getElementById('r1-val');
+            let r2 = document.getElementById('r2-val');
+            let r3 = document.getElementById('r3-val');
+            let msgEl = document.getElementById('slots-msg');
+            
+            msgEl.innerText = "GIRANDO...";
+            msgEl.style.color = "var(--text-main)";
+            tocarSom('https://assets.mixkit.co/active_storage/sfx/2003/2003-preview.mp3'); 
+
+            let giros = 0;
+            let anim = setInterval(() => {
+                r1.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+                r2.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+                r3.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+                giros++;
+                if(giros > 20) {
+                    clearInterval(anim);
+                    let res1 = emojis[Math.floor(Math.random() * emojis.length)];
+                    let res2 = emojis[Math.floor(Math.random() * emojis.length)];
+                    let res3 = emojis[Math.floor(Math.random() * emojis.length)];
+                    
+                    // Ajuste para facilitar um pouco o teste (chance de 10% de forçar um par)
+                    if(Math.random() > 0.9) res2 = res1; 
+
+                    r1.innerText = res1; r2.innerText = res2; r3.innerText = res3;
+
+                    let premio = 0;
+                    if(res1 === res2 && res2 === res3) {
+                        premio = window.GAME_CFG.sl_p1 || 500;
+                        document.getElementById('reel-1').classList.add('slot-winner');
+                        document.getElementById('reel-2').classList.add('slot-winner');
+                        document.getElementById('reel-3').classList.add('slot-winner');
+                    } else if (res1 === res2 || res2 === res3 || res1 === res3) {
+                        premio = window.GAME_CFG.sl_p2 || 100;
+                        if(res1===res2) { document.getElementById('reel-1').classList.add('slot-winner'); document.getElementById('reel-2').classList.add('slot-winner'); }
+                        else if(res2===res3) { document.getElementById('reel-2').classList.add('slot-winner'); document.getElementById('reel-3').classList.add('slot-winner'); }
+                        else { document.getElementById('reel-1').classList.add('slot-winner'); document.getElementById('reel-3').classList.add('slot-winner'); }
+                    }
+
+                    setTimeout(() => processarGanho('slots', premio, dados, agora, msgEl), 500);
+                }
+            }, 100);
+        });
+    }
+
+    function sairMinigame() { 
+        if(window.JOGANDO_MINI) return; 
+        document.getElementById('t-roleta').style.display='none'; 
+        document.getElementById('t-caixa').style.display='none'; 
+        document.getElementById('t-raspa').style.display='none'; 
+        document.getElementById('t-slots').style.display='none'; 
+        document.getElementById('app-main').style.display='flex'; 
+        updUI(); 
+    }
 
     // QUIZ LOGIC
     function play(nivel){ 
@@ -1028,7 +1178,26 @@
     function saveAd() { let d = { ativo: document.getElementById('ad-ativo').value, titulo: document.getElementById('ad-tit').value, tipo: document.getElementById('ad-tipo').value, conteudo: document.getElementById('ad-cont').value }; db.collection('sistema').doc('anuncio').set(d, {merge:true}).then(()=> pop("Salvo", "Anúncio configurado.")); }
     function limparAd() { document.getElementById('ad-ativo').value = 'NAO'; document.getElementById('ad-tit').value = ''; document.getElementById('ad-cont').value = ''; saveAd(); }
     
-    function saveGames() { let cfg = { nome_roleta: document.getElementById('nm-roleta').value, nome_caixa: document.getElementById('nm-caixa').value, nome_raspa: document.getElementById('nm-raspa').value, rl_tm: parseInt(document.getElementById('rl-tm').value) || 12, rl_p: [parseInt(document.getElementById('f1').value)||0, parseInt(document.getElementById('f2').value)||0, parseInt(document.getElementById('f3').value)||0, parseInt(document.getElementById('f4').value)||0, parseInt(document.getElementById('f5').value)||0, parseInt(document.getElementById('f6').value)||0, parseInt(document.getElementById('f7').value)||0, parseInt(document.getElementById('f8').value)||0], cx_tm: parseInt(document.getElementById('cx-tm').value) || 12, cx_p: [parseInt(document.getElementById('cx-p1').value)||0, parseInt(document.getElementById('cx-p2').value)||0, parseInt(document.getElementById('cx-p3').value)||0], cx_t: [document.getElementById('cx-t1').value, document.getElementById('cx-t2').value, document.getElementById('cx-t3').value], rp_tm: parseInt(document.getElementById('rp-tm').value) || 8, rp_p: parseInt(document.getElementById('rp-p1').value) || 100 }; db.collection('sistema').doc('minigames').set(cfg, {merge:true}).then(()=>{ loadGlobalConfigs(); pop("Salvo", "Configurações aplicadas."); }); }
+    function saveGames() { 
+        let cfg = { 
+            nome_roleta: document.getElementById('nm-roleta').value, 
+            nome_caixa: document.getElementById('nm-caixa').value, 
+            nome_raspa: document.getElementById('nm-raspa').value, 
+            nome_slots: document.getElementById('nm-slots').value, 
+            rl_tm: parseInt(document.getElementById('rl-tm').value) || 12, 
+            rl_p: [parseInt(document.getElementById('f1').value)||0, parseInt(document.getElementById('f2').value)||0, parseInt(document.getElementById('f3').value)||0, parseInt(document.getElementById('f4').value)||0, parseInt(document.getElementById('f5').value)||0, parseInt(document.getElementById('f6').value)||0, parseInt(document.getElementById('f7').value)||0, parseInt(document.getElementById('f8').value)||0], 
+            cx_tm: parseInt(document.getElementById('cx-tm').value) || 12, 
+            cx_p: [parseInt(document.getElementById('cx-p1').value)||0, parseInt(document.getElementById('cx-p2').value)||0, parseInt(document.getElementById('cx-p3').value)||0], 
+            cx_t: [document.getElementById('cx-t1').value, document.getElementById('cx-t2').value, document.getElementById('cx-t3').value], 
+            rp_tm: parseInt(document.getElementById('rp-tm').value) || 8, 
+            rp_p: parseInt(document.getElementById('rp-p1').value) || 100,
+            sl_tm: parseInt(document.getElementById('sl-tm').value) || 8,
+            sl_p1: parseInt(document.getElementById('sl-p1').value) || 500,
+            sl_p2: parseInt(document.getElementById('sl-p2').value) || 100
+        }; 
+        db.collection('sistema').doc('minigames').set(cfg, {merge:true}).then(()=>{ loadGlobalConfigs(); pop("Salvo", "Configurações aplicadas."); }); 
+    }
+    
     function saveLoja() { let it = { i: document.getElementById('lj-img').value, n: document.getElementById('lj-nome').value, p: parseInt(document.getElementById('lj-preco').value)||0 }; window.STORE_ITEMS.push(it); db.collection('sistema').doc('loja').set({itens: window.STORE_ITEMS}, {merge:true}).then(()=> { ldL(); document.getElementById('lj-img').value=''; document.getElementById('lj-nome').value=''; document.getElementById('lj-preco').value=''; }); }
     function ldL() { let h=''; window.STORE_ITEMS.forEach((it,i) => { h+= `<div style="display:flex; gap:10px; margin-bottom:5px; background:var(--bg-panel); padding:10px; border-radius:8px;"><img src="${parseImg(it.i)}" width="30" style="border-radius:5px; object-fit:cover;"><div style="flex:1; font-weight:bold;">${it.n} <span style="color:var(--gold)">(${it.p}XP)</span></div><button class="btn-sm" onclick="delLoja(${i})" style="background:var(--legendary-red); padding:0 10px;">X</button></div>`; }); document.getElementById('adm-loja-list').innerHTML = h; }
     function delLoja(i) { window.STORE_ITEMS.splice(i,1); db.collection('sistema').doc('loja').set({itens: window.STORE_ITEMS}, {merge:true}).then(()=>ldL()); }
