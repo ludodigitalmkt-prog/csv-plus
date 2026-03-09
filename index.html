@@ -184,13 +184,18 @@
     .danger-pulse { animation: pulseRed 0.8s infinite; border-color: var(--legendary-red) !important; color: var(--legendary-red) !important; text-shadow: 0 0 10px var(--legendary-red); }
     @keyframes pulseRed { 0% { box-shadow: 0 0 10px var(--legendary-red); background: rgba(214, 48, 49, 0.1); transform: scale(1); } 100% { box-shadow: 0 0 30px var(--legendary-red); background: rgba(214, 48, 49, 0.4); transform: scale(1.1); } }
     
-    .opt-btn { background: var(--bg-panel); padding: 20px; border-radius: 16px; margin-bottom: 15px; border: 2px solid var(--border-dark); font-weight: bold; cursor: pointer; transition: 0.2s; box-shadow: 0 5px 15px rgba(0,0,0,0.3); color: var(--text-main); display: flex; align-items: center;}
+    /* MODIFICAÇÃO: Responsividade e flex nos botões do Quiz */
+    .opt-btn { background: var(--bg-panel); padding: 15px; border-radius: 16px; margin-bottom: 12px; border: 2px solid var(--border-dark); font-weight: bold; cursor: pointer; transition: 0.2s; box-shadow: 0 5px 15px rgba(0,0,0,0.3); color: var(--text-main); display: flex; flex-direction: column; align-items: flex-start; word-break: break-word; font-size: 14px; line-height: 1.4; height: auto;}
+    
     .flashcard { position: relative; aspect-ratio: 1; perspective: 1000px; cursor: pointer; }
-    .flashcard .front, .flashcard .back { width: 100%; height: 100%; position: absolute; top: 0; left: 0; backface-visibility: hidden; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 16px; font-weight: 800; padding: 10px; text-align: center; transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1); }
+    /* MODIFICAÇÃO: Texto das cartas se adaptam ao tamanho e tem scroll se for muito longo */
+    .flashcard .front, .flashcard .back { width: 100%; height: 100%; position: absolute; top: 0; left: 0; backface-visibility: hidden; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: clamp(10px, 4vw, 16px); word-break: break-word; font-weight: 800; padding: 10px; text-align: center; transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1); overflow-y: auto; }
     .flashcard .front { background: var(--bg-panel); border: 2px solid var(--border-dark); color: var(--text-main); }
     .flashcard .back { transform: rotateY(180deg); color: #000; }
     .flashcard.flipped .front { transform: rotateY(180deg); } .flashcard.flipped .back { transform: rotateY(0deg); }
-    .balloon { width: 110px; height: 110px; border-radius: 50%; background: var(--bg-panel); border: 2px solid var(--border-dark); display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--text-main); font-weight: 800; text-align: center; padding: 10px; cursor: pointer; box-shadow: 0 10px 20px rgba(0,0,0,0.5); transition: 0.2s;}
+    
+    /* MODIFICAÇÃO: Balões responsivos para textos maiores */
+    .balloon { width: 110px; height: 110px; border-radius: 50%; background: var(--bg-panel); border: 2px solid var(--border-dark); display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--text-main); font-weight: 800; text-align: center; padding: 10px; cursor: pointer; box-shadow: 0 10px 20px rgba(0,0,0,0.5); transition: 0.2s; font-size: clamp(10px, 3.5vw, 14px); word-break: break-word;}
 
     .c-msg { display: flex; gap: 10px; align-items: flex-end; max-width: 85%; margin-bottom: 15px;} .c-msg.me { align-self: flex-end; flex-direction: row-reverse; }
     .c-bub { background: var(--bg-panel); border: 1px solid var(--border-dark); padding: 12px 16px; border-radius: 16px 16px 16px 0; font-size: 14px; color: var(--text-main);}
@@ -636,6 +641,8 @@
                     U = doc.data(); U.id = user.uid; 
                     if(U.status === 'BLOQUEADO') { auth.signOut(); showLoginScreen("Sua conta foi desativada."); return; }
                     if(!U.inventario) U.inventario = []; if(!U.fase) U.fase = 1; 
+                    // MODIFICAÇÃO: Inicia array de questões respondidas
+                    if(!U.respondidas) U.respondidas = [];
                     
                     loadGlobalConfigs(); loadStoreItems(); checkAds();
                     
@@ -762,10 +769,10 @@
     function renderStore() { let h = ''; let defaults = [ {n:'Robô (Grátis)', i:`https://api.dicebear.com/7.x/bottts/svg?seed=${U.id}`, p:0}, {n:'Humano (Grátis)', i:`https://api.dicebear.com/7.x/adventurer/svg?seed=${U.id}`, p:0} ]; let allItems = defaults.concat(window.STORE_ITEMS); allItems.forEach((it) => { let owned = U.inventario.includes(it.i) || it.p === 0; let isCurrent = U.avatar === it.i; let btnHTML = isCurrent ? `<button class="store-btn equipped">EM USO</button>` : (owned ? `<button class="store-btn owned" onclick="usarAvatar('${it.i}')">EQUIPAR</button>` : `<button class="store-btn" onclick="comprarAvatar('${it.i}', ${it.p})"><span class="material-icons-round" style="font-size:12px;vertical-align:middle">stars</span> ${it.p}</button>`); h += `<div class="store-item"><img src="${parseImg(it.i)}" class="store-img"><div class="store-price">${it.n}</div>${btnHTML}</div>`; }); document.getElementById('store-list').innerHTML = h; }
     function comprarAvatar(url, preco) { if(U.xp < preco) { pop("Negado", "XP Insuficiente!"); return; } U.xp -= preco; U.inventario.push(url); U.avatar = url; db.collection("usuarios").doc(U.id).update({ xp: U.xp, inventario: U.inventario, avatar: url }).then(() => { tocarSom('https://assets.mixkit.co/active_storage/sfx/2955/2955-preview.mp3'); confetti({ particleCount: 100, spread: 70 }); updUI(); renderStore(); pop("Sucesso", "Skin equipada."); }); }
     function usarAvatar(url) { U.avatar = url; db.collection("usuarios").doc(U.id).update({ avatar: url }).then(() => { updUI(); renderStore(); pop("Sucesso", "Skin atualizada."); }); }
-    function loadMusicList() { db.collection('sistema').doc('musicas').get().then(doc => { if(doc.exists) { let ms = doc.data().lista || []; let h = ''; ms.forEach(m => { h += `<div class="opt-btn" style="background:#07090D;" onclick="playMusic('${m.url}', this)"><span class="material-icons-round" style="margin-right:10px;">play_arrow</span> ${m.nome}</div>`; }); if(h) document.getElementById('music-list').innerHTML = h; } }); }
+    function loadMusicList() { db.collection('sistema').doc('musicas').get().then(doc => { if(doc.exists) { let ms = doc.data().lista || []; let h = ''; ms.forEach(m => { h += `<div class="opt-btn" style="background:#07090D; align-items:center; flex-direction:row;" onclick="playMusic('${m.url}', this)"><span class="material-icons-round" style="margin-right:10px;">play_arrow</span> ${m.nome}</div>`; }); if(h) document.getElementById('music-list').innerHTML = h; } }); }
 
     // JOGOS DE SORTE
-    function checarCooldown(jogo, tempoHoras, callback) { db.collection("usuarios").doc(U.id).get().then((doc) => { let dados = doc.data(); let ultimo = dados['ultimo_' + jogo] || 0; let agora = new Date().getTime(); let cooldown = tempoHoras * 60 * 60 * 1000; if (U.nivel !== 'ADMIN' && (agora - ultimo) < cooldown) { let h = Math.floor(((ultimo + cooldown) - agora) / (1000*60*60)); let m = Math.floor((((ultimo + cooldown) - agora) % (1000*60*60)) / (1000*60)); pop("Aguarde", `Caixa travada. Volte em ${h}h e ${m}m.`); return; } callback(dados, agora); }); }
+    function checarCooldown(jogo, tempoHoras, callback) { db.collection("usuarios").doc(U.id).get().then((doc) => { let dados = doc.data(); let ultimo = dados['ultimo_' + jogo] || 0; let agora = new Date().getTime(); let cooldown = tempoHoras * 60 * 60 * 1000; if (U.nivel !== 'ADMIN' && (agora - ultimo) < cooldown) { let h = Math.floor(((ultimo + cooldown) - agora) / (1000*60*60)); let m = Math.floor((((ultimo + cooldown) - agora) % (1000*60*60)) / (1000*60)); pop("Aguarde", `Travado. Volte em ${h}h e ${m}m.`); return; } callback(dados, agora); }); }
     function processarGanho(jogo, premio, dados, agora, elMsg) { let novoXP = (dados.xp || 0) + premio; let objUpdate = { xp: novoXP }; objUpdate['ultimo_' + jogo] = agora; db.collection("usuarios").doc(U.id).update(objUpdate).then(() => { triggerVibration(premio > 0 ? 'win' : 'lose'); U.xp = novoXP; if(premio > 0) { elMsg.innerText = `+${premio} XP`; elMsg.style.color = 'var(--gold)'; tocarSom('https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3'); confetti({ particleCount: 100, spread: 70, colors:['#FFC312', '#0984E3'] }); updUI(premio); } else { elMsg.innerText = "AZAR"; elMsg.style.color = 'var(--legendary-red)'; tocarSom('https://assets.mixkit.co/active_storage/sfx/2956/2956-preview.mp3'); updUI(); } setTimeout(()=>{ JOGANDO_MINI = false; }, 2000); }); }
 
     function montarRoletaVisual() { try { let w = document.getElementById('wheel-el'); if(!w) return; w.innerHTML = ''; let fatias = (window.GAME_CFG && Array.isArray(window.GAME_CFG.rl_p) && window.GAME_CFG.rl_p.length === 8) ? window.GAME_CFG.rl_p : [0, 50, 0, 100, 0, 200, 0, 500]; for(let i=0; i<8; i++) { let val = fatias[i]; let txt = (val == 0 || val === '0') ? 'AZAR' : val; let div = document.createElement('div'); div.className = 'wheel-text'; div.style.transform = `rotate(${i * 45 + 22.5}deg)`; div.innerText = txt; w.appendChild(div); } } catch(e) { console.log(e); } }
@@ -838,14 +845,35 @@
     }
     function sairMinigame() { if(JOGANDO_MINI) return; document.getElementById('t-roleta').style.display='none'; document.getElementById('t-caixa').style.display='none'; document.getElementById('t-raspa').style.display='none'; document.getElementById('app-main').style.display='flex'; updUI(); }
 
-    // QUIZ LOGIC (MISSÃO E DUELOS)
-    function play(nivel){ document.getElementById('app-main').style.display = 'none'; document.getElementById('t-play').style.display = 'flex'; document.getElementById('q-box').innerHTML = '<div style="text-align:center; color:var(--gold); font-weight:900; font-size:20px;">CARREGANDO...</div>'; db.collection('perguntas').where('nivel', '==', nivel).where('status', '==', 'ATIVA').where('duelo','==','NAO').get().then((snap) => { let perguntas = []; snap.forEach(doc => perguntas.push(doc.data())); if(perguntas.length === 0){ pop("Vazio", "Nenhuma missão de treinamento cadastrada."); sairJogo(); return; } perguntas = perguntas.sort(() => 0.5 - Math.random()); window.DESAFIO_ATUAL = null; window.TOTAL_XP_ACUMULADO = 0; runQ(perguntas, 0, false); }); }
+    // QUIZ LOGIC (MISSÃO E DUELOS) - MODIFICAÇÃO: FILTRO DE PERGUNTAS INÉDITAS
+    function play(nivel){ 
+        document.getElementById('app-main').style.display = 'none'; document.getElementById('t-play').style.display = 'flex'; document.getElementById('q-box').innerHTML = '<div style="text-align:center; color:var(--gold); font-weight:900; font-size:20px;">CARREGANDO...</div>'; 
+        db.collection('perguntas').where('nivel', '==', nivel).where('status', '==', 'ATIVA').where('duelo','==','NAO').get().then((snap) => { 
+            let perguntas = []; 
+            snap.forEach(doc => {
+                let q = doc.data();
+                // Verifica se a pergunta não está na lista de respondidas
+                if (!U.respondidas.includes(q.id)) {
+                    perguntas.push(q);
+                }
+            }); 
+            if(perguntas.length === 0){ 
+                pop("Concluído!", "Você já respondeu todas as missões disponíveis para este nível!"); 
+                sairJogo(); 
+                return; 
+            } 
+            perguntas = perguntas.sort(() => 0.5 - Math.random()); 
+            window.DESAFIO_ATUAL = null; window.TOTAL_XP_ACUMULADO = 0; 
+            runQ(perguntas, 0, false); 
+        }); 
+    }
     
+    // MODIFICAÇÃO: NOVA ESTRUTURA HTML DAS RESPOSTAS PARA RESPONSIVIDADE
     function runQ(l, i, isDuelo){
       if(i >= l.length){ 
           if(!isDuelo) { 
               U.fase = (U.fase || 1) + 1; 
-              db.collection("usuarios").doc(U.id).update({ fase: U.fase }).then(() => { 
+              db.collection("usuarios").doc(U.id).update({ fase: U.fase, respondidas: U.respondidas }).then(() => { 
                   showEpicXP(window.TOTAL_XP_ACUMULADO); 
                   setTimeout(() => { pop("NÍVEL CONCLUÍDO!", `Você avançou para a Fase ${U.fase} do Mapa!`); sairJogo(); go('mapa', document.querySelectorAll('.nav-btn')[1]); }, 3500); 
               }); 
@@ -855,18 +883,53 @@
       
       let q = l[i], b = document.getElementById('q-box'); document.getElementById('app-main').style.display = 'none'; document.getElementById('t-play').style.display = 'flex';
       let imgHtml = q.imagem ? `<img src="${parseImg(q.imagem)}" style="max-height:160px; width:100%; object-fit:contain; margin-bottom:20px; border-radius:10px;">` : ''; 
-      let html = `${imgHtml}<div style="text-align:center; font-size:20px; font-weight:900; margin-bottom:20px; text-transform:uppercase;">${q.enunciado}</div>`;
+      let html = `${imgHtml}<div style="text-align:center; font-size:clamp(16px, 5vw, 22px); line-height:1.3; font-weight:900; margin-bottom:20px; text-transform:uppercase; word-break:break-word;">${q.enunciado}</div>`;
       
-      if(q.tipo === 'FLASHCARD'){ html += `<div style="display:grid; grid-template-columns:1fr 1fr; gap:15px; padding:10px;">`; ['A','B','C','D'].forEach(o => { if(q.opcoes && (q.opcoes[o] || q.opcoes[o+'_img'])) { let inC = ""; if(q.opcoes[o+'_img']) inC += `<img src="${parseImg(q.opcoes[o+'_img'])}" style="max-height:60px; border-radius:8px; margin-bottom:10px;">`; if(q.opcoes[o]) inC += `<span>${q.opcoes[o]}</span>`; let isCor = (o == q.correta); html += `<div class="flashcard" onclick="if(!this.classList.contains('flipped')){ this.classList.add('flipped'); tocarSom('https://assets.mixkit.co/active_storage/sfx/2955/2955-preview.mp3'); setTimeout(()=>{chk(${isCor},this,${i},${isDuelo})}, 1000); }"><div class="front">${inC}</div><div class="back" style="background:${isCor?'var(--success-green)':'var(--legendary-red)'}; border:none;"><span class="material-icons-round" style="font-size:50px;">${isCor?'check_circle':'cancel'}</span></div></div>`; } }); html += `</div>`; }
-      else if (q.tipo === 'COMPLETE') { html += `<div style="display:flex; flex-wrap:wrap; justify-content:center; gap:20px; margin-top:20px;">`; ['A','B','C','D'].forEach((o, idx) => { if(q.opcoes && q.opcoes[o]) { html += `<div class="balloon" style="animation-delay:${idx*0.2}s" onclick="tocarSom('https://assets.mixkit.co/active_storage/sfx/2605/2605-preview.mp3'); chk('${o}'=='${q.correta}',this,${i},${isDuelo})">${q.opcoes[o]}</div>`; } }); html += `</div>`; }
-      else { ['A','B','C','D'].forEach(o => { if(q.opcoes && (q.opcoes[o] || q.opcoes[o+'_img'])) { let inC = ""; if(q.opcoes[o]) inC += `<span>${q.opcoes[o]}</span>`; if(q.opcoes[o+'_img']) inC += `<img src="${parseImg(q.opcoes[o+'_img'])}" style="max-height:80px; border-radius:8px; display:block; margin-top:10px;">`; html += `<div class="opt-btn" onclick="chk('${o}'=='${q.correta}',this,${i},${isDuelo})"><b style="color:var(--gold);margin-right:10px;">${o})</b> ${inC}</div>`; } }); }
+      if(q.tipo === 'FLASHCARD'){ 
+          html += `<div style="display:grid; grid-template-columns:1fr 1fr; gap:15px; padding:10px;">`; 
+          ['A','B','C','D'].forEach(o => { 
+              if(q.opcoes && (q.opcoes[o] || q.opcoes[o+'_img'])) { 
+                  let inC = ""; 
+                  if(q.opcoes[o+'_img']) inC += `<img src="${parseImg(q.opcoes[o+'_img'])}" style="max-height:50px; max-width:100%; object-fit:contain; border-radius:8px; margin-bottom:5px;">`; 
+                  if(q.opcoes[o]) inC += `<span>${q.opcoes[o]}</span>`; 
+                  let isCor = (o == q.correta); 
+                  html += `<div class="flashcard" onclick="if(!this.classList.contains('flipped')){ this.classList.add('flipped'); tocarSom('https://assets.mixkit.co/active_storage/sfx/2955/2955-preview.mp3'); setTimeout(()=>{chk(${isCor},this,${i},${isDuelo})}, 1000); }"><div class="front">${inC}</div><div class="back" style="background:${isCor?'var(--success-green)':'var(--legendary-red)'}; border:none;"><span class="material-icons-round" style="font-size:50px;">${isCor?'check_circle':'cancel'}</span></div></div>`; 
+              } 
+          }); 
+          html += `</div>`; 
+      }
+      else if (q.tipo === 'COMPLETE') { 
+          html += `<div style="display:flex; flex-wrap:wrap; justify-content:center; gap:20px; margin-top:20px;">`; 
+          ['A','B','C','D'].forEach((o, idx) => { 
+              if(q.opcoes && q.opcoes[o]) { 
+                  html += `<div class="balloon" style="animation-delay:${idx*0.2}s" onclick="tocarSom('https://assets.mixkit.co/active_storage/sfx/2605/2605-preview.mp3'); chk('${o}'=='${q.correta}',this,${i},${isDuelo})">${q.opcoes[o]}</div>`; 
+              } 
+          }); 
+          html += `</div>`; 
+      }
+      else { 
+          ['A','B','C','D'].forEach(o => { 
+              if(q.opcoes && (q.opcoes[o] || q.opcoes[o+'_img'])) { 
+                  let inC = `<div style="display:flex; width:100%; gap:10px;"><b style="color:var(--gold); flex-shrink:0;">${o})</b>`; 
+                  if(q.opcoes[o]) inC += `<span style="flex:1; text-align:left; line-height:1.3; word-break:break-word;">${q.opcoes[o]}</span>`; 
+                  inC += `</div>`;
+                  if(q.opcoes[o+'_img']) inC += `<img src="${parseImg(q.opcoes[o+'_img'])}" style="width:100%; max-height:120px; object-fit:contain; border-radius:8px; margin-top:10px;">`; 
+                  html += `<div class="opt-btn" onclick="chk('${o}'=='${q.correta}',this,${i},${isDuelo})">${inC}</div>`; 
+              } 
+          }); 
+      }
       
       b.innerHTML = html; window.LS = l; let t = q.tempo || 30; document.getElementById('timer').innerText = t; let tbox = document.getElementById('timer-box'); tbox.classList.remove('danger-pulse');
       clearInterval(window.TMR); window.TMR = setInterval(() => { t--; document.getElementById('timer').innerText = t; if(t <= 10 && t > 0) { tbox.classList.add('danger-pulse'); tocarSom('https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3'); triggerVibration('tick'); } if(t <= 0) chk(false, null, i, isDuelo); }, 1000);
     }
 
+    // MODIFICAÇÃO: REGISTRA A PERGUNTA COMO RESPONDIDA
     function chk(win, el, i, isDuelo){ 
       clearInterval(window.TMR); let q = window.LS[i]; let xp = win ? (q.xpGanho || 10) : -(q.xpPerda || 5); triggerVibration(win ? 'win' : 'lose'); document.getElementById('timer-box').classList.remove('danger-pulse'); 
+      
+      // Adiciona na lista de respondidas se for inédita
+      if (!U.respondidas.includes(q.id)) { U.respondidas.push(q.id); }
+
       if(win && el && q.tipo!=='FLASHCARD') { el.style.background = 'var(--success-green)'; el.style.color = '#000'; } else if(!win && el && q.tipo!=='FLASHCARD') { el.style.background = 'var(--legendary-red)'; el.style.color = '#fff'; }
       if(!win) { let flash = document.createElement('div'); flash.style.position='fixed'; flash.style.inset=0; flash.style.background='rgba(214, 48, 49, 0.4)'; flash.style.zIndex=9999; document.body.appendChild(flash); setTimeout(()=>flash.remove(), 200); } 
 
@@ -880,9 +943,10 @@
                       if(dd.c_acerto && dd.a_acerto) { msgDuelo = "A DUPLA VENCEU!"; sfxLink = 'https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3'; U.xp += dd.q_win; let pID = (window.PAPEL_ATUAL === 'c') ? dd.a_id : dd.c_id; db.collection("usuarios").doc(pID).get().then(pDoc => { if(pDoc.exists) db.collection("usuarios").doc(pID).update({ xp: pDoc.data().xp + dd.q_win }); }); } 
                       else { msgDuelo = "A DUPLA FALHOU!"; sfxLink = 'https://assets.mixkit.co/active_storage/sfx/2956/2956-preview.mp3'; U.xp -= dd.q_lose; let pID = (window.PAPEL_ATUAL === 'c') ? dd.a_id : dd.c_id; db.collection("usuarios").doc(pID).get().then(pDoc => { if(pDoc.exists) db.collection("usuarios").doc(pID).update({ xp: pDoc.data().xp - dd.q_lose }); }); }
                       tocarSom(sfxLink); showEpicXP(dd.c_acerto && dd.a_acerto ? dd.q_win : -dd.q_lose);
-                      db.collection("usuarios").doc(U.id).update({ xp: U.xp }).then(() => { updUI(dd.c_acerto && dd.a_acerto ? dd.q_win : 0); setTimeout(() => { sairJogo(); }, 3500); });
+                      db.collection("usuarios").doc(U.id).update({ xp: U.xp, respondidas: U.respondidas }).then(() => { updUI(dd.c_acerto && dd.a_acerto ? dd.q_win : 0); setTimeout(() => { sairJogo(); }, 3500); });
                   } else {
                       if(win) tocarSom('https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3'); else tocarSom('https://assets.mixkit.co/active_storage/sfx/2956/2956-preview.mp3');
+                      db.collection("usuarios").doc(U.id).update({ respondidas: U.respondidas });
                       pop("Registrado", "O resultado sairá quando sua dupla jogar!"); sairJogo();
                   }
               }); 
@@ -890,7 +954,7 @@
       } else {
           if(win) tocarSom('https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3'); else tocarSom('https://assets.mixkit.co/active_storage/sfx/2956/2956-preview.mp3');
           window.TOTAL_XP_ACUMULADO += xp; U.xp += xp; 
-          db.collection("usuarios").doc(U.id).update({ xp: U.xp }).then(() => { updUI(xp); setTimeout(() => runQ(window.LS, i+1, false), 1500); });
+          db.collection("usuarios").doc(U.id).update({ xp: U.xp, respondidas: U.respondidas }).then(() => { updUI(xp); setTimeout(() => runQ(window.LS, i+1, false), 1500); });
       }
     }
     function sairJogo(){ clearInterval(window.TMR); document.getElementById('t-play').style.display='none'; document.getElementById('app-main').style.display='flex'; document.getElementById('timer-box').classList.remove('danger-pulse'); updUI(); window.DESAFIO_ATUAL = null; }
@@ -906,7 +970,7 @@
         
         // Usa o App Secundário para não deslogar o Admin
         secondaryApp.auth().createUserWithEmailAndPassword(emailFantasma, senha).then((cred) => { 
-            db.collection('usuarios').doc(cred.user.uid).set({ nome: nome, login: loginInput, email: emailFantasma, xp: 0, fase: 1, nivel: nivel, frase: "", avatar: "", inventario: [], status: 'ATIVO' }).then(() => { 
+            db.collection('usuarios').doc(cred.user.uid).set({ nome: nome, login: loginInput, email: emailFantasma, xp: 0, fase: 1, nivel: nivel, frase: "", avatar: "", inventario: [], respondidas: [], status: 'ATIVO' }).then(() => { 
                 secondaryApp.auth().signOut();
                 document.getElementById('cad-nome').value = ''; document.getElementById('cad-login').value = '';
                 msg.style.color = 'var(--success-green)'; msg.innerText = "Usuário criado com sucesso!"; 
